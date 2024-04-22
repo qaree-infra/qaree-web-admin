@@ -1,8 +1,8 @@
 import { graphql } from "gql.tada";
 
-export const userInfoQuery = graphql(`
-  query userInfo {
-    userInfo {
+export const getAdminInfoQuery = graphql(`
+  query getAdminInfo {
+    getAdminInfo {
         name,
         email,
         avatar {
@@ -13,11 +13,11 @@ export const userInfoQuery = graphql(`
   }
 `);
 
-export const refreshTokenQuery = graphql(`
-  query refreshToken {
-    refreshToken {
-      message
-      refresh_token
-    }
-  }
-`);
+// export const refreshTokenQuery = graphql(`
+//   query refreshToken {
+//     refreshToken {
+//       message
+//       refresh_token
+//     }
+//   }
+// `);

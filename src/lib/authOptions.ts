@@ -4,9 +4,10 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { redirect } from "next/navigation";
 import { fetcher } from "./graphql/fetcher";
 import { signInMutation } from "./graphql/mutations";
-import { userInfoQuery } from "./graphql/queries";
+import { getAdminInfoQuery } from "./graphql/queries";
 import type { AuthUser } from "./graphql/types";
 
+// TODO: remove the placeholder data
 export const authOptions: NextAuthOptions = {
 	providers: [
 		CredentialsProvider({
@@ -29,9 +30,9 @@ export const authOptions: NextAuthOptions = {
 				if (resetToken) {
 					// todo(security) validate the token
 
-					// I need more data about user
-					const { userInfo } = await fetcher({
-						query: userInfoQuery,
+					// // I need more data about user
+					const { getAdminInfo } = await fetcher({
+						query: getAdminInfoQuery,
 						server: true,
 						protectid: true,
 						headers: {
@@ -42,9 +43,9 @@ export const authOptions: NextAuthOptions = {
 
 					return {
 						access_token: resetToken,
-						name: userInfo?.name as string,
-						email: userInfo?.email as string,
-						avatar: userInfo?.avatar as {
+						name: getAdminInfo?.name as string,
+						email: getAdminInfo?.email as string,
+						avatar: getAdminInfo?.avatar as {
 							size: number;
 							path: string;
 						},
@@ -53,7 +54,7 @@ export const authOptions: NextAuthOptions = {
 
 				if (!email || !password) return null;
 
-				const { signin } = await fetcher({
+				const { signIn } = await fetcher({
 					query: signInMutation,
 					variables: {
 						email,
@@ -64,24 +65,24 @@ export const authOptions: NextAuthOptions = {
 					cache: "default",
 				});
 
-				if (!signin?.access_token) return null;
+				if (!signIn?.access_token) return null;
 
 				// I need more data about user
-				const { userInfo } = await fetcher({
-					query: userInfoQuery,
+				const { getAdminInfo } = await fetcher({
+					query: getAdminInfoQuery,
 					server: true,
 					protectid: false,
 					headers: {
-						Authorization: `Bearer ${signin.access_token}`,
+						Authorization: `Bearer ${signIn.access_token}`,
 					},
 					cache: "no-cache",
 				});
 
 				const user = {
-					access_token: signin.access_token,
-					name: userInfo?.name as string,
-					email: userInfo?.email as string,
-					avatar: userInfo?.avatar as {
+					access_token: signIn.access_token,
+					name: getAdminInfo?.name as string,
+					email: getAdminInfo?.email as string,
+					avatar: getAdminInfo?.avatar as {
 						size: number;
 						path: string;
 					},

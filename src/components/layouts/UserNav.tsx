@@ -32,7 +32,9 @@ async function UserNav() {
 							alt={`@${name}`}
 							className="size-9"
 						/>
-						<AvatarFallback>{name[0].toUpperCase()}</AvatarFallback>
+						<AvatarFallback>
+							{name.length ? name[0]?.toUpperCase() : "Q"}
+						</AvatarFallback>
 					</Avatar>
 				</Button>
 			</DropdownMenuTrigger>
