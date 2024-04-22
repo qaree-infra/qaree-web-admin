@@ -23,7 +23,7 @@ export const getBookSummaryQuery = graphql(`
           avatar
         }
         status
-        publishionDate
+        createdAt
         reviewer {
           name
         }

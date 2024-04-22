@@ -1,10 +1,15 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
+import Image from "next/image";
+import { Image as ImageIcon } from "lucide-react";
 
 export interface BookSummary {
 	_id: string;
-	cover: File;
+	cover: {
+		path: string;
+		size: number;
+	};
 	name: string;
 	status: string;
 	price: number;
@@ -16,21 +21,43 @@ export interface BookSummary {
 		name: string;
 		avatar: string;
 	};
-	publishionDate: string;
+	createdAt: string;
 }
 
 export const columns: ColumnDef<BookSummary>[] = [
 	{
 		accessorKey: "cover",
 		header: "Cover",
+		cell({ row }) {
+			const data = row.original.cover;
+			console.log(row.original);
+
+			return (
+				<div className="w-24 aspect-[6/9] bg-muted flex justify-center items-center m-2 max-md:hidden">
+					{data ? (
+						<Image
+							src={data.path}
+							className="w-full"
+							width={60}
+							height={90}
+							alt={row.original.name}
+						/>
+					) : (
+						<ImageIcon className="size-12 text-muted-foreground" />
+					)}
+				</div>
+			);
+		},
 	},
 	{
 		accessorKey: "name",
 		header: "Name",
+		enableHiding: false,
 	},
 	{
 		accessorKey: "status",
 		header: "Status",
+		enableHiding: false,
 	},
 	{
 		accessorKey: "price",
@@ -47,9 +74,10 @@ export const columns: ColumnDef<BookSummary>[] = [
 	{
 		accessorKey: "author.name",
 		header: "Author",
+		enableHiding: false,
 	},
 	{
-		accessorKey: "publishionDate",
-		header: "Publishion Date",
+		accessorKey: "createdAt",
+		header: "Created At",
 	},
 ];
