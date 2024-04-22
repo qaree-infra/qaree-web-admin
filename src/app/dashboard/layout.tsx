@@ -3,7 +3,8 @@ import { MobileSheet } from "@/components/layouts/MobileSheet";
 import { BreadcrumbNav } from "@/components/layouts/BreadcrumbNav";
 import { SearchForm } from "@/components/layouts/SearchForm";
 import UserNav from "@/components/layouts/UserNav";
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
+import { Spinner } from "@/components/Spinner";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
 	return (
@@ -14,7 +15,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 					<MobileSheet />
 					<BreadcrumbNav />
 					<SearchForm />
-					<UserNav />
+					<Suspense fallback={<Spinner />}>
+						<UserNav />
+					</Suspense>
 				</header>
 				<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
 					{children}

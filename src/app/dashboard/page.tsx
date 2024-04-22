@@ -10,7 +10,7 @@ export default async function Dashboard() {
 	return (
 		<div>
 			<h1 className="text-4xl">
-				Welcome, <span>{name}</span>
+				Welcome, <span>{"mohamed"}</span>
 			</h1>
 			<p>Home Page</p>
 		</div>
