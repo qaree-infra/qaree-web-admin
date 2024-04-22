@@ -79,36 +79,37 @@ export const registerAction = async (
 	}
 };
 
-export const getBookSummariesAction = async (): Promise<ActionState> => {
-	try {
-		const { adminGetBooks } = await fetcher({
-			query: getBookSummaryQuery,
-			server: true,
-			protectid: true,
-			cache: "default",
-		});
+// FIXME:no need to this one
+// export const getBookSummariesAction = async (): Promise<ActionState> => {
+// 	try {
+// 		const { adminGetBooks } = await fetcher({
+// 			query: getBookSummaryQuery,
+// 			server: true,
+// 			protectid: true,
+// 			cache: "default",
+// 		});
 
-		if (!adminGetBooks?.books) {
-			return {
-				success: false,
-				message: "Cannot get books!",
-			};
-		}
-		return {
-			success: true,
-			message: "success",
-		};
-	} catch (error) {
-		let message = "Unexpected Error";
-		if (error instanceof Error) {
-			message = error.message;
-		}
-		return {
-			success: false,
-			message,
-		};
-	}
-};
+// 		if (!adminGetBooks?.books) {
+// 			return {
+// 				success: false,
+// 				message: "Cannot get books!",
+// 			};
+// 		}
+// 		return {
+// 			success: true,
+// 			message: "success",
+// 		};
+// 	} catch (error) {
+// 		let message = "Unexpected Error";
+// 		if (error instanceof Error) {
+// 			message = error.message;
+// 		}
+// 		return {
+// 			success: false,
+// 			message,
+// 		};
+// 	}
+// };
 
 // export const resendValidatingOTPAction = async ({
 // 	userData,

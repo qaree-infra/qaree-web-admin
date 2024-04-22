@@ -17,7 +17,7 @@ export default function ErrorPage({
 					<p className="mb-4 text-lg font-semibold text-primary-sky">
 						There was a problem
 					</p>
-					<h1 className="mb-10 max-w-prose text-balance text-3xl font-bold sm:text-6xl">
+					<h1 className="mb-10 max-w-prose text-balance text-3xl font-bold ">
 						{error.message || "Something went wrong"}
 					</h1>
 					<p className="opacity-80">
