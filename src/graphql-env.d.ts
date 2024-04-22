@@ -24,103 +24,15 @@ export type introspection = {
         "name": "Query",
         "fields": [
           {
-            "name": "userInfo",
+            "name": "adminGetAllUsers",
             "type": {
               "kind": "OBJECT",
-              "name": "User",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "refreshToken",
-            "type": {
-              "kind": "OBJECT",
-              "name": "RefreshTokenType",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "getTopAuthors",
-            "type": {
-              "kind": "OBJECT",
-              "name": "GetTopAuthors",
-              "ofType": null
-            },
-            "args": [
-              {
-                "name": "page",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                }
-              },
-              {
-                "name": "limit",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                }
-              }
-            ]
-          },
-          {
-            "name": "getBookInfo",
-            "type": {
-              "kind": "OBJECT",
-              "name": "MyBook",
-              "ofType": null
-            },
-            "args": [
-              {
-                "name": "bookId",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            ]
-          },
-          {
-            "name": "getMyBooks",
-            "type": {
-              "kind": "OBJECT",
-              "name": "MyBook",
-              "ofType": null
-            },
-            "args": [
-              {
-                "name": "bookId",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            ]
-          },
-          {
-            "name": "getBooks",
-            "type": {
-              "kind": "OBJECT",
-              "name": "GetMyBooks",
+              "name": "GetAllUsersType",
               "ofType": null
             },
             "args": [
               {
                 "name": "sortBy",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              {
-                "name": "filterBy",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -154,28 +66,10 @@ export type introspection = {
             ]
           },
           {
-            "name": "getBook",
+            "name": "adminGetBooks",
             "type": {
               "kind": "OBJECT",
-              "name": "MyBook",
-              "ofType": null
-            },
-            "args": [
-              {
-                "name": "bookId",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            ]
-          },
-          {
-            "name": "getBooksFromRecycleBin",
-            "type": {
-              "kind": "OBJECT",
-              "name": "GetBooksFromRecyclePinType",
+              "name": "AdminGetBooks",
               "ofType": null
             },
             "args": [
@@ -261,7 +155,7 @@ export type introspection = {
             "name": "getBookEPubContent",
             "type": {
               "kind": "OBJECT",
-              "name": "BookContent",
+              "name": "bookContent",
               "ofType": null
             },
             "args": [
@@ -279,7 +173,7 @@ export type introspection = {
             "name": "getAllCategories",
             "type": {
               "kind": "OBJECT",
-              "name": "GetAllCategories",
+              "name": "AdminGetAllCategories",
               "ofType": null
             },
             "args": [
@@ -298,28 +192,27 @@ export type introspection = {
                   "name": "Int",
                   "ofType": null
                 }
+              },
+              {
+                "name": "completed",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
               }
             ]
           },
           {
-            "name": "getSignupActionURL",
+            "name": "getOffer",
             "type": {
               "kind": "OBJECT",
-              "name": "GetSignupActionURL",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "getSellerOnboardingStatus",
-            "type": {
-              "kind": "OBJECT",
-              "name": "TrackOnboardingStatus",
+              "name": "OfferType",
               "ofType": null
             },
             "args": [
               {
-                "name": "trackingId",
+                "name": "id",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -329,10 +222,132 @@ export type introspection = {
             ]
           },
           {
-            "name": "getMerchantStatus",
+            "name": "getAllOffers",
             "type": {
               "kind": "OBJECT",
-              "name": "GetMerchantStatus",
+              "name": "GetAllOffers",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "page",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "sort",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "getAdminInfo",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Admin",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "getAdmins",
+            "type": {
+              "kind": "OBJECT",
+              "name": "GetAdminsType",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "sortBy",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "page",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "keyword",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "GetAllUsersType",
+        "fields": [
+          {
+            "name": "users",
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "currentPage",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "numberOfPages",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "total",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
               "ofType": null
             },
             "args": []
@@ -376,15 +391,6 @@ export type introspection = {
             "type": {
               "kind": "OBJECT",
               "name": "File",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "bio",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
               "ofType": null
             },
             "args": []
@@ -466,41 +472,20 @@ export type introspection = {
         "name": "Float"
       },
       {
-        "kind": "OBJECT",
-        "name": "RefreshTokenType",
-        "fields": [
-          {
-            "name": "message",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "refresh_token",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
+        "kind": "SCALAR",
+        "name": "Int"
       },
       {
         "kind": "OBJECT",
-        "name": "GetTopAuthors",
+        "name": "AdminGetBooks",
         "fields": [
           {
-            "name": "authors",
+            "name": "books",
             "type": {
               "kind": "LIST",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "User",
+                "name": "BookType",
                 "ofType": null
               }
             },
@@ -537,12 +522,8 @@ export type introspection = {
         "interfaces": []
       },
       {
-        "kind": "SCALAR",
-        "name": "Int"
-      },
-      {
         "kind": "OBJECT",
-        "name": "MyBook",
+        "name": "BookType",
         "fields": [
           {
             "name": "_id",
@@ -729,6 +710,15 @@ export type introspection = {
               "ofType": null
             },
             "args": []
+          },
+          {
+            "name": "reviewer",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Admin",
+              "ofType": null
+            },
+            "args": []
           }
         ],
         "interfaces": []
@@ -843,89 +833,58 @@ export type introspection = {
       },
       {
         "kind": "OBJECT",
-        "name": "GetMyBooks",
+        "name": "Admin",
         "fields": [
           {
-            "name": "books",
-            "type": {
-              "kind": "LIST",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "MyBook",
-                "ofType": null
-              }
-            },
-            "args": []
-          },
-          {
-            "name": "currentPage",
+            "name": "_id",
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "ID",
               "ofType": null
             },
             "args": []
           },
           {
-            "name": "numberOfPages",
+            "name": "name",
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "String",
               "ofType": null
             },
             "args": []
           },
           {
-            "name": "total",
+            "name": "email",
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "GetBooksFromRecyclePinType",
-        "fields": [
-          {
-            "name": "books",
-            "type": {
-              "kind": "LIST",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "MyBook",
-                "ofType": null
-              }
-            },
-            "args": []
-          },
-          {
-            "name": "currentPage",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Int",
+              "name": "String",
               "ofType": null
             },
             "args": []
           },
           {
-            "name": "numberOfPages",
+            "name": "avatar",
             "type": {
-              "kind": "SCALAR",
-              "name": "Int",
+              "kind": "OBJECT",
+              "name": "File",
               "ofType": null
             },
             "args": []
           },
           {
-            "name": "total",
+            "name": "updatedAt",
             "type": {
               "kind": "SCALAR",
-              "name": "Int",
+              "name": "String",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "createdAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "args": []
@@ -1130,7 +1089,7 @@ export type introspection = {
       },
       {
         "kind": "OBJECT",
-        "name": "BookContent",
+        "name": "bookContent",
         "fields": [
           {
             "name": "content",
@@ -1138,7 +1097,7 @@ export type introspection = {
               "kind": "LIST",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "AdminContentRaw",
+                "name": "ContentRaw",
                 "ofType": null
               }
             },
@@ -1150,7 +1109,7 @@ export type introspection = {
               "kind": "LIST",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "AdminContentRaw",
+                "name": "ContentRaw",
                 "ofType": null
               }
             },
@@ -1161,7 +1120,7 @@ export type introspection = {
       },
       {
         "kind": "OBJECT",
-        "name": "AdminContentRaw",
+        "name": "ContentRaw",
         "fields": [
           {
             "name": "href",
@@ -1222,7 +1181,7 @@ export type introspection = {
       },
       {
         "kind": "OBJECT",
-        "name": "GetAllCategories",
+        "name": "AdminGetAllCategories",
         "fields": [
           {
             "name": "categories",
@@ -1231,6 +1190,131 @@ export type introspection = {
               "ofType": {
                 "kind": "OBJECT",
                 "name": "CategroyType",
+                "ofType": null
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "currentPage",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "numberOfPages",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "totalCompleted",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "totalUncompleted",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "total",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OfferType",
+        "fields": [
+          {
+            "name": "_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "percent",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "expireAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "book",
+            "type": {
+              "kind": "OBJECT",
+              "name": "BookType",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "createdAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "updatedAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "GetAllOffers",
+        "fields": [
+          {
+            "name": "offers",
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "OfferType",
                 "ofType": null
               }
             },
@@ -1268,318 +1352,44 @@ export type introspection = {
       },
       {
         "kind": "OBJECT",
-        "name": "GetSignupActionURL",
+        "name": "GetAdminsType",
         "fields": [
           {
-            "name": "actionURL",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "TrackOnboardingStatus",
-        "fields": [
-          {
-            "name": "merchantId",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "trackingId",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "links",
+            "name": "admins",
             "type": {
               "kind": "LIST",
               "ofType": {
                 "kind": "OBJECT",
-                "name": "TrackingOnboardingStatusLink",
-                "ofType": null
-              }
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "TrackingOnboardingStatusLink",
-        "fields": [
-          {
-            "name": "href",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "rel",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "method",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "GetMerchantStatus",
-        "fields": [
-          {
-            "name": "merchantId",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "trackingId",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "products",
-            "type": {
-              "kind": "LIST",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "MerchantProduct",
+                "name": "Admin",
                 "ofType": null
               }
             },
             "args": []
           },
           {
-            "name": "capabilities",
-            "type": {
-              "kind": "LIST",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "MerchantCapability",
-                "ofType": null
-              }
-            },
-            "args": []
-          },
-          {
-            "name": "paymentsReceivable",
+            "name": "currentPage",
             "type": {
               "kind": "SCALAR",
-              "name": "Boolean",
+              "name": "Int",
               "ofType": null
             },
             "args": []
           },
           {
-            "name": "legalName",
+            "name": "numberOfPages",
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Int",
               "ofType": null
             },
             "args": []
           },
           {
-            "name": "primaryEmailConfirmed",
+            "name": "total",
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "Int",
               "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "oauthIntegrations",
-            "type": {
-              "kind": "LIST",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "OAuthIntergation",
-                "ofType": null
-              }
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "MerchantProduct",
-        "fields": [
-          {
-            "name": "name",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "status",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "vettingStatus",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "capabilities",
-            "type": {
-              "kind": "LIST",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "MerchantCapability",
-        "fields": [
-          {
-            "name": "name",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "status",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "OAuthIntergation",
-        "fields": [
-          {
-            "name": "integrationType",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "integrationMethod",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "oauthThirdParty",
-            "type": {
-              "kind": "LIST",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "OAuthThirdParty",
-                "ofType": null
-              }
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "OAuthThirdParty",
-        "fields": [
-          {
-            "name": "partnerClientId",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "merchantClientId",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "scopes",
-            "type": {
-              "kind": "LIST",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
             },
             "args": []
           }
@@ -1591,33 +1401,15 @@ export type introspection = {
         "name": "Mutation",
         "fields": [
           {
-            "name": "signup",
+            "name": "reviewBookData",
             "type": {
               "kind": "OBJECT",
-              "name": "SignUp",
+              "name": "BookReview",
               "ofType": null
             },
             "args": [
               {
-                "name": "userData",
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "SignUpInput",
-                  "ofType": null
-                }
-              }
-            ]
-          },
-          {
-            "name": "verifyAccount",
-            "type": {
-              "kind": "OBJECT",
-              "name": "VerifyAccountType",
-              "ofType": null
-            },
-            "args": [
-              {
-                "name": "email",
+                "name": "bookId",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -1625,25 +1417,7 @@ export type introspection = {
                 }
               },
               {
-                "name": "otp",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            ]
-          },
-          {
-            "name": "resendValidatingOTP",
-            "type": {
-              "kind": "OBJECT",
-              "name": "ResendValidatingOTPType",
-              "ofType": null
-            },
-            "args": [
-              {
-                "name": "email",
+                "name": "status",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -1651,7 +1425,7 @@ export type introspection = {
                 }
               },
               {
-                "name": "lang",
+                "name": "content",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -1661,10 +1435,10 @@ export type introspection = {
             ]
           },
           {
-            "name": "signin",
+            "name": "signIn",
             "type": {
               "kind": "OBJECT",
-              "name": "SigninType",
+              "name": "SignInType",
               "ofType": null
             },
             "args": [
@@ -1687,90 +1461,10 @@ export type introspection = {
             ]
           },
           {
-            "name": "forgetPassword",
+            "name": "register",
             "type": {
               "kind": "OBJECT",
-              "name": "ForgetPasswordType",
-              "ofType": null
-            },
-            "args": [
-              {
-                "name": "email",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            ]
-          },
-          {
-            "name": "validateResetPasswordOTP",
-            "type": {
-              "kind": "OBJECT",
-              "name": "ValidateResetPasswordType",
-              "ofType": null
-            },
-            "args": [
-              {
-                "name": "email",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              {
-                "name": "otp",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            ]
-          },
-          {
-            "name": "resendResetPasswordOTP",
-            "type": {
-              "kind": "OBJECT",
-              "name": "ResendResetPasswordOTPType",
-              "ofType": null
-            },
-            "args": [
-              {
-                "name": "email",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            ]
-          },
-          {
-            "name": "resetPassword",
-            "type": {
-              "kind": "OBJECT",
-              "name": "ResetPassword",
-              "ofType": null
-            },
-            "args": [
-              {
-                "name": "newPassword",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            ]
-          },
-          {
-            "name": "updateUser",
-            "type": {
-              "kind": "OBJECT",
-              "name": "User",
+              "name": "Admin",
               "ofType": null
             },
             "args": [
@@ -1783,7 +1477,33 @@ export type introspection = {
                 }
               },
               {
-                "name": "bio",
+                "name": "email",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "password",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "updateAccount",
+            "type": {
+              "kind": "OBJECT",
+              "name": "Admin",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "name",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -1812,21 +1532,37 @@ export type introspection = {
             "name": "deleteAccount",
             "type": {
               "kind": "OBJECT",
-              "name": "DeleteAccountType",
+              "name": "DeleteAccount",
               "ofType": null
             },
             "args": []
           },
           {
-            "name": "googleLogin",
+            "name": "addCategory",
             "type": {
               "kind": "OBJECT",
-              "name": "GoogleLoginType",
+              "name": "CategroyType",
               "ofType": null
             },
             "args": [
               {
-                "name": "google_token",
+                "name": "name_ar",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "name_en",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "background",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -1836,15 +1572,15 @@ export type introspection = {
             ]
           },
           {
-            "name": "addBookDetails",
+            "name": "editCategory",
             "type": {
               "kind": "OBJECT",
-              "name": "MyBook",
+              "name": "CategroyType",
               "ofType": null
             },
             "args": [
               {
-                "name": "name",
+                "name": "categoryId",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -1852,7 +1588,7 @@ export type introspection = {
                 }
               },
               {
-                "name": "description",
+                "name": "name_ar",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -1860,7 +1596,7 @@ export type introspection = {
                 }
               },
               {
-                "name": "isbn",
+                "name": "name_en",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -1868,7 +1604,51 @@ export type introspection = {
                 }
               },
               {
-                "name": "edition",
+                "name": "background",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "deleteCategory",
+            "type": {
+              "kind": "OBJECT",
+              "name": "DeleteCategoryType",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "categoryId",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "addOffer",
+            "type": {
+              "kind": "OBJECT",
+              "name": "OfferType",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "bookId",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "percent",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -1876,60 +1656,43 @@ export type introspection = {
                 }
               },
               {
-                "name": "language",
+                "name": "expireAt",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
-                  "ofType": null
-                }
-              },
-              {
-                "name": "publishingRights",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
-              },
-              {
-                "name": "previousPublishingData",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              {
-                "name": "categories",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                }
-              },
-              {
-                "name": "price",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Float",
                   "ofType": null
                 }
               }
             ]
           },
           {
-            "name": "editBookDetails",
+            "name": "deleteOffer",
             "type": {
               "kind": "OBJECT",
-              "name": "MyBook",
+              "name": "DeleteOfferType",
               "ofType": null
             },
             "args": [
               {
-                "name": "bookId",
+                "name": "id",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "editOffer",
+            "type": {
+              "kind": "OBJECT",
+              "name": "OfferType",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -1937,31 +1700,7 @@ export type introspection = {
                 }
               },
               {
-                "name": "name",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              {
-                "name": "description",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              {
-                "name": "isbn",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              {
-                "name": "edition",
+                "name": "percent",
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
@@ -1969,129 +1708,11 @@ export type introspection = {
                 }
               },
               {
-                "name": "language",
+                "name": "expireAt",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
                   "ofType": null
-                }
-              },
-              {
-                "name": "publishingRights",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
-              },
-              {
-                "name": "previousPublishingData",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              {
-                "name": "categories",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                }
-              },
-              {
-                "name": "price",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Float",
-                  "ofType": null
-                }
-              }
-            ]
-          },
-          {
-            "name": "moveBookToRecycleBin",
-            "type": {
-              "kind": "OBJECT",
-              "name": "MoveBookToRecycleType",
-              "ofType": null
-            },
-            "args": [
-              {
-                "name": "bookId",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            ]
-          },
-          {
-            "name": "moveBookFromRecycleBin",
-            "type": {
-              "kind": "OBJECT",
-              "name": "MoveBookToRecycleType",
-              "ofType": null
-            },
-            "args": [
-              {
-                "name": "bookId",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            ]
-          },
-          {
-            "name": "publishBook",
-            "type": {
-              "kind": "OBJECT",
-              "name": "PublishBook",
-              "ofType": null
-            },
-            "args": [
-              {
-                "name": "bookId",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            ]
-          },
-          {
-            "name": "addBookSample",
-            "type": {
-              "kind": "OBJECT",
-              "name": "AddBookSample",
-              "ofType": null
-            },
-            "args": [
-              {
-                "name": "bookId",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              {
-                "name": "sample",
-                "type": {
-                  "kind": "LIST",
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
                 }
               }
             ]
@@ -2101,53 +1722,7 @@ export type introspection = {
       },
       {
         "kind": "OBJECT",
-        "name": "SignUp",
-        "fields": [
-          {
-            "name": "message",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "SignUpInput",
-        "inputFields": [
-          {
-            "name": "name",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            }
-          },
-          {
-            "name": "email",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            }
-          },
-          {
-            "name": "password",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            }
-          }
-        ]
-      },
-      {
-        "kind": "OBJECT",
-        "name": "VerifyAccountType",
+        "name": "BookReview",
         "fields": [
           {
             "name": "message",
@@ -2172,32 +1747,7 @@ export type introspection = {
       },
       {
         "kind": "OBJECT",
-        "name": "ResendValidatingOTPType",
-        "fields": [
-          {
-            "name": "message",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "success",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "SigninType",
+        "name": "SignInType",
         "fields": [
           {
             "name": "message",
@@ -2222,107 +1772,7 @@ export type introspection = {
       },
       {
         "kind": "OBJECT",
-        "name": "ForgetPasswordType",
-        "fields": [
-          {
-            "name": "message",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "success",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "ValidateResetPasswordType",
-        "fields": [
-          {
-            "name": "message",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "reset_token",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "success",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "ResendResetPasswordOTPType",
-        "fields": [
-          {
-            "name": "message",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "success",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "ResetPassword",
-        "fields": [
-          {
-            "name": "message",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "DeleteAccountType",
+        "name": "DeleteAccount",
         "fields": [
           {
             "name": "message",
@@ -2356,44 +1806,10 @@ export type introspection = {
       },
       {
         "kind": "OBJECT",
-        "name": "GoogleLoginType",
+        "name": "DeleteCategoryType",
         "fields": [
           {
             "name": "message",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "access_token",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "MoveBookToRecycleType",
-        "fields": [
-          {
-            "name": "message",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "deleted_id",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -2415,7 +1831,7 @@ export type introspection = {
       },
       {
         "kind": "OBJECT",
-        "name": "PublishBook",
+        "name": "DeleteOfferType",
         "fields": [
           {
             "name": "message",
@@ -2427,35 +1843,10 @@ export type introspection = {
             "args": []
           },
           {
-            "name": "book",
-            "type": {
-              "kind": "OBJECT",
-              "name": "MyBook",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "AddBookSample",
-        "fields": [
-          {
-            "name": "message",
+            "name": "success",
             "type": {
               "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "book",
-            "type": {
-              "kind": "OBJECT",
-              "name": "MyBook",
+              "name": "Boolean",
               "ofType": null
             },
             "args": []
