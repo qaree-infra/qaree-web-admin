@@ -3,6 +3,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import { Image as ImageIcon } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export interface BookSummary {
 	_id: string;
@@ -58,18 +59,41 @@ export const columns: ColumnDef<BookSummary>[] = [
 		accessorKey: "status",
 		header: "Status",
 		enableHiding: false,
+		cell({ row }) {
+			return <Badge>{row.original.status}</Badge>;
+		},
 	},
 	{
 		accessorKey: "price",
 		header: "Price",
+		cell({ row }) {
+			return new Intl.NumberFormat("en-US", {
+				style: "currency",
+				currency: "EGP",
+			}).format(row.original.price);
+		},
 	},
 	{
 		accessorKey: "avgRate",
 		header: "Rate",
+		cell({ row }) {
+			const formatter = new Intl.NumberFormat("en-US", {
+				minimumFractionDigits: 1,
+				maximumFractionDigits: 2,
+			});
+			return <div>{formatter.format(row.original.avgRate)} Stars</div>;
+		},
 	},
 	{
 		accessorKey: "reviewer.name",
 		header: "Reviewer",
+		cell({ row }) {
+			const reviewer = row.original.reviewer;
+			if (!reviewer) {
+				return <div className="ms-4">____</div>;
+			}
+			return <Badge variant={"outline"}>{reviewer.name}</Badge>;
+		},
 	},
 	{
 		accessorKey: "author.name",
@@ -79,5 +103,15 @@ export const columns: ColumnDef<BookSummary>[] = [
 	{
 		accessorKey: "createdAt",
 		header: "Created At",
+		cell({ row }) {
+			const formatter = new Intl.DateTimeFormat("en-US", {
+				day: "2-digit",
+				month: "2-digit",
+				year: "numeric",
+			});
+			const formattedDate = formatter.format(new Date(+row.original.createdAt));
+
+			return formattedDate;
+		},
 	},
 ];

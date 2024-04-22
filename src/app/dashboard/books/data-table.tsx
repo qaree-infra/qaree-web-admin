@@ -107,7 +107,7 @@ export function DataTable<TData, TValue>({
 			<TabsContent value="all" className="py-4">
 				<div className="rounded-md border">
 					<Table>
-						<TableHeader>
+						<TableHeader className="whitespace-nowrap">
 							{table.getHeaderGroups().map((headerGroup) => (
 								<TableRow key={headerGroup.id}>
 									{headerGroup.headers.map((header) => {
@@ -125,7 +125,7 @@ export function DataTable<TData, TValue>({
 								</TableRow>
 							))}
 						</TableHeader>
-						<TableBody>
+						<TableBody className="whitespace-nowrap">
 							{table.getRowModel().rows?.length ? (
 								table.getRowModel().rows.map((row) => (
 									<TableRow
