@@ -15,6 +15,7 @@ import {
 	// validateResetPasswordOTPMutation,
 	// verifyAccountMutation,
 } from "@/lib/graphql/mutations";
+import { getBookSummaryQuery } from "@/lib/graphql/queries";
 // import { addBookDetailsMutation } from "@/lib/graphql/mutations";
 
 import type {
@@ -74,6 +75,37 @@ export const registerAction = async (
 		return {
 			success: false,
 			message: errorMessage,
+		};
+	}
+};
+
+export const getBookSummariesAction = async (): Promise<ActionState> => {
+	try {
+		const { adminGetBooks } = await fetcher({
+			query: getBookSummaryQuery,
+			server: true,
+			protectid: true,
+			cache: "default",
+		});
+
+		if (!adminGetBooks?.books) {
+			return {
+				success: false,
+				message: "Cannot get books!",
+			};
+		}
+		return {
+			success: true,
+			message: "success",
+		};
+	} catch (error) {
+		let message = "Unexpected Error";
+		if (error instanceof Error) {
+			message = error.message;
+		}
+		return {
+			success: false,
+			message,
 		};
 	}
 };
