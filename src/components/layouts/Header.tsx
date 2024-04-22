@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { MobileMenu } from "../MobileMenu";
 import { Spinner } from "../Spinner";
 import ThemeToggle from "../ThemeToggle";
-import UserNav from "../UserNav";
+import UserNav from "./UserNav";
 import SearchForm from "./SearchForm";
 
 function Header() {

@@ -1,17 +1,18 @@
+import { Search } from "lucide-react";
 import { Icons } from "../Icons";
 import { Input } from "../ui/input";
 
-function SearchForm() {
+export function SearchForm() {
 	return (
-		<div className="bg-background/95 w-full max-w-lg backdrop-blur supports-[backdrop-filter]:bg-background/60">
-			<form>
-				<div className="relative">
-					<Icons.search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-					<Input placeholder="Search" className="pl-8" />
-				</div>
-			</form>
-		</div>
+		<form action={"#"} className="ml-auto">
+			<div className="relative  flex-1 md:grow-0">
+				<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+				<Input
+					type="search"
+					placeholder="Search..."
+					className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px]"
+				/>
+			</div>
+		</form>
 	);
 }
-
-export default SearchForm;

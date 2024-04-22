@@ -3,6 +3,7 @@
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { SessionProvider } from "next-auth/react";
 import type { ReactNode } from "react";
+import { TooltipProvider } from "./ui/tooltip";
 
 function Providers({ children }: { children: ReactNode }) {
 	// todo fix hydrating error when hard refresh with light mode
@@ -13,7 +14,9 @@ function Providers({ children }: { children: ReactNode }) {
 			enableSystem
 			disableTransitionOnChange
 		>
-			<SessionProvider>{children}</SessionProvider>
+			<SessionProvider>
+				<TooltipProvider>{children}</TooltipProvider>
+			</SessionProvider>
 		</ThemeProvider>
 	);
 }

@@ -8,7 +8,7 @@ export default async function Dashboard() {
 	const { name } = user;
 
 	return (
-		<div className="container py-14">
+		<div>
 			<h1 className="text-4xl">
 				Welcome, <span>{name}</span>
 			</h1>
