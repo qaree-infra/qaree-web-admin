@@ -12,6 +12,7 @@ export default async function Dashboard() {
 			<h1 className="text-4xl">
 				Welcome, <span>{name}</span>
 			</h1>
+			<p>Home Page</p>
 		</div>
 	);
 }
