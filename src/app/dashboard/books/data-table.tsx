@@ -1,5 +1,5 @@
 "use client";
-import { File, ListFilter, PlusCircle } from "lucide-react";
+import { ArrowDownUp, File, ListFilter, PlusCircle } from "lucide-react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -8,6 +8,8 @@ import {
 	flexRender,
 	getCoreRowModel,
 	useReactTable,
+	ColumnFiltersState,
+	getFilteredRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -38,13 +40,17 @@ export function DataTable<TData, TValue>({
 	data,
 }: DataTableProps<TData, TValue>) {
 	const [columnVisibility, setColumnVisibility] = useState({});
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
 	const table = useReactTable({
 		data,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
+		onColumnFiltersChange: setColumnFilters,
+		getFilteredRowModel: getFilteredRowModel(),
 		state: {
 			columnVisibility,
+			columnFilters,
 		},
 		onColumnVisibilityChange: setColumnVisibility,
 	});
@@ -90,18 +96,19 @@ export function DataTable<TData, TValue>({
 								})}
 						</DropdownMenuContent>
 					</DropdownMenu>
-					<Button size="sm" variant="outline" className="h-7 gap-1">
-						<File className="h-3.5 w-3.5" />
-						<span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-							Export
-						</span>
-					</Button>
-					<Button size="sm" className="h-7 gap-1">
-						<PlusCircle className="h-3.5 w-3.5" />
-						<span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-							Add Product
-						</span>
-					</Button>
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button variant="outline" size="sm" className="h-7 gap-1">
+								<ArrowDownUp className="size-3.5" />
+								<span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+									Sort
+								</span>
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end">
+							<div>coming soon...</div>
+						</DropdownMenuContent>
+					</DropdownMenu>
 				</div>
 			</div>
 			<TabsContent value="all" className="py-4">
