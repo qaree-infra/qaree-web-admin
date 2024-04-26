@@ -12,7 +12,7 @@ import {
 
 import type { Table as TableType } from "@tanstack/react-table";
 
-export function DataTable<TData>({ table }: { table: TableType<TData> }) {
+export function SimpleDataTable<TData>({ table }: { table: TableType<TData> }) {
 	return (
 		<Table>
 			<TableHeader className="whitespace-nowrap">

@@ -37,7 +37,7 @@ import {
 
 import { useState } from "react";
 import { RouterPagination } from "@/components/table/RouterPagination";
-import { DataTable } from "@/components/table/PureDataTable";
+import { SimpleDataTable } from "@/components/table/SimpleDataTable";
 import { ColumnsFilter } from "@/components/table/ColumnsFilter";
 
 type PaginationConfig = {
@@ -111,7 +111,7 @@ export function BooksDataTable<TData, TValue>({
 			</div>
 			<TabsContent value="all" className="py-4">
 				<div className="rounded-md border">
-					<DataTable table={table} />
+					<SimpleDataTable table={table} />
 				</div>
 				<div className="py-4">
 					<RouterPagination table={table} />
