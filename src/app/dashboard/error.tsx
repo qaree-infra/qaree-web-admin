@@ -26,7 +26,10 @@ export default function ErrorPage({
 				</div>
 				<div className="flex flex-wrap justify-center gap-5 sm:gap-16">
 					<Button onClick={() => reset()}>Try again</Button>
-					<Link href={"/"} className={buttonVariants({ variant: "outline" })}>
+					<Link
+						href={"/dashboard"}
+						className={buttonVariants({ variant: "outline" })}
+					>
 						Go back to home
 					</Link>
 				</div>
