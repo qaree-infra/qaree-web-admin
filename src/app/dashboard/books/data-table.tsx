@@ -38,6 +38,7 @@ import {
 import { useState } from "react";
 import { RouterPagination } from "@/components/table/RouterPagination";
 import { DataTable } from "@/components/table/PureDataTable";
+import { ColumnsFilter } from "@/components/table/ColumnsFilter";
 
 type PaginationConfig = {
 	state: PaginationState;
@@ -90,36 +91,9 @@ export function BooksDataTable<TData, TValue>({
 						Archived
 					</TabsTrigger>
 				</TabsList>
+
 				<div className="ml-auto flex items-center gap-2">
-					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<Button variant="outline" size="sm" className="h-7 gap-1">
-								<ListFilter className="h-3.5 w-3.5" />
-								<span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-									Columns
-								</span>
-							</Button>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent align="end">
-							{table
-								.getAllColumns()
-								.filter((column) => column.getCanHide())
-								.map((column) => {
-									return (
-										<DropdownMenuCheckboxItem
-											key={column.id}
-											className="capitalize"
-											checked={column.getIsVisible()}
-											onCheckedChange={(value) =>
-												column.toggleVisibility(!!value)
-											}
-										>
-											{column.id}
-										</DropdownMenuCheckboxItem>
-									);
-								})}
-						</DropdownMenuContent>
-					</DropdownMenu>
+					<ColumnsFilter table={table} />
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant="outline" size="sm" className="h-7 gap-1">
