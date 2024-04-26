@@ -28,6 +28,9 @@ export interface User {
 	createdAt: string;
 }
 
+// both user and admin user has the same types
+export type AdminUser = User;
+
 export const columns: ColumnDef<User>[] = [
 	{
 		accessorKey: "name",

@@ -99,7 +99,8 @@ export async function fetcher<
 		redirect(authOptions.pages?.signIn || "/signin");
 	}
 
-	const resData = (await res.json()) as ApiResponse<ResultOf<T>>;
+	// TODO: test the added NonNullable type
+	const resData = (await res.json()) as ApiResponse<NonNullable<ResultOf<T>>>;
 
 	if ("errors" in resData) {
 		throw new FetcherError(resData.errors[0].message);

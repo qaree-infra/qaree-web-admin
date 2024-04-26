@@ -39,7 +39,7 @@ export function RouterPagination<TData>({
 	return (
 		<div className="flex items-center justify-between px-2">
 			<div className="flex-1 text-sm text-muted-foreground">
-				Totale books: {count}
+				Totale: {count}
 			</div>
 			<div className="flex items-center space-x-6 lg:space-x-8">
 				<div className="flex items-center space-x-2">
@@ -83,7 +83,7 @@ export function RouterPagination<TData>({
 						variant="outline"
 						className="h-8 w-8 p-0"
 						onClick={() => {
-							router.push(`?page=${page}&size=${size}`);
+							router.push(`?page=${page - 1}&size=${size}`);
 						}}
 						disabled={!table.getCanPreviousPage()}
 					>

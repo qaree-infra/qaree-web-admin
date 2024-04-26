@@ -33,6 +33,26 @@ export const adminGetAllUsersQuery = graphql(`
   }
 `);
 
+export const getAdminsQuery = graphql(`
+  query getAdmins($sortBy: String ,$page: Int ,$limit: Int ,$keyword: String) {
+    getAdmins(sortBy: $sortBy, page:$page, limit: $limit, keyword: $keyword) {
+      admins {
+        _id
+        name
+        email
+        avatar {
+          name
+          path
+        }
+        createdAt
+      }
+      currentPage
+      numberOfPages
+      total
+    }
+  }
+`);
+
 // export const refreshTokenQuery = graphql(`
 //   query refreshToken {
 //     refreshToken {

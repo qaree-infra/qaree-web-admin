@@ -1,33 +1,34 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { fetcher } from "@/lib/graphql/fetcher";
-import { adminGetAllUsersQuery } from "@/lib/graphql/queries";
+import { adminGetAllUsersQuery, getAdminsQuery } from "@/lib/graphql/queries";
 import { UsersDataTable } from "./data-table-users";
-import { type User, columns } from "./columns-users";
+import { type User, columns, type AdminUser } from "./columns-users";
 
-const getUsers = async ({
+const getAllUsers = async ({
 	pageNumber,
 	size,
-}: {
-	pageNumber: number;
-	size: number;
-}) => {
-	const { adminGetAllUsers } = await fetcher({
-		query: adminGetAllUsersQuery,
-		variables: {
-			limit: size,
-			page: pageNumber,
-		},
-		server: true,
-	});
+}: { pageNumber: number; size: number }) => {
+	// Fetch users and admins concurrently using Promise.all
+	const [users, admins] = await Promise.all([
+		fetcher({
+			query: adminGetAllUsersQuery,
+			variables: { limit: size, page: pageNumber },
+			server: true,
+		}),
+		fetcher({
+			query: getAdminsQuery,
+			variables: { limit: size, page: pageNumber },
+			server: true,
+		}),
+	]);
 
-	if (!adminGetAllUsers) {
-		return {
-			total: 0,
-			users: [],
-		} as const;
-	}
-
-	return adminGetAllUsers;
+	// Extract data from resolved promises
+	return {
+		users: users.adminGetAllUsers?.users,
+		admins: admins.getAdmins?.admins,
+		totaleUsers: users.adminGetAllUsers?.total,
+		totaleAdmins: admins.getAdmins?.total,
+	};
 };
 
 interface Props {
@@ -46,7 +47,10 @@ export default async function UsersPage({
 		pageNumber = 1;
 	}
 
-	const { users, total } = await getUsers({ pageNumber, size: Number(size) });
+	const { users, admins, totaleAdmins, totaleUsers } = await getAllUsers({
+		pageNumber,
+		size: Number(size),
+	});
 
 	return (
 		<Tabs defaultValue="users">
@@ -59,7 +63,7 @@ export default async function UsersPage({
 					columns={columns}
 					data={users as User[]}
 					paginationConfig={{
-						rowCount: total ?? 0,
+						rowCount: totaleUsers ?? 0,
 						state: {
 							pageIndex: pageNumber - 1,
 							pageSize: Number(size),
@@ -67,7 +71,19 @@ export default async function UsersPage({
 					}}
 				/>
 			</TabsContent>
-			<TabsContent value="admins">sdklfj</TabsContent>
+			<TabsContent value="admins">
+				<UsersDataTable
+					columns={columns}
+					data={admins as AdminUser[]}
+					paginationConfig={{
+						rowCount: totaleAdmins ?? 0,
+						state: {
+							pageIndex: pageNumber - 1,
+							pageSize: Number(size),
+						},
+					}}
+				/>
+			</TabsContent>
 		</Tabs>
 	);
 }
