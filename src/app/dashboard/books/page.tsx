@@ -31,7 +31,7 @@ async function BooksPage() {
 		},
 	];
 
-	// @ts-ignore ignore nullable values
+	// @ts-ignore nullable values
 	// const data = adminGetBooks?.books as BookSummary[];
 
 	return <DataTable columns={columns} data={data} />;

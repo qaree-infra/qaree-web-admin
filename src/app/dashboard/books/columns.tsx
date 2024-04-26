@@ -14,6 +14,7 @@ import {
 	DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 export interface BookSummary {
 	_id: string;
@@ -128,7 +129,7 @@ export const columns: ColumnDef<BookSummary>[] = [
 		id: "actions",
 		enableHiding: false,
 		cell: ({ row }) => {
-			const book = row.original;
+			const { _id: bookId } = row.original;
 
 			return (
 				<DropdownMenu>
@@ -141,12 +142,14 @@ export const columns: ColumnDef<BookSummary>[] = [
 					<DropdownMenuContent align="end">
 						<DropdownMenuLabel>Actions</DropdownMenuLabel>
 						<DropdownMenuItem
-							onClick={() => navigator.clipboard.writeText(book._id)}
+							onClick={() => navigator.clipboard.writeText(bookId)}
 						>
 							Copy ID
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem>Review</DropdownMenuItem>
+						<DropdownMenuItem asChild>
+							<Link href={`/dashboard/books/${bookId}`}>Review</Link>
+						</DropdownMenuItem>
 						<DropdownMenuItem>Delete</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

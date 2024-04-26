@@ -5,10 +5,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import {
 	type ColumnDef,
+	type ColumnFiltersState,
 	flexRender,
 	getCoreRowModel,
 	useReactTable,
-	ColumnFiltersState,
 	getFilteredRowModel,
 } from "@tanstack/react-table";
 

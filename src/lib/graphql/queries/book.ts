@@ -5,7 +5,6 @@ import { graphql } from "gql.tada";
 // page: Int
 // limit: Int
 // keyword: String
-
 export const getBookSummaryQuery = graphql(`
   query adminGetBooks($sortBy: String, $filterBy: String, $page: Int, $limit: Int, $keyword: String) {
     adminGetBooks(sortBy: $sortBy, filterBy: $filterBy, page: $page, limit: $limit, keyword: $keyword) {
@@ -54,31 +53,22 @@ export const getBookEPubContentQuery = graphql(`
   }
 `);
 
-// export const getMyBooksQuery = graphql(`
-//   query getBooks($page: Int, $limit: Int){
-//     getBooks(page: $page, limit: $limit) {
-//       books {
-//         _id,
-//         name,
-//         price,
-//         categories {
-//           _id
-//           name_en
-//           background
-//         },
-//         status,
-//         createdAt,
-//         avgRate,
-//         updatedAt,
-//         isbn,
-//         description,
-//         language,
-//         publishingRights,
-//         edition,
-//       },
-//       currentPage,
-//       numberOfPages,
-//       total
-//     }
-//   }
-// `);
+export const getBookEPubMetadataQuery = graphql(`
+  query getBookEPubMetadata($bookId: String!) {
+    getBookEPubMetadata(bookId: $bookId) {
+      publisher
+      generator
+      cover
+      specifiedFonts
+      modified
+      language
+      title
+      subject
+      description
+      creator
+      creatorFileAs
+      date
+      ISBN
+    }
+  }
+`);
