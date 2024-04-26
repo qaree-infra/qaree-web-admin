@@ -26,23 +26,33 @@ export function RouterPagination<TData>({
 	table,
 }: DataTablePaginationProps<TData>) {
 	const router = useRouter();
+
+	const page = table.getState().pagination.pageIndex + 1;
+	const size = table.getState().pagination.pageSize;
+	const count = table.getRowCount();
+
+	const lastPage = Math.ceil(count / size);
+	if (page > lastPage) {
+		router.push(`?page=${lastPage}&size=${size}`);
+	}
+
 	return (
 		<div className="flex items-center justify-between px-2">
 			<div className="flex-1 text-sm text-muted-foreground">
-				Totale books: {table.getRowCount()}
+				Totale books: {count}
 			</div>
 			<div className="flex items-center space-x-6 lg:space-x-8">
 				<div className="flex items-center space-x-2">
 					<p className="text-sm font-medium">Rows per page</p>
 					<Select
-						value={`${table.getState().pagination.pageSize}`}
+						value={`${size}`}
 						onValueChange={(value) => {
-							router.push(`?size=${value}`);
+							router.push(`?page=${page}&size=${value}`);
 							// table.setPageSize(Number(value));
 						}}
 					>
 						<SelectTrigger className="h-8 w-[70px]">
-							<SelectValue placeholder={table.getState().pagination.pageSize} />
+							<SelectValue placeholder={size} />
 						</SelectTrigger>
 						<SelectContent side="top">
 							{[5, 10, 15, 30].map((pageSize) => (
@@ -54,15 +64,14 @@ export function RouterPagination<TData>({
 					</Select>
 				</div>
 				<div className="flex w-[100px] items-center justify-center text-sm font-medium">
-					Page {table.getState().pagination.pageIndex + 1} of{" "}
-					{table.getPageCount()}
+					Page {page} of {table.getPageCount()}
 				</div>
 				<div className="flex items-center space-x-2">
 					<Button
 						variant="outline"
 						className="hidden h-8 w-8 p-0 lg:flex"
 						onClick={() => {
-							router.push("?page=1");
+							router.push(`?page=1&size=${size}`);
 							// table.setPageIndex(0)
 						}}
 						disabled={!table.getCanPreviousPage()}
@@ -74,7 +83,7 @@ export function RouterPagination<TData>({
 						variant="outline"
 						className="h-8 w-8 p-0"
 						onClick={() => {
-							router.push(`?page=${table.getState().pagination.pageIndex}`);
+							router.push(`?page=${page}&size=${size}`);
 						}}
 						disabled={!table.getCanPreviousPage()}
 					>
@@ -85,7 +94,7 @@ export function RouterPagination<TData>({
 						variant="outline"
 						className="h-8 w-8 p-0"
 						onClick={() => {
-							router.push(`?page=${table.getState().pagination.pageIndex + 2}`);
+							router.push(`?page=${page + 1}&size=${size}`);
 						}}
 						disabled={!table.getCanNextPage()}
 					>
@@ -96,7 +105,7 @@ export function RouterPagination<TData>({
 						variant="outline"
 						className="hidden h-8 w-8 p-0 lg:flex"
 						onClick={() => {
-							router.push(`?page=${table.getPageCount()}`);
+							router.push(`?page=${table.getPageCount()}&size=${size}`);
 							// table.setPageIndex(table.getPageCount() - 1)
 						}}
 						disabled={!table.getCanNextPage()}
