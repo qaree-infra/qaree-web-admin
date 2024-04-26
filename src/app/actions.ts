@@ -84,6 +84,8 @@ export const reviewBookAction = async ({
 				bookId,
 				...review,
 			},
+			server: true,
+			protectid: true,
 		});
 		if (!reviewBookData?.success) {
 			throw Error("Error: faield to save review");

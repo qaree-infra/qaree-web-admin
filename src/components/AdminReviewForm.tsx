@@ -4,8 +4,10 @@ import { Form } from "./ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormInput, FormSelect, SubmitButton } from "./SmartForm";
+import { FormInput, FormSelect, FormTextare, SubmitButton } from "./SmartForm";
 import { bookStatusItems, options } from "@/lib/config/book-status-items";
+import { reviewBookAction } from "@/app/actions";
+import { toast } from "sonner";
 
 type Props = {
 	bookId: string;
@@ -41,8 +43,16 @@ function AdminReviewForm({ bookId }: Props) {
 		},
 	});
 
-	const onSubmit = (values: ReviewSchema) => {
-		console.log(values);
+	const onSubmit = async (values: ReviewSchema) => {
+		const { success, message } = await reviewBookAction({
+			bookId,
+			review: values,
+		});
+
+		if (!success) {
+			return toast.error(message);
+		}
+		toast.success(message);
 	};
 
 	return (
@@ -56,7 +66,12 @@ function AdminReviewForm({ bookId }: Props) {
 					showLabel
 					items={bookStatusItems}
 				/>
-				<FormInput form={form} name="content" label="Content" />
+				<FormTextare
+					form={form}
+					name="content"
+					label="Content"
+					placeholder="Write your review here..."
+				/>
 				<SubmitButton />
 			</form>
 		</Form>
