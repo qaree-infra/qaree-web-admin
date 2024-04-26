@@ -1,35 +1,26 @@
 "use server";
 
-import { getCurrentUser } from "@/lib/authOptions";
-import { UPLOAD_FULL_URL } from "@/lib/graphql";
+import type { ReviewSchema } from "@/components/AdminReviewForm";
 import { fetcher } from "@/lib/graphql/fetcher";
 import {
-	// editBookMutation,
-	// forgetPasswordMutation,
-	// moveBookToRecycleBinMutation,
-	// publishBookMutation,
-	// resendResetPasswordOTPMutation,
-	// resendValidatingOTPMutation,
-	// resetPasswordMutation,
+	reviewBookDataMutation,
 	signUpMutation,
-	// validateResetPasswordOTPMutation,
-	// verifyAccountMutation,
 } from "@/lib/graphql/mutations";
-import { getBookSummaryQuery } from "@/lib/graphql/queries";
-// import { addBookDetailsMutation } from "@/lib/graphql/mutations";
 
-import type {
-	PureBookDetailesSchemaType,
-	RegisterData,
-} from "@/lib/graphql/types";
-import { type EditBookType, registerFormSchema } from "@/schema";
-import type { ResultOf } from "gql.tada";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import type { RegisterData } from "@/lib/graphql/types";
+import { registerFormSchema } from "@/schema";
 
 type ActionState = {
 	success: boolean;
 	message: string;
+};
+
+const getErrorMessage = (error: unknown): string => {
+	let message = "Unexpected Error";
+	if (error instanceof Error) {
+		message = error.message;
+	}
+	return message;
 };
 
 export const registerAction = async (
@@ -76,6 +67,31 @@ export const registerAction = async (
 			success: false,
 			message: errorMessage,
 		};
+	}
+};
+
+export const reviewBookAction = async ({
+	bookId,
+	review,
+}: {
+	bookId: string;
+	review: ReviewSchema;
+}): Promise<ActionState> => {
+	try {
+		const { reviewBookData } = await fetcher({
+			query: reviewBookDataMutation,
+			variables: {
+				bookId,
+				...review,
+			},
+		});
+		if (!reviewBookData?.success) {
+			throw Error("Error: faield to save review");
+		}
+		return { success: true, message: reviewBookData.message ?? "Sucess" };
+	} catch (error) {
+		const message = getErrorMessage(error);
+		return { success: false, message };
 	}
 };
 

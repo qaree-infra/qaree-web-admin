@@ -11,26 +11,28 @@ type Props = {
 	bookId: string;
 };
 
-function AdminReviewForm({ bookId }: Props) {
-	const reviewSchema = z.object({
-		status: z.enum(options, {
-			errorMap: (issue) => {
-				if (issue.code === "invalid_enum_value" && issue.received !== "") {
-					return { message: "Invalid option!" };
-				}
-				return { message: "Select book status" };
-			},
+const reviewSchema = z.object({
+	status: z.enum(options, {
+		errorMap: (issue) => {
+			if (issue.code === "invalid_enum_value" && issue.received !== "") {
+				return { message: "Invalid option!" };
+			}
+			return { message: "Select book status" };
+		},
+	}),
+	content: z
+		.string({
+			required_error: "Write your review",
+		})
+		.min(10, {
+			message: "The review should be at least 10 characters long",
 		}),
-		content: z
-			.string({
-				required_error: "Write your review",
-			})
-			.min(10, {
-				message: "",
-			}),
-	});
+});
 
-	const form = useForm<z.infer<typeof reviewSchema>>({
+export type ReviewSchema = z.infer<typeof reviewSchema>;
+
+function AdminReviewForm({ bookId }: Props) {
+	const form = useForm<ReviewSchema>({
 		mode: "onBlur",
 		resolver: zodResolver(reviewSchema),
 		defaultValues: {
@@ -39,7 +41,7 @@ function AdminReviewForm({ bookId }: Props) {
 		},
 	});
 
-	const onSubmit = (values: z.infer<typeof reviewSchema>) => {
+	const onSubmit = (values: ReviewSchema) => {
 		console.log(values);
 	};
 
@@ -55,7 +57,6 @@ function AdminReviewForm({ bookId }: Props) {
 					items={bookStatusItems}
 				/>
 				<FormInput form={form} name="content" label="Content" />
-
 				<SubmitButton />
 			</form>
 		</Form>
