@@ -37,6 +37,7 @@ import {
 
 import { useState } from "react";
 import { RouterPagination } from "@/components/table/RouterPagination";
+import { DataTable } from "@/components/table/PureDataTable";
 
 type PaginationConfig = {
 	state: PaginationState;
@@ -49,7 +50,7 @@ interface DataTableProps<TData, TValue> {
 	paginationConfig: PaginationConfig;
 }
 
-export function DataTable<TData, TValue>({
+export function BooksDataTable<TData, TValue>({
 	columns,
 	data,
 	paginationConfig,
@@ -136,54 +137,7 @@ export function DataTable<TData, TValue>({
 			</div>
 			<TabsContent value="all" className="py-4">
 				<div className="rounded-md border">
-					<Table>
-						<TableHeader className="whitespace-nowrap">
-							{table.getHeaderGroups().map((headerGroup) => (
-								<TableRow key={headerGroup.id}>
-									{headerGroup.headers.map((header) => {
-										return (
-											<TableHead key={header.id}>
-												{header.isPlaceholder
-													? null
-													: flexRender(
-															header.column.columnDef.header,
-															header.getContext(),
-													  )}
-											</TableHead>
-										);
-									})}
-								</TableRow>
-							))}
-						</TableHeader>
-						<TableBody className="whitespace-nowrap">
-							{table.getRowModel().rows?.length ? (
-								table.getRowModel().rows.map((row) => (
-									<TableRow
-										key={row.id}
-										data-state={row.getIsSelected() && "selected"}
-									>
-										{row.getVisibleCells().map((cell) => (
-											<TableCell key={cell.id}>
-												{flexRender(
-													cell.column.columnDef.cell,
-													cell.getContext(),
-												)}
-											</TableCell>
-										))}
-									</TableRow>
-								))
-							) : (
-								<TableRow>
-									<TableCell
-										colSpan={columns.length}
-										className="h-24 text-center"
-									>
-										No results.
-									</TableCell>
-								</TableRow>
-							)}
-						</TableBody>
-					</Table>
+					<DataTable table={table} />
 				</div>
 				<div className="py-4">
 					<RouterPagination table={table} />

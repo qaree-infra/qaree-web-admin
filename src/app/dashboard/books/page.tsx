@@ -3,7 +3,8 @@ import { getBookSummaryQuery } from "@/lib/graphql/queries";
 import type { PaginationState } from "@tanstack/react-table";
 import { redirect } from "next/navigation";
 import { type BookSummary, columns } from "./columns";
-import { DataTable } from "./data-table";
+import { BooksDataTable } from "./data-table";
+import { NoBooksFound } from "@/components/skeleton/NoBooksFound";
 
 type Props = {
 	searchParams: {
@@ -30,16 +31,13 @@ async function BooksPage({ searchParams: { page = "1", size = "5" } }) {
 	});
 
 	if (!adminGetBooks?.books) {
-		//TODO: handle this
-		// return <DataTable columns={columns} data={[]} />;
-		return;
+		return <NoBooksFound />;
 	}
 
-	const { currentPage, books, total } = adminGetBooks;
-	// return JSON.stringify(books);
+	const { books, total } = adminGetBooks;
 
 	return (
-		<DataTable
+		<BooksDataTable
 			columns={columns}
 			data={books as BookSummary[]}
 			paginationConfig={{
@@ -54,23 +52,3 @@ async function BooksPage({ searchParams: { page = "1", size = "5" } }) {
 }
 
 export default BooksPage;
-
-// const data = [
-// 	{
-// 		_id: "661d14b8fc4a78d6224c3c43",
-// 		cover: {
-// 			size: 16393,
-// 			path: "https://res.cloudinary.com/dgg86hhf3/image/upload/v1713181904/book/cover/pvawqgje3ig9vjhzc9nz.jpg",
-// 		},
-// 		name: "hello world",
-// 		avgRate: 0,
-// 		price: 0,
-// 		author: {
-// 			name: "mohamed",
-// 			avatar: null,
-// 		},
-// 		status: "inReview",
-// 		createdAt: 2342352342343,
-// 		reviewer: null,
-// 	},
-// ];

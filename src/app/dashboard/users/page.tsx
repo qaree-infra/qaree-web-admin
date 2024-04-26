@@ -1,12 +1,18 @@
-import React from "react";
-/**
- * > user type & admin type
- * + columns
- * + data-table
- *
- */
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+
 function UsersPage() {
-	return <div>UsersPage</div>;
+	return (
+		<Tabs defaultValue="users" className="w-[400px]">
+			<TabsList>
+				<TabsTrigger value="users">Users</TabsTrigger>
+				<TabsTrigger value="admins">Admins</TabsTrigger>
+			</TabsList>
+			<TabsContent value="users">
+				Make changes to your account here.
+			</TabsContent>
+			<TabsContent value="admins">sdklfj</TabsContent>
+		</Tabs>
+	);
 }
 
 export default UsersPage;
