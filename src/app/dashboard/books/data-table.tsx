@@ -1,5 +1,5 @@
 "use client";
-import { ArrowDownUp, ListFilter } from "lucide-react";
+import { ArrowDownUp } from "lucide-react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -11,7 +11,6 @@ import type {
 } from "@tanstack/react-table";
 
 import {
-	flexRender,
 	getCoreRowModel,
 	getFilteredRowModel,
 	getPaginationRowModel,
@@ -22,23 +21,15 @@ import {
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
-	DropdownMenuCheckboxItem,
 	DropdownMenuContent,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/ui/table";
 
 import { useState } from "react";
 import { RouterPagination } from "@/components/table/RouterPagination";
 import { SimpleDataTable } from "@/components/table/SimpleDataTable";
 import { ColumnsFilter } from "@/components/table/ColumnsFilter";
+import { TableWithPagination } from "@/components/table/TableWithPagination";
 
 type PaginationConfig = {
 	state: PaginationState;
@@ -109,13 +100,8 @@ export function BooksDataTable<TData, TValue>({
 					</DropdownMenu>
 				</div>
 			</div>
-			<TabsContent value="all" className="py-4">
-				<div className="rounded-md border">
-					<SimpleDataTable table={table} />
-				</div>
-				<div className="py-4">
-					<RouterPagination table={table} />
-				</div>
+			<TabsContent value="all">
+				<TableWithPagination table={table} />
 			</TabsContent>
 		</Tabs>
 	);
