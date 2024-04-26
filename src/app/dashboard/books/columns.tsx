@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { SortName } from "./SortName";
 
 export interface BookSummary {
 	_id: string;
@@ -63,8 +64,10 @@ export const columns: ColumnDef<BookSummary>[] = [
 	},
 	{
 		accessorKey: "name",
-		header: "Name",
 		enableHiding: false,
+		header({ column }) {
+			return <SortName column={column} title="Name" />;
+		},
 	},
 	{
 		accessorKey: "status",

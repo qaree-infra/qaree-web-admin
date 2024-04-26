@@ -6,10 +6,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
 	type ColumnDef,
 	type ColumnFiltersState,
+	type SortingState,
 	flexRender,
 	getCoreRowModel,
 	useReactTable,
 	getFilteredRowModel,
+	getPaginationRowModel,
+	getSortedRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -29,6 +32,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useState } from "react";
+import { DataTablePagination } from "./pagination";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -41,6 +45,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
 	const [columnVisibility, setColumnVisibility] = useState({});
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	const [sorting, setSorting] = useState<SortingState>([]);
 
 	const table = useReactTable({
 		data,
@@ -48,9 +53,13 @@ export function DataTable<TData, TValue>({
 		getCoreRowModel: getCoreRowModel(),
 		onColumnFiltersChange: setColumnFilters,
 		getFilteredRowModel: getFilteredRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		onSortingChange: setSorting,
+		getSortedRowModel: getSortedRowModel(),
 		state: {
 			columnVisibility,
 			columnFilters,
+			sorting,
 		},
 		onColumnVisibilityChange: setColumnVisibility,
 	});
@@ -161,6 +170,9 @@ export function DataTable<TData, TValue>({
 							)}
 						</TableBody>
 					</Table>
+				</div>
+				<div className="py-4">
+					<DataTablePagination table={table} />
 				</div>
 			</TabsContent>
 		</Tabs>

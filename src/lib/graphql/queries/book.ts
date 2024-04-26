@@ -27,6 +27,9 @@ export const getBookSummaryQuery = graphql(`
           name
         }
       }
+      currentPage
+      numberOfPages
+      total
     }
   }
 `);
