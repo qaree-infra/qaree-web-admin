@@ -72,3 +72,13 @@ export const getBookEPubMetadataQuery = graphql(`
     }
   }
 `);
+
+export const getBookEPubManifestQuery = graphql(`
+  query getBookEPubManifest($bookId: String!) {
+    getBookEPubManifest(bookId: $bookId) {
+      files {
+        href
+      }
+    }
+  }
+`);
