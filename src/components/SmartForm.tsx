@@ -135,6 +135,7 @@ interface FormElementSelectProps<T extends FieldValues>
 	label: string;
 	items: Item[];
 	showLabel?: boolean;
+	placeholder?: string;
 }
 
 export function FormSelect<T extends FieldValues>({
@@ -142,6 +143,7 @@ export function FormSelect<T extends FieldValues>({
 	form,
 	label,
 	items,
+	placeholder,
 	showLabel,
 	...props
 }: FormElementSelectProps<T>) {
@@ -159,7 +161,7 @@ export function FormSelect<T extends FieldValues>({
 					{showLabel && <Label>{label}</Label>}
 					<div className="group">
 						<SelectTrigger ref={ref}>
-							<SelectValue placeholder={label} />
+							<SelectValue placeholder={placeholder} />
 						</SelectTrigger>
 
 						<SelectContent>
