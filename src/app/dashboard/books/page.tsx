@@ -1,9 +1,9 @@
-import { DataTable } from "./data-table";
-import { getBookSummaryQuery } from "@/lib/graphql/queries";
 import { fetcher } from "@/lib/graphql/fetcher";
-import { columns, type BookSummary } from "./columns";
+import { getBookSummaryQuery } from "@/lib/graphql/queries";
 import type { PaginationState } from "@tanstack/react-table";
 import { redirect } from "next/navigation";
+import { type BookSummary, columns } from "./columns";
+import { DataTable } from "./data-table";
 
 type Props = {
 	searchParams: {

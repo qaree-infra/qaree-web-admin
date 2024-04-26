@@ -1,7 +1,3 @@
-import Link from "next/link";
-import React from "react";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import { Button } from "../ui/button";
 import {
 	Home,
 	LineChart,
@@ -11,6 +7,10 @@ import {
 	ShoppingCart,
 	Users2,
 } from "lucide-react";
+import Link from "next/link";
+import React from "react";
+import { Button } from "../ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 
 export function MobileSheet() {
 	return (

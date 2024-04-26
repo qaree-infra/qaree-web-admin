@@ -1,19 +1,19 @@
 "use client";
 
-import type { ColumnDef } from "@tanstack/react-table";
-import Image from "next/image";
-import { Image as ImageIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
-	DropdownMenuTrigger,
 	DropdownMenuContent,
-	DropdownMenuLabel,
 	DropdownMenuItem,
+	DropdownMenuLabel,
 	DropdownMenuSeparator,
+	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import type { ColumnDef } from "@tanstack/react-table";
+import { Image as ImageIcon } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { SortName } from "./SortName";
 
@@ -43,7 +43,6 @@ export const columns: ColumnDef<BookSummary>[] = [
 		header: "Cover",
 		cell({ row }) {
 			const data = row.original.cover;
-			console.log(row.original);
 
 			return (
 				<div className="w-24 aspect-[6/9] bg-muted flex justify-center items-center m-2 max-md:hidden">

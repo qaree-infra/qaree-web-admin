@@ -3,9 +3,9 @@ import {
 	getBookEPubManifestQuery,
 	getBookEPubMetadataQuery,
 } from "@/lib/graphql/queries";
-import { Button } from "./ui/button";
-import Link from "next/link";
 import { getBinaryMetadata } from "next/dist/build/swc";
+import Link from "next/link";
+import { Button } from "./ui/button";
 
 export async function BookDetailes({ bookId }: { bookId: string }) {
 	// TODO: this all provided data by backend, see getAllBook endpoint for more

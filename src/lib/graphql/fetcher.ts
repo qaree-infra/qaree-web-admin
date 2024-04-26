@@ -90,8 +90,8 @@ export async function fetcher<
 			error instanceof Error
 				? error.message
 				: typeof error === "string"
-					? error
-					: "Unknown error",
+				  ? error
+				  : "Unknown error",
 		);
 	}
 

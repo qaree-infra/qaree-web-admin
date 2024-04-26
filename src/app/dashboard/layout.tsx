@@ -1,10 +1,10 @@
+import { Spinner } from "@/components/Spinner";
 import { Aside } from "@/components/layouts/Aside";
-import { MobileSheet } from "@/components/layouts/MobileSheet";
 import { BreadcrumbNav } from "@/components/layouts/BreadcrumbNav";
+import { MobileSheet } from "@/components/layouts/MobileSheet";
 import { SearchForm } from "@/components/layouts/SearchForm";
 import UserNav from "@/components/layouts/UserNav";
-import { Suspense, type ReactNode } from "react";
-import { Spinner } from "@/components/Spinner";
+import { type ReactNode, Suspense } from "react";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
 	return (

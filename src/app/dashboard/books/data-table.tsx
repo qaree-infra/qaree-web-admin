@@ -13,12 +13,19 @@ import type {
 import {
 	flexRender,
 	getCoreRowModel,
-	useReactTable,
 	getFilteredRowModel,
 	getPaginationRowModel,
 	getSortedRowModel,
+	useReactTable,
 } from "@tanstack/react-table";
 
+import { Button } from "@/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
 	Table,
 	TableBody,
@@ -27,13 +34,6 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import {
-	DropdownMenu,
-	DropdownMenuTrigger,
-	DropdownMenuContent,
-	DropdownMenuCheckboxItem,
-} from "@/components/ui/dropdown-menu";
 
 import { useState } from "react";
 import { DataTablePagination } from "./pagination";

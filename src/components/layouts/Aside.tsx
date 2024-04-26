@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import {
 	Book,
 	Home,
@@ -10,10 +11,9 @@ import {
 	Users2,
 } from "lucide-react";
 import Link from "next/link";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { type ReactNode, useState } from "react";
 import ThemeToggle from "../ThemeToggle";
-import { useState, type ReactNode } from "react";
-import { cn } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 interface Item {
 	name: string;
