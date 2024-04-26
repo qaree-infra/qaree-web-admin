@@ -36,7 +36,7 @@ import {
 } from "@/components/ui/table";
 
 import { useState } from "react";
-import { DataTablePagination } from "./pagination";
+import { RouterPagination } from "@/components/table/RouterPagination";
 
 type PaginationConfig = {
 	state: PaginationState;
@@ -186,7 +186,7 @@ export function DataTable<TData, TValue>({
 					</Table>
 				</div>
 				<div className="py-4">
-					<DataTablePagination table={table} />
+					<RouterPagination table={table} />
 				</div>
 			</TabsContent>
 		</Tabs>
