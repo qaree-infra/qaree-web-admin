@@ -16,6 +16,7 @@ import { Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { SortName } from "./SortName";
+import { FormatedDate } from "@/components/table/FormatedDate";
 
 export interface BookSummary {
 	_id: string;
@@ -117,14 +118,7 @@ export const columns: ColumnDef<BookSummary>[] = [
 		accessorKey: "createdAt",
 		header: "Created At",
 		cell({ row }) {
-			const formatter = new Intl.DateTimeFormat("en-US", {
-				day: "2-digit",
-				month: "2-digit",
-				year: "numeric",
-			});
-			const formattedDate = formatter.format(new Date(+row.original.createdAt));
-
-			return formattedDate;
+			return <FormatedDate value={+row.original.createdAt} />;
 		},
 	},
 	{

@@ -14,7 +14,7 @@ import type { Table as TableType } from "@tanstack/react-table";
 
 export function SimpleDataTable<TData>({ table }: { table: TableType<TData> }) {
 	return (
-		<div className="rounded-md border  my-4">
+		<div className="rounded-md border my-4">
 			<Table>
 				<TableHeader className="whitespace-nowrap">
 					{table.getHeaderGroups().map((headerGroup) => (

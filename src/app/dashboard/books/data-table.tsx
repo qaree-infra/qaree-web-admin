@@ -26,8 +26,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useState } from "react";
-import { RouterPagination } from "@/components/table/RouterPagination";
-import { SimpleDataTable } from "@/components/table/SimpleDataTable";
 import { ColumnsFilter } from "@/components/table/ColumnsFilter";
 import { TableWithPagination } from "@/components/table/TableWithPagination";
 
