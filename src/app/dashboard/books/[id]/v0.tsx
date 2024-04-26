@@ -124,39 +124,6 @@ function V0() {
 						<Button type="submit">Submit Review</Button>
 					</form>
 				</div>
-				<div className="space-y-4">
-					<h2 className="text-2xl font-bold">Previous Admin Review</h2>
-					<div className="space-y-4">
-						<div className="grid grid-cols-3 gap-4">
-							<div>
-								<p className="text-gray-500">Status:</p>
-								<p>Approved</p>
-							</div>
-							<div>
-								<p className="text-gray-500">Message:</p>
-								<p>Great book, highly recommended.</p>
-							</div>
-							<div>
-								<p className="text-gray-500">Reviewer:</p>
-								<p>John Doe</p>
-							</div>
-						</div>
-						<div className="grid grid-cols-3 gap-4">
-							<div>
-								<p className="text-gray-500">Status:</p>
-								<p>Rejected</p>
-							</div>
-							<div>
-								<p className="text-gray-500">Message:</p>
-								<p>The content is not appropriate for our audience.</p>
-							</div>
-							<div>
-								<p className="text-gray-500">Reviewer:</p>
-								<p>Jane Smith</p>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	);

@@ -57,7 +57,10 @@ function AdminReviewForm({ bookId }: Props) {
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)}>
+			<form
+				onSubmit={form.handleSubmit(onSubmit)}
+				className="max-w-3xl space-y-5"
+			>
 				<FormSelect
 					form={form}
 					name="status"
