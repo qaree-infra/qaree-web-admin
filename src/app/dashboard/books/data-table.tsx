@@ -1,12 +1,16 @@
 "use client";
-import { ArrowDownUp, File, ListFilter, PlusCircle } from "lucide-react";
+import { ArrowDownUp, ListFilter } from "lucide-react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import type {
+	ColumnDef,
+	ColumnFiltersState,
+	PaginationState,
+	SortingState,
+} from "@tanstack/react-table";
+
 import {
-	type ColumnDef,
-	type ColumnFiltersState,
-	type SortingState,
 	flexRender,
 	getCoreRowModel,
 	useReactTable,
@@ -34,14 +38,21 @@ import {
 import { useState } from "react";
 import { DataTablePagination } from "./pagination";
 
+type PaginationConfig = {
+	state: PaginationState;
+	rowCount: number;
+};
+
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
+	paginationConfig: PaginationConfig;
 }
 
 export function DataTable<TData, TValue>({
 	columns,
 	data,
+	paginationConfig,
 }: DataTableProps<TData, TValue>) {
 	const [columnVisibility, setColumnVisibility] = useState({});
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -51,17 +62,20 @@ export function DataTable<TData, TValue>({
 		data,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
-		onColumnFiltersChange: setColumnFilters,
 		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		onSortingChange: setSorting,
 		getSortedRowModel: getSortedRowModel(),
+		onColumnFiltersChange: setColumnFilters,
+		onColumnVisibilityChange: setColumnVisibility,
 		state: {
 			columnVisibility,
 			columnFilters,
 			sorting,
+			pagination: paginationConfig.state,
 		},
-		onColumnVisibilityChange: setColumnVisibility,
+		manualPagination: true,
+		rowCount: paginationConfig.rowCount,
 	});
 
 	return (

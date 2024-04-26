@@ -2,28 +2,55 @@ import { DataTable } from "./data-table";
 import { getBookSummaryQuery } from "@/lib/graphql/queries";
 import { fetcher } from "@/lib/graphql/fetcher";
 import { columns, type BookSummary } from "./columns";
+import type { PaginationState } from "@tanstack/react-table";
+import { redirect } from "next/navigation";
 
-async function BooksPage() {
+type Props = {
+	searchParams: {
+		page: string;
+		size: string;
+	};
+};
+
+async function BooksPage({ searchParams: { page = "1", size = "5" } }) {
+	let pageNumber = Number.parseInt(page);
+
+	// Never trust user input
+	if (Number.isNaN(pageNumber)) {
+		pageNumber = 1;
+	}
+
 	const { adminGetBooks } = await fetcher({
 		query: getBookSummaryQuery,
 		variables: {
-			// filterBy: "",
-			// keyword: "",
-			limit: 20,
-			// page: 1,
-			// sortBy: "",
+			limit: Number(size),
+			page: pageNumber,
 		},
 		server: true,
 	});
 
 	if (!adminGetBooks?.books) {
-		return <DataTable columns={columns} data={[]} />;
+		//TODO: handle this
+		// return <DataTable columns={columns} data={[]} />;
+		return;
 	}
 
-	const { currentPage, numberOfPages, books, total } = adminGetBooks;
+	const { currentPage, books, total } = adminGetBooks;
+	// return JSON.stringify(books);
 
-	// as used here to ignore nullable values
-	return <DataTable columns={columns} data={books as BookSummary[]} />;
+	return (
+		<DataTable
+			columns={columns}
+			data={books as BookSummary[]}
+			paginationConfig={{
+				rowCount: total ?? 0,
+				state: {
+					pageIndex: pageNumber - 1,
+					pageSize: Number(size),
+				},
+			}}
+		/>
+	);
 }
 
 export default BooksPage;
