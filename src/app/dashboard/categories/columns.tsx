@@ -38,7 +38,7 @@ export const columns: ColumnDef<Category>[] = [
 								className="size-10"
 							/>
 						) : (
-							<ImageIcon className="text-muted-foreground" />
+							<ImageIcon className="text-muted-foreground size-10" />
 						)}
 					</div>
 				</div>
