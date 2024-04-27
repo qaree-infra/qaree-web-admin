@@ -34,7 +34,7 @@ export const reviewSchema = z.object({
 		}),
 });
 
-export const addCategorySchema = z.object({
+export const categorySchema = z.object({
 	icon: z.instanceof(File, {
 		message: errors.icon,
 	}),
@@ -50,3 +50,4 @@ export const addCategorySchema = z.object({
 });
 
 export type ReviewSchema = z.infer<typeof reviewSchema>;
+export type CategorySchema = z.infer<typeof categorySchema>;
