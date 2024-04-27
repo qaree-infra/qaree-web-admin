@@ -1,18 +1,25 @@
 "use server";
 
-import type { ReviewSchema } from "@/components/AdminReviewForm";
+import type { CategorySchema, ReviewSchema, categorySchema } from "@/schema";
+
 import { fetcher } from "@/lib/graphql/fetcher";
 import {
+	addCategoryMutation,
 	reviewBookDataMutation,
 	signUpMutation,
 } from "@/lib/graphql/mutations";
 
 import type { RegisterData } from "@/lib/graphql/types";
 import { registerFormSchema } from "@/schema";
+import type { ResultOf } from "gql.tada";
 
 type ActionState = {
 	success: boolean;
 	message: string;
+};
+
+type StateWithData<T> = ActionState & {
+	data: T | null;
 };
 
 const getErrorMessage = (error: unknown): string => {
@@ -94,5 +101,36 @@ export const reviewBookAction = async ({
 	} catch (error) {
 		const message = getErrorMessage(error);
 		return { success: false, message };
+	}
+};
+
+export const addCategoryAction = async ({
+	values,
+}: { values: CategorySchema }): Promise<
+	StateWithData<ResultOf<typeof addCategoryMutation>>
+> => {
+	try {
+		const data = await fetcher({
+			query: addCategoryMutation,
+			// FIXME: backend mutation missed icon field
+			variables: values,
+		});
+
+		if (!data.addCategory) {
+			throw Error("Server Error");
+		}
+
+		return {
+			success: true,
+			message: "Sucess",
+			data,
+		};
+	} catch (error) {
+		const message = getErrorMessage(error);
+		return {
+			success: false,
+			message,
+			data: null,
+		};
 	}
 };

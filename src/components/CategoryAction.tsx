@@ -25,6 +25,7 @@ import { useState } from "react";
 import { FormInput } from "./SmartForm";
 import { FormFile } from "./FormFile";
 import { FormIcon } from "./FormIcon";
+import { PencilRuler, Plus } from "lucide-react";
 
 type PropsWithoutCategry = {
 	type?: "create";
@@ -69,10 +70,16 @@ export function CategoryAction(props: Props) {
 		<div>
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogTrigger asChild>
-					<Button variant="outline">
-						Add
-						{/* shoudl be edit too */}
-					</Button>
+					{props.type === "update" ? (
+						<Button size={"icon"} variant={"outline"}>
+							<PencilRuler />
+						</Button>
+					) : (
+						<Button variant="outline" className="flex gap-2 ">
+							<Plus className="size-5" />
+							<span>New Category</span>
+						</Button>
+					)}
 				</DialogTrigger>
 				<DialogContent className="sm:max-w-xl">
 					<Form {...form}>

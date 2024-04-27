@@ -16,3 +16,20 @@ export const editCategoryMutation = graphql(`
     }
   }
 `);
+
+export const addCategoryMutation = graphql(`
+  mutation addCategory($name_en: String!, $name_ar: String!, $background: String!) {
+    addCategory(name_en: $name_en, name_ar: $name_ar, background: $background) {
+      _id
+      name_ar
+      name_en
+      icon {
+        name
+        path
+      }
+      background
+      createdAt
+      updatedAt
+    }
+  }
+`);
