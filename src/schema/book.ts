@@ -1,94 +1,32 @@
+import { options } from "@/lib/config/book-status-items";
 import { z } from "zod";
 
-// todo write better error messages
 const errors = {
-	name: "Book name is required",
-	cover: "Please upload a book cover image.",
-	book: "Please upload a valid EPUB file",
-	description: "Description is required",
-	language: "Please select book language",
-	publishingRights: "Please confirm publishing rights",
-	isbn: "",
-	edition: "",
-	categories: "",
+	status: "Select book status",
+	content: "Write your review",
 };
 
 const invalid = {
-	name: "Book name should be at least 3 characters",
-	description: "Description should be at least 10 characters",
+	status: "Invalid status option!",
+	content: "The review should be at least 10 characters long",
 };
 
-const filesSchema = z.object({
-	cover: z.instanceof(File, {
-		message: errors.cover,
+export const reviewSchema = z.object({
+	status: z.enum(options, {
+		errorMap: (issue) => {
+			if (issue.code === "invalid_enum_value" && issue.received !== "") {
+				return { message: invalid.status };
+			}
+			return { message: errors.status };
+		},
 	}),
-	book: z.instanceof(File, {
-		message: errors.book,
-	}),
-});
-
-const bookDetailesSchema = z.object({
-	name: z
+	content: z
 		.string({
-			required_error: errors.name,
-		})
-		.min(3, {
-			message: invalid.name,
-		}),
-	description: z.string().min(10, { message: errors.description }),
-	categories: z.array(z.string()),
-	language: z
-		.string({ required_error: errors.language })
-		.min(1, { message: errors.language }),
-	publishingRights: z.string({
-		required_error: errors.publishingRights,
-	}),
-});
-
-export type MediaType = z.infer<typeof filesSchema>;
-
-export const publishDefaultValues: Omit<PublishSchemaType, keyof MediaType> = {
-	name: "",
-	categories: [],
-	description: "",
-	language: "",
-	publishingRights: "",
-};
-
-export const editBookSchema = z.object({
-	name: z
-		.string({
-			required_error: errors.name,
-		})
-		.min(3, {
-			message: invalid.name,
-		}),
-	description: z
-		.string({
-			required_error: errors.description,
+			required_error: errors.content,
 		})
 		.min(10, {
-			message: invalid.description,
+			message: invalid.content,
 		}),
-	isbn: z
-		.string({
-			required_error: errors.isbn,
-		})
-		.optional(),
-	edition: z.coerce.number().optional(),
-	price: z.coerce.number().optional(),
-	categories: z.array(z.string()),
-	language: z
-		.string({ required_error: errors.language })
-		.min(1, { message: errors.language }),
-	publishingRights: z.string({
-		required_error: errors.publishingRights,
-	}),
 });
 
-export type EditBookType = z.infer<typeof editBookSchema>;
-
-export type AddBookDetailsSchemaType = z.infer<typeof bookDetailesSchema>;
-
-export const publishSchema = bookDetailesSchema.and(filesSchema);
-export type PublishSchemaType = z.infer<typeof publishSchema>;
+export type ReviewSchema = z.infer<typeof reviewSchema>;

@@ -1,37 +1,17 @@
 "use client";
 
 import { reviewBookAction } from "@/app/actions";
-import { bookStatusItems, options } from "@/lib/config/book-status-items";
+import { bookStatusItems } from "@/lib/config/book-status-items";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
-import { FormInput, FormSelect, FormTextare, SubmitButton } from "./SmartForm";
+import { FormSelect, FormTextare, SubmitButton } from "./SmartForm";
 import { Form } from "./ui/form";
+import { type ReviewSchema, reviewSchema } from "@/schema";
 
 type Props = {
 	bookId: string;
 };
-
-const reviewSchema = z.object({
-	status: z.enum(options, {
-		errorMap: (issue) => {
-			if (issue.code === "invalid_enum_value" && issue.received !== "") {
-				return { message: "Invalid option!" };
-			}
-			return { message: "Select book status" };
-		},
-	}),
-	content: z
-		.string({
-			required_error: "Write your review",
-		})
-		.min(10, {
-			message: "The review should be at least 10 characters long",
-		}),
-});
-
-export type ReviewSchema = z.infer<typeof reviewSchema>;
 
 function AdminReviewForm({ bookId }: Props) {
 	const form = useForm<ReviewSchema>({

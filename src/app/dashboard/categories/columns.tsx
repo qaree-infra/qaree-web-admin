@@ -83,7 +83,7 @@ export const columns: ColumnDef<Category>[] = [
 		id: "actions",
 		accessorKey: "actions",
 		cell({ row }) {
-			return <div className="flex justify-center ">update & delete</div>;
+			return <div>update & delete</div>;
 		},
 	},
 ];
