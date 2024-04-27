@@ -70,11 +70,6 @@ export const getBookEPubManifestQuery = graphql(`
   }
 `);
 
-/**
- * limit: Int
-page: Int
-completed: Boolean
- */
 export const getAllCategoriesQuery = graphql(`
   query getAllCategories($limit: Int, $page: Int, $completed: Boolean) {
     getAllCategories(limit: $limit, page: $page, completed:$completed) {
@@ -88,6 +83,7 @@ export const getAllCategoriesQuery = graphql(`
         }
         background
         updatedAt
+        createdAt
       }
     }
   }

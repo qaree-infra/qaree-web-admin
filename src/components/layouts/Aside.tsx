@@ -33,8 +33,8 @@ const items: Item[] = [
 		icon: <Book size={20} />,
 	},
 	{
-		name: "Updates",
-		href: "/updates",
+		name: "Categories",
+		href: "/categories",
 		icon: <PencilRuler size={20} />,
 	},
 	{
