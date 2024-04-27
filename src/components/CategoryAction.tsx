@@ -6,14 +6,6 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
 import {
-	Card,
-	CardHeader,
-	CardTitle,
-	CardDescription,
-	CardContent,
-} from "./ui/card";
-
-import {
 	Dialog,
 	DialogClose,
 	DialogContent,
