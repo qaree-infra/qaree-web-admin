@@ -4,11 +4,16 @@ import { z } from "zod";
 const errors = {
 	status: "Select book status",
 	content: "Write your review",
+	icon: "",
+	name: "",
+	background: "",
 };
 
 const invalid = {
 	status: "Invalid status option!",
 	content: "The review should be at least 10 characters long",
+	name: "",
+	hex_color: "",
 };
 
 export const reviewSchema = z.object({
@@ -27,6 +32,21 @@ export const reviewSchema = z.object({
 		.min(10, {
 			message: invalid.content,
 		}),
+});
+
+export const addCategorySchema = z.object({
+	icon: z.instanceof(File, {
+		message: errors.icon,
+	}),
+	name_en: z
+		.string({ required_error: errors.name })
+		.min(3, { message: invalid.name }),
+	name_ar: z
+		.string({ required_error: errors.name })
+		.min(3, { message: invalid.name }),
+	background: z
+		.string({ required_error: errors.background })
+		.min(3, { message: invalid.hex_color }),
 });
 
 export type ReviewSchema = z.infer<typeof reviewSchema>;
