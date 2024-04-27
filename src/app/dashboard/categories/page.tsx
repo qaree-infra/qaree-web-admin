@@ -61,12 +61,42 @@ export default async function Categories({
 				<CategoryAction />
 			</div>
 			<TabsContent value="complete">
-				{/* @ts-ignore nullable values */}
-				<CategoriesDataTable columns={columns} data={complete} />
+				{incomplete ? (
+					<CategoriesDataTable
+						// @ts-ignore nullable values
+						columns={columns}
+						// @ts-ignore nullable values
+						data={complete}
+						paginationConfig={{
+							rowCount: totalComplete ?? 0,
+							state: {
+								pageIndex: pageNumber - 1,
+								pageSize: Number(size),
+							},
+						}}
+					/>
+				) : (
+					<NoBooksFound />
+				)}
 			</TabsContent>
 			<TabsContent value="incomplete">
-				{/* @ts-ignore nullable values */}
-				<CategoriesDataTable columns={columns} data={incomplete} />
+				{incomplete ? (
+					<CategoriesDataTable
+						// @ts-ignore nullable values
+						columns={columns}
+						// @ts-ignore nullable values
+						data={incomplete}
+						paginationConfig={{
+							rowCount: totaleIncomplete ?? 0,
+							state: {
+								pageIndex: pageNumber - 1,
+								pageSize: Number(size),
+							},
+						}}
+					/>
+				) : (
+					<NoBooksFound />
+				)}
 			</TabsContent>
 		</Tabs>
 	);
