@@ -15,12 +15,16 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "./ui/dialog";
-import { Form } from "./ui/form";
+
+import { Form, FormField } from "./ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type CategorySchema, categorySchema } from "@/schema";
 import { toast } from "sonner";
 import { useState } from "react";
+import { FormInput } from "./SmartForm";
+import { FormFile } from "./FormFile";
+import { FormIcon } from "./FormIcon";
 
 type PropsWithoutCategry = {
 	type?: "create";
@@ -33,7 +37,7 @@ type PropsWithCategory = {
 
 type Props = PropsWithCategory | PropsWithoutCategry;
 
-export function CategoriesForm(props: Props) {
+export function CategoryAction(props: Props) {
 	const [open, setOpen] = useState(false);
 
 	if (props.type === "update") {
@@ -51,8 +55,14 @@ export function CategoriesForm(props: Props) {
 	};
 
 	const form = useForm<CategorySchema>({
-		mode: "onBlur",
+		mode: "onSubmit",
 		resolver: zodResolver(categorySchema),
+		defaultValues: {
+			name_en: "",
+			name_ar: "",
+			background: "",
+			icon: undefined,
+		},
 	});
 
 	return (
@@ -64,48 +74,56 @@ export function CategoriesForm(props: Props) {
 						{/* shoudl be edit too */}
 					</Button>
 				</DialogTrigger>
-				<DialogContent className="sm:max-w-[425px]">
-					<DialogHeader>
-						<DialogTitle>Add New Category</DialogTitle>
-						<DialogDescription>
-							Enter the details for the new category.
-						</DialogDescription>
-					</DialogHeader>
+				<DialogContent className="sm:max-w-xl">
 					<Form {...form}>
-						<form onSubmit={form.handleSubmit(onSubmit)}>
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								<div className="grid gap-2">
-									<Label htmlFor="english-name">English Name</Label>
-									<Input id="english-name" placeholder="English name" />
-								</div>
-								<div className="grid gap-2">
-									<Label htmlFor="arabic-name">Arabic Name</Label>
-									<Input id="arabic-name" placeholder="Arabic name" />
-								</div>
-								<div className="grid gap-2">
-									<Label htmlFor="icon">Icon</Label>
-									<Input id="icon" placeholder="Icon" type="file" />
-								</div>
-								<div className="grid gap-2">
-									<Label htmlFor="background-color">Background Color</Label>
-									<Input
-										id="background-color"
-										placeholder="Background color"
+						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+							<DialogHeader>
+								<DialogTitle>Add New Category</DialogTitle>
+								<DialogDescription>
+									Provide new category details or update existing ones. Ensure
+									the 24px icon type and appropriate background colors for light
+									and dark modes.
+								</DialogDescription>
+							</DialogHeader>
+							<div className="space-y-5">
+								<FormInput
+									form={form}
+									name="name_en"
+									label="English Name"
+									placeholder="Category English mame"
+								/>
+								<FormInput
+									form={form}
+									name="name_ar"
+									label="Arabic Name"
+									placeholder="Category Arabic mame"
+								/>
+								<div className="grid grid-cols-2 gap-4">
+									<FormIcon
+										form={form}
+										name="icon"
+										type="file"
+										label="Shows Icon"
+										className="h-20"
+									/>
+									<FormInput
+										form={form}
+										name="background"
+										label="Background"
 										type="color"
+										className="h-20"
 									/>
 								</div>
 							</div>
-							<div className="flex flex-row-reverse gap-2">
-								<Button type="submit">Submit</Button>
+
+							<DialogFooter>
 								<DialogClose asChild>
 									<Button variant="outline">Cancel</Button>
 								</DialogClose>
-							</div>
+								<Button type="submit">Submit</Button>
+							</DialogFooter>
 						</form>
 					</Form>
-					<DialogFooter>
-						<Button type="submit">Save</Button>
-					</DialogFooter>
 				</DialogContent>
 			</Dialog>
 		</div>
