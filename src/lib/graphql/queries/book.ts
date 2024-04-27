@@ -85,6 +85,8 @@ export const getAllCategoriesQuery = graphql(`
         updatedAt
         createdAt
       }
+      totalCompleted
+      totalUncompleted
     }
   }
 `);

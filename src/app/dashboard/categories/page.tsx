@@ -1,37 +1,73 @@
 import { fetcher } from "@/lib/graphql/fetcher";
 import { getAllCategoriesQuery } from "@/lib/graphql/queries";
-import React from "react";
-import CategoriesDataTable from "./data-table";
+import { CategoriesDataTable } from "./data-table";
 import { Category, columns } from "./columns";
 import { NoBooksFound } from "@/components/skeleton/NoBooksFound";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { CategoryAction } from "@/components/CategoryAction";
 
-const getData = async () => {
-	const { getAllCategories } = await fetcher({
-		query: getAllCategoriesQuery,
-		variables: {
-			limit: 10,
-			page: 1,
-			completed: true,
-		},
-		server: true,
-	});
+const getData = async ({
+	pageNumber,
+	size,
+}: { pageNumber: number; size: number }) => {
+	const [complete, incomplete] = await Promise.all([
+		fetcher({
+			query: getAllCategoriesQuery,
+			variables: { limit: 10, page: 1, completed: true },
+			server: true,
+		}),
+		fetcher({
+			query: getAllCategoriesQuery,
+			variables: { limit: 10, page: 1, completed: false },
+			server: true,
+		}),
+	]);
 
-	return getAllCategories?.categories;
+	return {
+		complete: complete.getAllCategories?.categories,
+		incomplete: incomplete.getAllCategories?.categories,
+		totalComplete: incomplete.getAllCategories?.totalCompleted,
+		totaleIncomplete: complete.getAllCategories?.totalCompleted,
+	};
 };
 
-export default async function Categories() {
-	const categories = await getData();
-
-	if (!categories) {
-		//TODO: update this to dynamic message support
-		return <NoBooksFound />;
+interface Props {
+	searchParams: {
+		page: string;
+		size: string;
+	};
+}
+export default async function Categories({
+	searchParams: { page = "1", size = "10" },
+}: Props) {
+	let pageNumber = Number(page);
+	if (Number.isNaN(pageNumber)) {
+		pageNumber = 1;
 	}
-	console.log(categories);
+
+	const { complete, incomplete, totalComplete, totaleIncomplete } =
+		await getData({
+			pageNumber,
+			size: Number(size),
+		});
 
 	return (
-		<div>
-			{/* @ts-ignore nullable values */}
-			<CategoriesDataTable columns={columns} data={categories} />
-		</div>
+		<Tabs defaultValue="complete">
+			<div className="flex justify-between">
+				<TabsList>
+					<TabsTrigger value="complete">Complete</TabsTrigger>
+					<TabsTrigger value="incomplete">Incomplete</TabsTrigger>
+				</TabsList>
+				<CategoryAction />
+			</div>
+			<TabsContent value="complete">
+				{/* @ts-ignore nullable values */}
+				<CategoriesDataTable columns={columns} data={complete} />
+			</TabsContent>
+			<TabsContent value="incomplete">
+				{/* @ts-ignore nullable values */}
+				<CategoriesDataTable columns={columns} data={incomplete} />
+			</TabsContent>
+		</Tabs>
 	);
 }

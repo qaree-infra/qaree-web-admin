@@ -12,6 +12,7 @@ import {
 import type { RegisterData } from "@/lib/graphql/types";
 import { registerFormSchema } from "@/schema";
 import type { ResultOf } from "gql.tada";
+import { revalidatePath } from "next/cache";
 
 type ActionState = {
 	success: boolean;
@@ -97,6 +98,7 @@ export const reviewBookAction = async ({
 		if (!reviewBookData?.success) {
 			throw Error("Error: faield to save review");
 		}
+		revalidatePath("/dashboard/categories");
 		return { success: true, message: reviewBookData.message ?? "Sucess" };
 	} catch (error) {
 		const message = getErrorMessage(error);
@@ -104,16 +106,16 @@ export const reviewBookAction = async ({
 	}
 };
 
-export const addCategoryAction = async ({
-	values,
-}: { values: CategorySchema }): Promise<
-	StateWithData<ResultOf<typeof addCategoryMutation>>
-> => {
+export const addCategoryAction = async (variables: {
+	name_en: string;
+	name_ar: string;
+	background: string;
+}): Promise<StateWithData<ResultOf<typeof addCategoryMutation>>> => {
 	try {
 		const data = await fetcher({
 			query: addCategoryMutation,
-			// FIXME: backend mutation missed icon field
-			variables: values,
+			variables,
+			server: true,
 		});
 
 		if (!data.addCategory) {
@@ -122,7 +124,7 @@ export const addCategoryAction = async ({
 
 		return {
 			success: true,
-			message: "Sucess",
+			message: "sucess",
 			data,
 		};
 	} catch (error) {

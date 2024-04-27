@@ -2,8 +2,6 @@
 
 import type { Category } from "@/app/dashboard/categories/columns";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
 
 import {
 	Dialog,
@@ -16,16 +14,17 @@ import {
 	DialogTrigger,
 } from "./ui/dialog";
 
-import { Form, FormField } from "./ui/form";
+import { Form } from "./ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type CategorySchema, categorySchema } from "@/schema";
 import { toast } from "sonner";
 import { useState } from "react";
-import { FormInput } from "./SmartForm";
-import { FormFile } from "./FormFile";
+import { FormInput, SubmitButton } from "./SmartForm";
 import { FormIcon } from "./FormIcon";
 import { PencilRuler, Plus } from "lucide-react";
+import { addCategoryAction } from "@/app/actions";
+import { revalidatePath } from "next/cache";
 
 type PropsWithoutCategry = {
 	type?: "create";
@@ -46,13 +45,21 @@ export function CategoryAction(props: Props) {
 	}
 
 	const onSubmit = async (values: CategorySchema) => {
-		toast.info(
-			<pre className="text-wrap text-start">
-				{JSON.stringify(values, null, 2)}
-			</pre>,
-		);
+		// FIXME: backend mutations missed category icon
+		const formData = new FormData();
+		formData.append("icon", values.icon);
 
-		// set close if success
+		const { icon, ...rest } = values;
+
+		const { success, message, data } = await addCategoryAction(rest);
+
+		if (!success) {
+			return toast.error(message);
+		}
+
+		toast.success(message);
+
+		setOpen(false);
 	};
 
 	const form = useForm<CategorySchema>({
@@ -83,7 +90,11 @@ export function CategoryAction(props: Props) {
 				</DialogTrigger>
 				<DialogContent className="sm:max-w-xl">
 					<Form {...form}>
-						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+						<form
+							onSubmit={form.handleSubmit(onSubmit)}
+							autoComplete="off"
+							className="space-y-5"
+						>
 							<DialogHeader>
 								<DialogTitle>Add New Category</DialogTitle>
 								<DialogDescription>
@@ -127,7 +138,7 @@ export function CategoryAction(props: Props) {
 								<DialogClose asChild>
 									<Button variant="outline">Cancel</Button>
 								</DialogClose>
-								<Button type="submit">Submit</Button>
+								<SubmitButton className="w-32" />
 							</DialogFooter>
 						</form>
 					</Form>

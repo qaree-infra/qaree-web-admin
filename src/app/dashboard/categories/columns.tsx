@@ -24,15 +24,15 @@ export const columns: ColumnDef<Category>[] = [
 		accessorKey: "icon",
 		header: "Icon",
 		cell({ row }) {
-			const { name, path } = row.original.icon;
+			const icon = row.original.icon;
 
 			return (
 				<div className="flex items-center gap-4">
 					<div className="flex items-center justify-center p-2 rounded-md bg-muted">
-						{path ? (
+						{icon?.path ? (
 							<Image
-								src={path}
-								alt={name}
+								src={icon.path}
+								alt={icon.name}
 								width={24}
 								height={24}
 								className="size-10"
