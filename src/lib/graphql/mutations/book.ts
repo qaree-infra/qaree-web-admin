@@ -8,3 +8,11 @@ export const reviewBookDataMutation = graphql(`
     }
   }
 `);
+
+export const editCategoryMutation = graphql(` 
+  mutation editCategory($categoryId: String!, $name_ar: String!, $name_en: String!, $background: String!) {
+    editCategory(categoryId: $categoryId, name_ar: $name_ar, name_en: $name_en, background: $background) {
+      _id
+    }
+  }
+`);

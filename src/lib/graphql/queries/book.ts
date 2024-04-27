@@ -1,10 +1,5 @@
 import { graphql } from "gql.tada";
 
-// sortBy: String
-// filterBy: String
-// page: Int
-// limit: Int
-// keyword: String
 export const getBookSummaryQuery = graphql(`
   query adminGetBooks($sortBy: String, $filterBy: String, $page: Int, $limit: Int, $keyword: String) {
     adminGetBooks(sortBy: $sortBy, filterBy: $filterBy, page: $page, limit: $limit, keyword: $keyword) {
@@ -30,17 +25,6 @@ export const getBookSummaryQuery = graphql(`
       currentPage
       numberOfPages
       total
-    }
-  }
-`);
-
-export const getAllCategoriesQuery = graphql(`
-  query getAllCategories {
-    getAllCategories {
-      categories {
-        _id,
-        name_en,
-      }
     }
   }
 `);
@@ -81,6 +65,29 @@ export const getBookEPubManifestQuery = graphql(`
     getBookEPubManifest(bookId: $bookId) {
       files {
         href
+      }
+    }
+  }
+`);
+
+/**
+ * limit: Int
+page: Int
+completed: Boolean
+ */
+export const getAllCategoriesQuery = graphql(`
+  query getAllCategories($limit: Int, $page: Int, $completed: Boolean) {
+    getAllCategories(limit: $limit, page: $page, completed:$completed) {
+      categories {
+        _id,
+        name_en,
+        name_ar
+        icon {
+          name
+          path
+        }
+        background
+        updatedAt
       }
     }
   }
