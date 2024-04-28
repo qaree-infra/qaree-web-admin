@@ -19,10 +19,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type CategorySchema, categorySchema } from "@/schema";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormInput, SubmitButton } from "./SmartForm";
 import { FormIcon } from "./FormIcon";
-import { PencilRuler, Plus } from "lucide-react";
+import { Pencil, PencilRuler, Plus, SquarePen } from "lucide-react";
 import { addCategoryAction, uploadCategoryIcon } from "@/app/actions";
 import { revalidatePath } from "next/cache";
 import { DeepNonNullable } from "@/lib/graphql/types";
@@ -38,13 +38,30 @@ type PropsWithCategory = {
 
 type Props = PropsWithCategory | PropsWithoutCategry;
 
+const defaultValues = {
+	name_en: "",
+	name_ar: "",
+	background: "",
+	icon: undefined,
+};
+
 export function CategoryAction(props: Props) {
 	const [open, setOpen] = useState(false);
+	const isUpdate = props.type === "update";
 
-	if (props.type === "update") {
-		// handel update
-		// think with icon or without? and can update icon
+	let values: CategorySchema;
+	if (isUpdate) {
+		const { _id, createdAt, icon, updateAt, ...rest } = props.category;
+		values = rest;
+	} else {
+		values = defaultValues;
 	}
+
+	const form = useForm<CategorySchema>({
+		mode: "onSubmit",
+		resolver: zodResolver(categorySchema),
+		defaultValues: values,
+	});
 
 	const onSubmit = async (values: CategorySchema) => {
 		const { icon, ...rest } = values;
@@ -73,19 +90,9 @@ export function CategoryAction(props: Props) {
 			);
 		}
 
+		form.reset(defaultValues);
 		setOpen(false);
 	};
-
-	const form = useForm<CategorySchema>({
-		mode: "onSubmit",
-		resolver: zodResolver(categorySchema),
-		defaultValues: {
-			name_en: "",
-			name_ar: "",
-			background: "",
-			icon: undefined,
-		},
-	});
 
 	return (
 		<div>
@@ -93,11 +100,11 @@ export function CategoryAction(props: Props) {
 				<DialogTrigger asChild>
 					{props.type === "update" ? (
 						<Button size={"icon"} variant={"outline"}>
-							<PencilRuler />
+							<Pencil />
 						</Button>
 					) : (
-						<Button variant="outline" className="flex gap-2 ">
-							<Plus className="size-5" />
+						<Button variant="outline" className="flex gap-2">
+							<Plus />
 							<span>New Category</span>
 						</Button>
 					)}
@@ -110,7 +117,7 @@ export function CategoryAction(props: Props) {
 							className="space-y-5"
 						>
 							<DialogHeader>
-								<DialogTitle>Add New Category</DialogTitle>
+								<DialogTitle>Add / Edit Category</DialogTitle>
 								<DialogDescription>
 									Provide new category details or update existing ones. Ensure
 									the 24px icon type and appropriate background colors for light
@@ -137,6 +144,7 @@ export function CategoryAction(props: Props) {
 										type="file"
 										label="Shows Icon"
 										className="h-20"
+										url={isUpdate ? props.category.icon.path : ""}
 									/>
 									<FormInput
 										form={form}

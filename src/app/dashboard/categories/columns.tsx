@@ -5,6 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
 import { FormatedDate } from "@/components/table/FormatedDate";
+import { CategoryAction } from "@/components/CategoryAction";
 
 export interface Category {
 	_id: string;
@@ -83,7 +84,11 @@ export const columns: ColumnDef<Category>[] = [
 		id: "actions",
 		accessorKey: "actions",
 		cell({ row }) {
-			return <div>update & delete</div>;
+			return (
+				<div>
+					<CategoryAction type="update" category={row.original} />
+				</div>
+			);
 		},
 	},
 ];

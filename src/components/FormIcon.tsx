@@ -13,6 +13,7 @@ interface FormIconProps<T extends FieldValues>
 			"form" | "name" | "id" | keyof ControllerRenderProps<T, Path<T>>
 		> {
 	label: string;
+	url?: string;
 }
 
 export function FormIcon<T extends FieldValues>({
@@ -20,6 +21,7 @@ export function FormIcon<T extends FieldValues>({
 	name,
 	label,
 	className,
+	url,
 }: FormIconProps<T>) {
 	const id = useId();
 
@@ -38,11 +40,11 @@ export function FormIcon<T extends FieldValues>({
 								className,
 							)}
 						>
-							{!value ? (
+							{!value && !url ? (
 								<ImageIcon />
 							) : (
 								<Image
-									src={URL.createObjectURL(value as File)}
+									src={url && !value ? url : URL.createObjectURL(value as File)}
 									alt="Icon"
 									width={24}
 									height={24}
