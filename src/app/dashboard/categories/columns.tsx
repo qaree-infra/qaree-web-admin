@@ -16,7 +16,7 @@ export interface Category {
 		path: string;
 	};
 	background: string;
-	updateAt: string;
+	updatedAt: string;
 	createdAt: string;
 }
 
@@ -75,7 +75,7 @@ export const columns: ColumnDef<Category>[] = [
 		accessorKey: "updateAt",
 		header: "Last Edited",
 		cell({ row }) {
-			const lastEdited = row.original.updateAt ?? row.original.createdAt;
+			const lastEdited = row.original.updatedAt ?? row.original.createdAt;
 			return <FormatedDate value={+lastEdited} />;
 		},
 	},

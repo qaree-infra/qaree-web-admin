@@ -19,13 +19,15 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type CategorySchema, categorySchema } from "@/schema";
 import { toast } from "sonner";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FormInput, SubmitButton } from "./SmartForm";
 import { FormIcon } from "./FormIcon";
-import { Pencil, PencilRuler, Plus, SquarePen } from "lucide-react";
-import { addCategoryAction, uploadCategoryIcon } from "@/app/actions";
-import { revalidatePath } from "next/cache";
-import { DeepNonNullable } from "@/lib/graphql/types";
+import { Pencil, Plus } from "lucide-react";
+import {
+	addCategoryAction,
+	editCategoryAction,
+	uploadCategoryIcon,
+} from "@/app/actions";
 
 type PropsWithoutCategry = {
 	type?: "create";
@@ -49,48 +51,85 @@ export function CategoryAction(props: Props) {
 	const [open, setOpen] = useState(false);
 	const isUpdate = props.type === "update";
 
-	let values: CategorySchema;
-	if (isUpdate) {
-		const { _id, createdAt, icon, updateAt, ...rest } = props.category;
-		values = rest;
-	} else {
-		values = defaultValues;
-	}
-
 	const form = useForm<CategorySchema>({
 		mode: "onSubmit",
 		resolver: zodResolver(categorySchema),
-		defaultValues: values,
+		defaultValues,
 	});
 
 	const onSubmit = async (values: CategorySchema) => {
 		const { icon, ...rest } = values;
 
-		const { success, message, data } = await addCategoryAction(rest);
-
-		if (!success || !data?.addCategory) {
-			return toast.error(message);
-		}
-
-		if (icon && icon instanceof File) {
-			const formData = new FormData();
-			formData.append("icon", icon);
-
-			const categoryId = data.addCategory._id;
-			const state = await uploadCategoryIcon(String(categoryId), formData);
-
-			if (!state.success) {
-				return toast.error(state.message);
+		if (isUpdate) {
+			if (!form.formState.isDirty) {
+				return toast.warning("No changes have been triggered!");
 			}
 
-			toast.success(message);
+			const notIconOnly =
+				form.formState.dirtyFields.background ||
+				form.formState.dirtyFields.name_en ||
+				form.formState.dirtyFields.name_ar;
+
+			const categoryId = props.category._id;
+
+			if (notIconOnly) {
+				const { success, message, data } = await editCategoryAction(
+					props.category._id,
+					values,
+				);
+
+				if (!success) {
+					return toast.error(message);
+				}
+
+				const isDirtyIcon = form.formState.dirtyFields.icon;
+				if (!isDirtyIcon) {
+					toast.success(message);
+				}
+			}
+
+			if (icon instanceof File) {
+				const formData = new FormData();
+				formData.append("icon", icon);
+				const state = await uploadCategoryIcon(categoryId, formData);
+				if (!state.success) {
+					return toast.error(state.message);
+				}
+				if (notIconOnly) {
+					toast.success(state.message);
+				} else {
+					toast.success(
+						"Your category icon and data have been successfully updated",
+					);
+				}
+			}
 		} else {
-			toast.info(
-				"We noticed that there are no category icon assigned. Your category will remain marked as incomplete. You can edit it at any time.",
-			);
+			const { success, message, data } = await addCategoryAction(rest);
+
+			if (!success || !data?.addCategory) {
+				return toast.error(message);
+			}
+
+			if (icon && icon instanceof File) {
+				const formData = new FormData();
+				formData.append("icon", icon);
+
+				const categoryId = data.addCategory._id;
+				const state = await uploadCategoryIcon(String(categoryId), formData);
+
+				if (!state.success) {
+					return toast.error(state.message);
+				}
+
+				toast.success(message);
+			} else {
+				toast.info(
+					"We noticed that there are no category icon assigned. Your category will remain marked as incomplete. You can edit it at any time.",
+				);
+			}
+			form.reset(defaultValues);
 		}
 
-		form.reset(defaultValues);
 		setOpen(false);
 	};
 
@@ -99,7 +138,15 @@ export function CategoryAction(props: Props) {
 			<Dialog open={open} onOpenChange={setOpen}>
 				<DialogTrigger asChild>
 					{props.type === "update" ? (
-						<Button size={"icon"} variant={"outline"}>
+						<Button
+							size={"icon"}
+							variant={"outline"}
+							onClick={() => {
+								const { _id, createdAt, icon, updatedAt, ...rest } =
+									props.category;
+								form.reset(rest);
+							}}
+						>
 							<Pencil />
 						</Button>
 					) : (
@@ -144,7 +191,11 @@ export function CategoryAction(props: Props) {
 										type="file"
 										label="Shows Icon"
 										className="h-20"
-										url={isUpdate ? props.category.icon.path : ""}
+										url={
+											isUpdate && props.category.icon
+												? props.category.icon.path
+												: ""
+										}
 									/>
 									<FormInput
 										form={form}

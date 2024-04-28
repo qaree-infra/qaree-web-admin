@@ -53,3 +53,4 @@ export const categorySchema = z.object({
 
 export type ReviewSchema = z.infer<typeof reviewSchema>;
 export type CategorySchema = z.infer<typeof categorySchema>;
+export type CategorySchemaWithoutIcon = Omit<CategorySchema, "icon">;

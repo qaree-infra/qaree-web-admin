@@ -1,10 +1,16 @@
 "use server";
 
-import type { CategorySchema, ReviewSchema, categorySchema } from "@/schema";
+import type {
+	CategorySchema,
+	CategorySchemaWithoutIcon,
+	ReviewSchema,
+	categorySchema,
+} from "@/schema";
 
 import { fetcher } from "@/lib/graphql/fetcher";
 import {
 	addCategoryMutation,
+	editCategoryMutation,
 	reviewBookDataMutation,
 	signUpMutation,
 } from "@/lib/graphql/mutations";
@@ -12,10 +18,11 @@ import {
 import type { CategoryIcon, RegisterData } from "@/lib/graphql/types";
 import { registerFormSchema } from "@/schema";
 import type { ResultOf } from "gql.tada";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { UPLOAD_FULL_URL } from "@/lib/graphql";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
+import type { Category } from "./dashboard/categories/columns";
 
 type ActionState = {
 	success: boolean;
@@ -101,7 +108,7 @@ export const reviewBookAction = async ({
 		if (!reviewBookData?.success) {
 			throw Error("Error: faield to save review");
 		}
-		revalidatePath("/dashboard/categories");
+		// revalidatePath("/dashboard/categories");
 		return { success: true, message: reviewBookData.message ?? "Sucess" };
 	} catch (error) {
 		const message = getErrorMessage(error);
@@ -109,11 +116,9 @@ export const reviewBookAction = async ({
 	}
 };
 
-export const addCategoryAction = async (variables: {
-	name_en: string;
-	name_ar: string;
-	background: string;
-}): Promise<StateWithData<ResultOf<typeof addCategoryMutation>>> => {
+export const addCategoryAction = async (
+	variables: CategorySchemaWithoutIcon,
+): Promise<StateWithData<ResultOf<typeof addCategoryMutation>>> => {
 	try {
 		const data = await fetcher({
 			query: addCategoryMutation,
@@ -121,10 +126,7 @@ export const addCategoryAction = async (variables: {
 			server: true,
 		});
 
-		if (!data.addCategory) {
-			throw Error("Server Error");
-		}
-
+		revalidateTag("categories");
 		return {
 			success: true,
 			message: "New category has been successfully added",
@@ -165,14 +167,47 @@ export const uploadCategoryIcon = async (
 
 		const data = (await res.json()) as CategoryIcon;
 
+		revalidateTag("categories");
+
 		return {
 			success: true,
-			message: "sucess",
+			message: "Your category icon has been successfully updated",
 			data,
 		};
 	} catch (error) {
 		const message = getErrorMessage(error);
 
+		return {
+			success: false,
+			message,
+			data: null,
+		};
+	}
+};
+
+export const editCategoryAction = async (
+	id: string,
+	values: CategorySchemaWithoutIcon,
+): Promise<StateWithData<ResultOf<typeof editCategoryMutation>>> => {
+	try {
+		const data = await fetcher({
+			query: editCategoryMutation,
+			variables: {
+				categoryId: id,
+				...values,
+			},
+			server: true,
+		});
+
+		revalidateTag("categories");
+
+		return {
+			success: true,
+			message: "Your category has been updated with the latest changes",
+			data: data,
+		};
+	} catch (error) {
+		const message = getErrorMessage(error);
 		return {
 			success: false,
 			message,
