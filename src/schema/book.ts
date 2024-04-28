@@ -35,9 +35,11 @@ export const reviewSchema = z.object({
 });
 
 export const categorySchema = z.object({
-	icon: z.instanceof(File, {
-		message: errors.icon,
-	}),
+	icon: z
+		.instanceof(File, {
+			message: errors.icon,
+		})
+		.optional(),
 	name_en: z
 		.string({ required_error: errors.name })
 		.min(3, { message: invalid.name }),

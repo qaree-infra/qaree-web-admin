@@ -9,10 +9,13 @@ import {
 	signUpMutation,
 } from "@/lib/graphql/mutations";
 
-import type { RegisterData } from "@/lib/graphql/types";
+import type { CategoryIcon, RegisterData } from "@/lib/graphql/types";
 import { registerFormSchema } from "@/schema";
 import type { ResultOf } from "gql.tada";
 import { revalidatePath } from "next/cache";
+import { UPLOAD_FULL_URL } from "@/lib/graphql";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 
 type ActionState = {
 	success: boolean;
@@ -124,11 +127,52 @@ export const addCategoryAction = async (variables: {
 
 		return {
 			success: true,
+			message: "New category has been successfully added",
+			data,
+		};
+	} catch (error) {
+		const message = getErrorMessage(error);
+		return {
+			success: false,
+			message,
+			data: null,
+		};
+	}
+};
+
+export const uploadCategoryIcon = async (
+	id: string,
+	formData: FormData,
+): Promise<StateWithData<CategoryIcon>> => {
+	const session = await getServerSession(authOptions);
+
+	try {
+		if (!session?.user) {
+			throw Error("You must be signed in to perform this action");
+		}
+
+		const token = session.user.access_token;
+
+		const res = await fetch(UPLOAD_FULL_URL.icon(id), {
+			method: "POST",
+			headers: {
+				accept: "application/json",
+				contentType: "multipart/form-data",
+				Authorization: `Bearer ${token}`,
+			},
+			body: formData,
+		});
+
+		const data = (await res.json()) as CategoryIcon;
+
+		return {
+			success: true,
 			message: "sucess",
 			data,
 		};
 	} catch (error) {
 		const message = getErrorMessage(error);
+
 		return {
 			success: false,
 			message,

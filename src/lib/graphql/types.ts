@@ -46,3 +46,16 @@ export type PureBookDetailesSchemaType = {
 	language: string;
 	publishingRights: boolean;
 };
+
+export interface CategoryIcon {
+	name: string;
+	size: number;
+	path: string;
+	type: string;
+	userId: string;
+	deleted: boolean;
+	_id: string;
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
+}

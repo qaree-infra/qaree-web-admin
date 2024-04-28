@@ -23,8 +23,9 @@ import { useState } from "react";
 import { FormInput, SubmitButton } from "./SmartForm";
 import { FormIcon } from "./FormIcon";
 import { PencilRuler, Plus } from "lucide-react";
-import { addCategoryAction } from "@/app/actions";
+import { addCategoryAction, uploadCategoryIcon } from "@/app/actions";
 import { revalidatePath } from "next/cache";
+import { DeepNonNullable } from "@/lib/graphql/types";
 
 type PropsWithoutCategry = {
 	type?: "create";
@@ -42,22 +43,35 @@ export function CategoryAction(props: Props) {
 
 	if (props.type === "update") {
 		// handel update
+		// think with icon or without? and can update icon
 	}
 
 	const onSubmit = async (values: CategorySchema) => {
-		// FIXME: backend mutations missed category icon
-		const formData = new FormData();
-		formData.append("icon", values.icon);
-
 		const { icon, ...rest } = values;
 
 		const { success, message, data } = await addCategoryAction(rest);
 
-		if (!success) {
+		if (!success || !data?.addCategory) {
 			return toast.error(message);
 		}
 
-		toast.success(message);
+		if (icon && icon instanceof File) {
+			const formData = new FormData();
+			formData.append("icon", icon);
+
+			const categoryId = data.addCategory._id;
+			const state = await uploadCategoryIcon(String(categoryId), formData);
+
+			if (!state.success) {
+				return toast.error(state.message);
+			}
+
+			toast.success(message);
+		} else {
+			toast.info(
+				"We noticed that there are no category icon assigned. Your category will remain marked as incomplete. You can edit it at any time.",
+			);
+		}
 
 		setOpen(false);
 	};
