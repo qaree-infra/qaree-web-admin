@@ -13,12 +13,12 @@ const getData = async ({
 	const [complete, incomplete] = await Promise.all([
 		fetcher({
 			query: getAllCategoriesQuery,
-			variables: { limit: 10, page: 1, completed: true },
+			variables: { limit: size, page: pageNumber, completed: true },
 			server: true,
 		}),
 		fetcher({
 			query: getAllCategoriesQuery,
-			variables: { limit: 10, page: 1, completed: false },
+			variables: { limit: size, page: pageNumber, completed: false },
 			server: true,
 		}),
 	]);
