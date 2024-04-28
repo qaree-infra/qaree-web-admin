@@ -1,6 +1,6 @@
 import type { Table } from "@tanstack/react-table";
-import { SimpleDataTable } from "./SimpleDataTable";
 import { RouterPagination } from "./RouterPagination";
+import { SimpleDataTable } from "./SimpleDataTable";
 
 export function TableWithPagination<TData>({ table }: { table: Table<TData> }) {
 	return (

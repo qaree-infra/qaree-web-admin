@@ -14,20 +14,20 @@ import {
 	DialogTrigger,
 } from "./ui/dialog";
 
-import { Form } from "./ui/form";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { type CategorySchema, categorySchema } from "@/schema";
-import { toast } from "sonner";
-import { useState } from "react";
-import { FormInput, SubmitButton } from "./SmartForm";
-import { FormIcon } from "./FormIcon";
-import { Pencil, Plus } from "lucide-react";
 import {
 	addCategoryAction,
 	editCategoryAction,
 	uploadCategoryIcon,
 } from "@/app/actions";
+import { type CategorySchema, categorySchema } from "@/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Pencil, Plus } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { FormIcon } from "./FormIcon";
+import { FormInput, SubmitButton } from "./SmartForm";
+import { Form } from "./ui/form";
 
 type PropsWithoutCategry = {
 	type?: "create";

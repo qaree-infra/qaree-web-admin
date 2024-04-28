@@ -1,12 +1,12 @@
 import {
 	DropdownMenu,
-	DropdownMenuTrigger,
-	DropdownMenuContent,
 	DropdownMenuCheckboxItem,
+	DropdownMenuContent,
+	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { Table } from "@tanstack/react-table";
 import { ListFilter } from "lucide-react";
 import { Button } from "../ui/button";
-import type { Table } from "@tanstack/react-table";
 
 export function ColumnsFilter<TData>({ table }: { table: Table<TData> }) {
 	return (

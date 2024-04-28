@@ -25,9 +25,9 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { useState } from "react";
 import { ColumnsFilter } from "@/components/table/ColumnsFilter";
 import { TableWithPagination } from "@/components/table/TableWithPagination";
+import { useState } from "react";
 
 type PaginationConfig = {
 	state: PaginationState;

@@ -1,11 +1,4 @@
-import React, { useState } from "react";
-import { Button, buttonVariants } from "./ui/button";
 import { deleteCategoryAction } from "@/app/actions";
-import { string, z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
-import { Form } from "./ui/form";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -17,8 +10,15 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Trash2 } from "lucide-react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { string, z } from "zod";
 import { FormInput, SubmitButton } from "./SmartForm";
+import { Button, buttonVariants } from "./ui/button";
+import { Form } from "./ui/form";
 const seleteSchema = z.object({
 	id: z.string(),
 });

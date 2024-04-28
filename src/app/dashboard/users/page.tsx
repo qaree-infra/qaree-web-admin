@@ -1,8 +1,8 @@
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetcher } from "@/lib/graphql/fetcher";
 import { adminGetAllUsersQuery, getAdminsQuery } from "@/lib/graphql/queries";
+import { type AdminUser, type User, columns } from "./columns-users";
 import { UsersDataTable } from "./data-table-users";
-import { type User, columns, type AdminUser } from "./columns-users";
 
 const getAllUsers = async ({
 	pageNumber,

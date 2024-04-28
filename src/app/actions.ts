@@ -16,15 +16,15 @@ import {
 	signUpMutation,
 } from "@/lib/graphql/mutations";
 
+import { authOptions } from "@/lib/authOptions";
+import { tags } from "@/lib/config/tags";
+import { UPLOAD_FULL_URL } from "@/lib/graphql";
 import type { CategoryIcon, RegisterData } from "@/lib/graphql/types";
 import { registerFormSchema } from "@/schema";
 import type { ResultOf } from "gql.tada";
-import { revalidatePath, revalidateTag } from "next/cache";
-import { UPLOAD_FULL_URL } from "@/lib/graphql";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/authOptions";
+import { revalidatePath, revalidateTag } from "next/cache";
 import type { Category } from "./dashboard/categories/columns";
-import { tags } from "@/lib/config/tags";
 
 type ActionState = {
 	success: boolean;

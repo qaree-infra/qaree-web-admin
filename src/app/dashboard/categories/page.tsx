@@ -1,10 +1,10 @@
+import { CategoryAction } from "@/components/CategoryAction";
+import { NoBooksFound } from "@/components/skeleton/NoBooksFound";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetcher } from "@/lib/graphql/fetcher";
 import { getAllCategoriesQuery } from "@/lib/graphql/queries";
-import { CategoriesDataTable } from "./data-table";
 import { Category, columns } from "./columns";
-import { NoBooksFound } from "@/components/skeleton/NoBooksFound";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { CategoryAction } from "@/components/CategoryAction";
+import { CategoriesDataTable } from "./data-table";
 
 const getData = async ({
 	pageNumber,

@@ -1,12 +1,12 @@
 "use client";
 
+import { CategoryAction } from "@/components/CategoryAction";
+import DeleteCategory from "@/components/DeleteCategory";
+import { FormatedDate } from "@/components/table/FormatedDate";
 import { Badge } from "@/components/ui/badge";
 import type { ColumnDef } from "@tanstack/react-table";
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
-import { FormatedDate } from "@/components/table/FormatedDate";
-import { CategoryAction } from "@/components/CategoryAction";
-import DeleteCategory from "@/components/DeleteCategory";
 
 export interface Category {
 	_id: string;

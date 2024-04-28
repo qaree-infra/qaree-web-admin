@@ -1,9 +1,11 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { ColumnDef } from "@tanstack/react-table";
 import { SortName } from "../books/SortName";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
+import { FormatedDate } from "@/components/table/FormatedDate";
+import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -12,10 +14,8 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
-import { FormatedDate } from "@/components/table/FormatedDate";
 
 export interface User {
 	_id: string;

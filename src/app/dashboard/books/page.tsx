@@ -1,10 +1,10 @@
+import { NoBooksFound } from "@/components/skeleton/NoBooksFound";
 import { fetcher } from "@/lib/graphql/fetcher";
 import { getBookSummaryQuery } from "@/lib/graphql/queries";
 import type { PaginationState } from "@tanstack/react-table";
 import { redirect } from "next/navigation";
 import { type BookSummary, columns } from "./columns";
 import { BooksDataTable } from "./data-table";
-import { NoBooksFound } from "@/components/skeleton/NoBooksFound";
 
 type Props = {
 	searchParams: {

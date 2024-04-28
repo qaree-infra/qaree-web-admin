@@ -3,11 +3,11 @@ import { flexRender } from "@tanstack/react-table";
 
 import {
 	Table,
-	TableHeader,
-	TableRow,
-	TableHead,
 	TableBody,
 	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
 } from "../ui/table";
 
 import type { Table as TableType } from "@tanstack/react-table";
