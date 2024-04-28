@@ -2,12 +2,14 @@
 
 import { cn } from "@/lib/utils";
 import {
+	BadgePercent,
 	Book,
 	Home,
 	LineChart,
 	Package2,
 	PencilRuler,
 	Settings,
+	Shapes,
 	Users2,
 } from "lucide-react";
 import Link from "next/link";
@@ -35,7 +37,12 @@ const items: Item[] = [
 	{
 		name: "Categories",
 		href: "/categories",
-		icon: <PencilRuler size={20} />,
+		icon: <Shapes size={20} />,
+	},
+	{
+		name: "Offeres",
+		href: "/offeres",
+		icon: <BadgePercent size={20} />,
 	},
 	{
 		name: "Users",
