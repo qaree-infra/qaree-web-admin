@@ -106,7 +106,7 @@ export function CategoryAction(props: Props) {
 		} else {
 			const { success, message, data } = await addCategoryAction(rest);
 			if (!success || !data?.id) {
-				// don't worry the id cannot be null if sucess is false
+				// don't worry the id cannot be null if sucess is true
 				// I will refactor this type weekness in next tasks
 				return toast.error(message);
 			}
