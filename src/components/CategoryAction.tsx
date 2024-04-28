@@ -73,7 +73,7 @@ export function CategoryAction(props: Props) {
 			const categoryId = props.category._id;
 
 			if (notIconOnly) {
-				const { success, message, data } = await editCategoryAction(
+				const { success, message } = await editCategoryAction(
 					props.category._id,
 					values,
 				);
@@ -105,16 +105,17 @@ export function CategoryAction(props: Props) {
 			}
 		} else {
 			const { success, message, data } = await addCategoryAction(rest);
-
-			if (!success || !data?.addCategory) {
+			if (!success || !data?.id) {
+				// don't worry the id cannot be null if sucess is false
+				// I will refactor this type weekness in next tasks
 				return toast.error(message);
 			}
 
 			if (icon && icon instanceof File) {
+				const categoryId = data?.id;
 				const formData = new FormData();
 				formData.append("icon", icon);
 
-				const categoryId = data.addCategory._id;
 				const state = await uploadCategoryIcon(String(categoryId), formData);
 
 				if (!state.success) {

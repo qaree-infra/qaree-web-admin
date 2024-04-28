@@ -118,7 +118,11 @@ export const reviewBookAction = async ({
 
 export const addCategoryAction = async (
 	variables: CategorySchemaWithoutIcon,
-): Promise<StateWithData<ResultOf<typeof addCategoryMutation>>> => {
+): Promise<
+	StateWithData<{
+		id: string;
+	}>
+> => {
 	try {
 		const data = await fetcher({
 			query: addCategoryMutation,
@@ -127,10 +131,13 @@ export const addCategoryAction = async (
 		});
 
 		revalidateTag("categories");
+
 		return {
 			success: true,
 			message: "New category has been successfully added",
-			data,
+			data: {
+				id: String(data.addCategory?._id),
+			},
 		};
 	} catch (error) {
 		const message = getErrorMessage(error);
@@ -145,7 +152,7 @@ export const addCategoryAction = async (
 export const uploadCategoryIcon = async (
 	id: string,
 	formData: FormData,
-): Promise<StateWithData<CategoryIcon>> => {
+): Promise<ActionState> => {
 	const session = await getServerSession(authOptions);
 
 	try {
@@ -155,7 +162,7 @@ export const uploadCategoryIcon = async (
 
 		const token = session.user.access_token;
 
-		const res = await fetch(UPLOAD_FULL_URL.icon(id), {
+		await fetch(UPLOAD_FULL_URL.icon(id), {
 			method: "POST",
 			headers: {
 				accept: "application/json",
@@ -165,14 +172,11 @@ export const uploadCategoryIcon = async (
 			body: formData,
 		});
 
-		const data = (await res.json()) as CategoryIcon;
-
 		revalidateTag("categories");
 
 		return {
 			success: true,
 			message: "Your category icon has been successfully updated",
-			data,
 		};
 	} catch (error) {
 		const message = getErrorMessage(error);
@@ -180,7 +184,6 @@ export const uploadCategoryIcon = async (
 		return {
 			success: false,
 			message,
-			data: null,
 		};
 	}
 };
@@ -188,9 +191,9 @@ export const uploadCategoryIcon = async (
 export const editCategoryAction = async (
 	id: string,
 	values: CategorySchemaWithoutIcon,
-): Promise<StateWithData<ResultOf<typeof editCategoryMutation>>> => {
+): Promise<ActionState> => {
 	try {
-		const data = await fetcher({
+		await fetcher({
 			query: editCategoryMutation,
 			variables: {
 				categoryId: id,
@@ -204,14 +207,12 @@ export const editCategoryAction = async (
 		return {
 			success: true,
 			message: "Your category has been updated with the latest changes",
-			data: data,
 		};
 	} catch (error) {
 		const message = getErrorMessage(error);
 		return {
 			success: false,
 			message,
-			data: null,
 		};
 	}
 };
