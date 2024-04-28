@@ -10,6 +10,7 @@ import type {
 import { fetcher } from "@/lib/graphql/fetcher";
 import {
 	addCategoryMutation,
+	deleteCategoryMutation,
 	editCategoryMutation,
 	reviewBookDataMutation,
 	signUpMutation,
@@ -23,6 +24,7 @@ import { UPLOAD_FULL_URL } from "@/lib/graphql";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/authOptions";
 import type { Category } from "./dashboard/categories/columns";
+import { tags } from "@/lib/config/tags";
 
 type ActionState = {
 	success: boolean;
@@ -130,7 +132,7 @@ export const addCategoryAction = async (
 			server: true,
 		});
 
-		revalidateTag("categories");
+		revalidateTag(tags.categories);
 
 		return {
 			success: true,
@@ -172,7 +174,7 @@ export const uploadCategoryIcon = async (
 			body: formData,
 		});
 
-		revalidateTag("categories");
+		revalidateTag(tags.categories);
 
 		return {
 			success: true,
@@ -202,7 +204,7 @@ export const editCategoryAction = async (
 			server: true,
 		});
 
-		revalidateTag("categories");
+		revalidateTag(tags.categories);
 
 		return {
 			success: true,
@@ -210,6 +212,38 @@ export const editCategoryAction = async (
 		};
 	} catch (error) {
 		const message = getErrorMessage(error);
+		return {
+			success: false,
+			message,
+		};
+	}
+};
+
+export const deleteCategoryAction = async (
+	categoryId: string,
+): Promise<ActionState> => {
+	try {
+		const { deleteCategory } = await fetcher({
+			query: deleteCategoryMutation,
+			variables: {
+				categoryId,
+			},
+			server: true,
+		});
+
+		if (!deleteCategory?.success) {
+			throw Error(deleteCategory?.message ?? "Delete failed!");
+		}
+
+		revalidateTag(tags.categories);
+
+		return {
+			success: true,
+			message: "Your category has been deleted",
+		};
+	} catch (error) {
+		const message = getErrorMessage(error);
+
 		return {
 			success: false,
 			message,

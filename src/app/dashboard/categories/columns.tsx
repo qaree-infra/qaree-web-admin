@@ -6,6 +6,7 @@ import { ImageIcon } from "lucide-react";
 import Image from "next/image";
 import { FormatedDate } from "@/components/table/FormatedDate";
 import { CategoryAction } from "@/components/CategoryAction";
+import DeleteCategory from "@/components/DeleteCategory";
 
 export interface Category {
 	_id: string;
@@ -85,8 +86,9 @@ export const columns: ColumnDef<Category>[] = [
 		accessorKey: "actions",
 		cell({ row }) {
 			return (
-				<div>
+				<div className="flex gap-2 items-center">
 					<CategoryAction type="update" category={row.original} />
+					<DeleteCategory id={row.original._id} />
 				</div>
 			);
 		},

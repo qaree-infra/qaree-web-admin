@@ -24,3 +24,12 @@ export const addCategoryMutation = graphql(`
     }
   }
 `);
+
+export const deleteCategoryMutation = graphql(`
+  mutation deleteCategory($categoryId: String!) {
+    deleteCategory(categoryId: $categoryId) {
+      success
+      message
+    }
+  }
+`);

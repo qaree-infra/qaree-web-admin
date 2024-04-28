@@ -148,7 +148,7 @@ export function CategoryAction(props: Props) {
 								form.reset(rest);
 							}}
 						>
-							<Pencil />
+							<Pencil className="size-5" />
 						</Button>
 					) : (
 						<Button variant="outline" className="flex gap-2">
