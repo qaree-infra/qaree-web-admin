@@ -22,20 +22,26 @@ import { Button } from "./ui/button";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 import type { Offer } from "@/app/dashboard/offeres/columns";
+import { DropdownMenuItem } from "./ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
-type T = {
-	type: "create" | "update";
-};
+// type T = {
+// 	type: "create" | "update";
+// };
 
-type AddProps = T & {
+type AddProps = {
 	bookId: string;
+	type: "create";
 };
 
-type EditProps = T & {
+type EditProps = {
 	offer: Offer;
+	type: "update";
 };
 
-type Props = AddProps | EditProps;
+type Props = (AddProps | EditProps) & {
+	className?: string;
+};
 
 export function OfferAction(props: Props) {
 	const [open, setOpen] = useState(false);
@@ -43,7 +49,9 @@ export function OfferAction(props: Props) {
 
 	const onSubmit = async (values: OfferSchema) => {
 		toast.info(<pre>{JSON.stringify(values, null, 2)}</pre>);
+		setOpen(false);
 	};
+
 	const form = useForm<OfferSchema>({
 		mode: "onSubmit",
 		resolver: zodResolver(offerSchema),
@@ -54,55 +62,65 @@ export function OfferAction(props: Props) {
 	});
 
 	return (
-		<div>
-			<Dialog open={open} onOpenChange={setOpen}>
-				<DialogTrigger asChild>
-					{props.type === "update" ? (
-						<Button
-							size={"icon"}
-							variant={"outline"}
-							onClick={() => {
-								// reset
-							}}
-						>
-							<Pencil className="size-5" />
-						</Button>
-					) : (
-						<Button variant="blank" className="w-full justify-start">
-							<span>Add Offer</span>
-						</Button>
-					)}
-				</DialogTrigger>
-				<DialogContent className="sm:max-w-xl">
-					<Form {...form}>
-						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-							<DialogHeader>
-								<DialogTitle>Add / Edit Offer</DialogTitle>
-								<DialogDescription>
-									Provide new offer details or update existing ones. Ensure the
-									discount amount is valid and select the expiration date.
-								</DialogDescription>
-							</DialogHeader>
-							<div className="space-y-5">
-								<FormInput
-									form={form}
-									name="percent"
-									label="Discount"
-									placeholder="Enter amount"
-								/>
+		<Dialog open={open} onOpenChange={setOpen}>
+			<DialogTrigger asChild>
+				{props.type === "update" ? (
+					<Button
+						size={"icon"}
+						variant={"outline"}
+						onClick={() => {
+							const { percent, expireAt } = props.offer;
+							form.reset({
+								percent,
+								expireAt: new Date(expireAt),
+							});
+						}}
+					>
+						<Pencil className="size-5" />
+					</Button>
+				) : (
+					<Button
+						type="button"
+						variant="blank"
+						className={cn("w-full justify-start ", props.className)}
+					>
+						Add Offer
+					</Button>
+				)}
+			</DialogTrigger>
+			<DialogContent className="sm:max-w-xl">
+				<Form {...form}>
+					<form
+						onSubmit={form.handleSubmit(onSubmit)}
+						className="space-y-5"
+						autoComplete="off"
+					>
+						<DialogHeader>
+							<DialogTitle>Add / Edit Offer</DialogTitle>
+							<DialogDescription>
+								Provide new offer details or update existing ones. Ensure the
+								discount amount is valid and select the expiration date.
+							</DialogDescription>
+						</DialogHeader>
+						<div className="space-y-5">
+							<FormInput
+								form={form}
+								name="percent"
+								label="Discount"
+								placeholder="Enter amount"
+							/>
 
-								<FormDate form={form} name="expireAt" label="Expire date" />
-							</div>
-							<DialogFooter>
-								<DialogClose asChild>
-									<Button variant="outline">Cancel</Button>
-								</DialogClose>
-								<SubmitButton className="w-32" />
-							</DialogFooter>
-						</form>
-					</Form>
-				</DialogContent>
-			</Dialog>
-		</div>
+							<FormDate form={form} name="expireAt" label="Expire date" />
+						</div>
+						<DialogFooter>
+							<DialogClose asChild>
+								<Button variant="outline">Cancel</Button>
+							</DialogClose>
+							<SubmitButton className="w-32" />
+						</DialogFooter>
+					</form>
+				</Form>
+			</DialogContent>
+		</Dialog>
 	);
 }

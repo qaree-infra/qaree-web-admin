@@ -18,6 +18,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { SortName } from "./SortName";
 import { OfferAction } from "@/components/OfferAction";
+import { useState } from "react";
 
 export interface BookSummary {
 	_id: string;

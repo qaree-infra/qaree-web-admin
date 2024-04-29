@@ -48,10 +48,10 @@ export default async function Offers({
 				_id: "3we",
 				name: "hello world",
 			},
-			createdAt: "329834",
-			expireAt: "32983432",
+			createdAt: "2024-05-03T21:00:00.000Z",
+			expireAt: "2024-05-03T21:00:00.000Z",
 			percent: 32,
-			updatedAt: "32983432",
+			updatedAt: "2024-05-03T21:00:00.000Z",
 		},
 	];
 
