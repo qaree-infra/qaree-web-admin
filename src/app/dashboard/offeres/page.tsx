@@ -40,25 +40,24 @@ export default async function Offers({
 		sizeNumber = 10;
 	}
 
-	// const { offers, total } = await getData(pageNumber, sizeNumber);
-	const offers: Offer[] = [
-		{
-			_id: "q332",
-			book: {
-				_id: "3we",
-				name: "hello world",
-			},
-			createdAt: "2024-05-03T21:00:00.000Z",
-			expireAt: "2024-05-03T21:00:00.000Z",
-			percent: 32,
-			updatedAt: "2024-05-03T21:00:00.000Z",
-		},
-	];
+	const { offers, total } = await getData(pageNumber, sizeNumber);
+	// const offers: Offer[] = [
+	// 	{
+	// 		_id: "q332",
+	// 		book: {
+	// 			_id: "3we",
+	// 			name: "hello world",
+	// 		},
+	// 		createdAt: "2024-05-03T21:00:00.000Z",
+	// 		expireAt: "2024-05-03T21:00:00.000Z",
+	// 		percent: 32,
+	// 		updatedAt: "2024-05-03T21:00:00.000Z",
+	// 	},
+	// ];
 
 	return (
 		<div>
-			<OfferAction type={"update"} offer={offers[0]} />
-			{/* <OffersDataTable
+			<OffersDataTable
 				// @ts-ignore nullable values!
 				columns={columns}
 				data={offers}
@@ -69,7 +68,7 @@ export default async function Offers({
 						pageSize: Number(size),
 					},
 				}}
-			/> */}
+			/>
 		</div>
 	);
 }

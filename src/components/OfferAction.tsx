@@ -18,16 +18,14 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "./ui/dialog";
+
 import { Button } from "./ui/button";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 import type { Offer } from "@/app/dashboard/offeres/columns";
-import { DropdownMenuItem } from "./ui/dropdown-menu";
-import { cn } from "@/lib/utils";
 
-// type T = {
-// 	type: "create" | "update";
-// };
+import { cn } from "@/lib/utils";
+import { addOfferAction, editOfferAction } from "@/app/actions";
 
 type AddProps = {
 	bookId: string;
@@ -45,13 +43,7 @@ type Props = (AddProps | EditProps) & {
 
 export function OfferAction(props: Props) {
 	const [open, setOpen] = useState(false);
-	// const isUpdate = props.type === "update";
-
-	const onSubmit = async (values: OfferSchema) => {
-		toast.info(<pre>{JSON.stringify(values, null, 2)}</pre>);
-		
-		setOpen(false);
-	};
+	const isUpdate = props.type === "update";
 
 	const form = useForm<OfferSchema>({
 		mode: "onSubmit",
@@ -61,6 +53,40 @@ export function OfferAction(props: Props) {
 			expireAt: undefined,
 		},
 	});
+
+	const onSubmit = async (values: OfferSchema) => {
+		const expireAt = values.expireAt.toLocaleString();
+
+		if (isUpdate) {
+			if (!form.formState.isDirty) {
+				return toast.warning("No changes have been triggered!");
+			}
+			const { success, message } = await editOfferAction({
+				id: props.offer._id,
+				expireAt,
+				percent: values.percent,
+			});
+
+			if (!success) {
+				return toast.error(message);
+			}
+			toast.success(message);
+		} else {
+			const { success, message } = await addOfferAction({
+				bookId: props.bookId,
+				expireAt,
+				percent: values.percent,
+			});
+
+			if (!success) {
+				return toast.error(message);
+			}
+
+			toast.success(message);
+		}
+
+		setOpen(false);
+	};
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
@@ -73,7 +99,7 @@ export function OfferAction(props: Props) {
 							const { percent, expireAt } = props.offer;
 							form.reset({
 								percent,
-								expireAt: new Date(expireAt),
+								expireAt: new Date(+expireAt),
 							});
 						}}
 					>

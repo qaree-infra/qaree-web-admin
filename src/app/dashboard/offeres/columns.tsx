@@ -1,5 +1,6 @@
 "use client";
 
+import { OfferAction } from "@/components/OfferAction";
 import { FormatedDate } from "@/components/table/FormatedDate";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
@@ -78,8 +79,12 @@ export const columns: ColumnDef<Offer>[] = [
 	{
 		id: "actions",
 		header: "Actions",
-		cell(props) {
-			return <div>edit & delete</div>;
+		cell({ row }) {
+			return (
+				<div>
+					<OfferAction type="update" offer={row.original} />
+				</div>
+			);
 		},
 	},
 ];
