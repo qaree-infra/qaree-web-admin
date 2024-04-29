@@ -146,7 +146,11 @@ export const columns: ColumnDef<BookSummary>[] = [
 						<DropdownMenuItem asChild>
 							<Link href={`/dashboard/books/${bookId}`}>Review</Link>
 						</DropdownMenuItem>
-						<DropdownMenuItem>Add Offer</DropdownMenuItem>
+						<DropdownMenuItem asChild>
+							<Button variant={"blank"} className="w-full justify-start">
+								Add Offer
+							</Button>
+						</DropdownMenuItem>
 						<DropdownMenuItem>Delete</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

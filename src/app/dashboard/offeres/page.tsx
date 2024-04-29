@@ -2,6 +2,7 @@ import { fetcher } from "@/lib/graphql/fetcher";
 import { getAllOffersQuery } from "@/lib/graphql/queries";
 import { OffersDataTable } from "./data-table";
 import { type Offer, columns } from "./columns";
+import { OfferAction } from "@/components/OfferAction";
 
 const getData = async (page: number, limit: number) => {
 	const { getAllOffers } = await fetcher({
@@ -56,7 +57,8 @@ export default async function Offers({
 
 	return (
 		<div>
-			<OffersDataTable
+			<OfferAction />
+			{/* <OffersDataTable
 				// @ts-ignore nullable values!
 				columns={columns}
 				data={offers}
@@ -67,7 +69,7 @@ export default async function Offers({
 						pageSize: Number(size),
 					},
 				}}
-			/>
+			/> */}
 		</div>
 	);
 }
