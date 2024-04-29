@@ -47,7 +47,10 @@ export function AdminUpdateAccount({ oldName }: { oldName: string }) {
 	return (
 		<Card>
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+				<form
+					onSubmit={form.handleSubmit(onSubmit)}
+					className="space-y-3 h-full flex flex-col justify-between"
+				>
 					<CardHeader>
 						<CardTitle>Update Account</CardTitle>
 						<CardDescription>

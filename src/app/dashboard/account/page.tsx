@@ -6,6 +6,7 @@ import { getAdminInfoQuery } from "@/lib/graphql/queries";
 import { AdminUpdateAccount } from "@/components/AdminUpdateAccount";
 import { Separator } from "@/components/ui/separator";
 import { UpdateAvatar } from "@/components/UpdateAvatar";
+import { DeleteAccount } from "@/components/DeleteAccount";
 
 export const metadata: Metadata = {
 	title: "Setting",
@@ -48,13 +49,18 @@ export default async function Account() {
 				</p>
 			</header>
 			<Separator />
-			<AdminUpdateAccount oldName={name} />
-			<UpdateAvatar
-				avatar={{
-					path: avatar.path,
-					name,
-				}}
-			/>
+			<div className="grid 2xl:grid-cols-[1fr_0.5fr] gap-4">
+				<AdminUpdateAccount oldName={name} />
+				<div className="flex flex-col gap-4">
+					<UpdateAvatar
+						avatar={{
+							path: avatar.path,
+							name,
+						}}
+					/>
+					<DeleteAccount />
+				</div>
+			</div>
 		</div>
 	);
 }

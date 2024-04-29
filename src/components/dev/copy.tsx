@@ -16,9 +16,9 @@ function CardDemo() {
 				<CardHeader>
 					<CardTitle>title</CardTitle>
 					<CardDescription>description</CardDescription>
-					<div>content</div>
-					<CardFooter>footer</CardFooter>
 				</CardHeader>
+				<div>content</div>
+				<CardFooter>footer</CardFooter>
 			</CardContent>
 		</Card>
 	);
