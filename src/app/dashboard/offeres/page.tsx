@@ -1,7 +1,7 @@
 import { fetcher } from "@/lib/graphql/fetcher";
 import { getAllOffersQuery } from "@/lib/graphql/queries";
 import { OffersDataTable } from "./data-table";
-import { columns } from "./columns";
+import { type Offer, columns } from "./columns";
 
 const getData = async (page: number, limit: number) => {
 	const { getAllOffers } = await fetcher({
@@ -39,7 +39,20 @@ export default async function Offers({
 		sizeNumber = 10;
 	}
 
-	const { offers, total } = await getData(pageNumber, sizeNumber);
+	// const { offers, total } = await getData(pageNumber, sizeNumber);
+	const offers: Offer[] = [
+		{
+			_id: "q332",
+			book: {
+				_id: "3we",
+				name: "hello world",
+			},
+			createdAt: "329834",
+			expireAt: "32983432",
+			percent: 32,
+			updatedAt: "32983432",
+		},
+	];
 
 	return (
 		<div>
@@ -48,7 +61,7 @@ export default async function Offers({
 				columns={columns}
 				data={offers}
 				paginationConfig={{
-					rowCount: total,
+					rowCount: 1,
 					state: {
 						pageIndex: pageNumber - 1,
 						pageSize: Number(size),

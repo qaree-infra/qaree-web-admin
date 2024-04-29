@@ -1,5 +1,7 @@
 "use client";
 
+import { FormatedDate } from "@/components/table/FormatedDate";
+import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
@@ -20,18 +22,39 @@ export const columns: ColumnDef<Offer>[] = [
 	{
 		accessorKey: "percent",
 		header: "Percent",
+		cell({ row }) {
+			const formatedPercent = new Intl.NumberFormat("en-US", {
+				style: "percent",
+				minimumFractionDigits: 2,
+				maximumFractionDigits: 2,
+			}).format(row.original.percent);
+
+			return <Badge>{formatedPercent}</Badge>;
+		},
 	},
 	{
 		accessorKey: "createdAt",
 		header: "Created At",
+		cell({ row }) {
+			const date: number = +row.original.createdAt;
+			return <FormatedDate value={date} />;
+		},
 	},
 	{
 		accessorKey: "updatedAt",
 		header: "Last Edit",
+		cell({ row }) {
+			const date: number = +row.original.updatedAt;
+			return <FormatedDate value={date} />;
+		},
 	},
 	{
 		accessorKey: "expireAt",
 		header: "Expire Date",
+		cell({ row }) {
+			const date: number = +row.original.expireAt;
+			return <FormatedDate value={date} />;
+		},
 	},
 	{
 		accessorKey: "book",
@@ -46,7 +69,7 @@ export const columns: ColumnDef<Offer>[] = [
 						})}
 						href={`/dashboard/books/${book._id}`}
 					>
-						@{book.name}
+						@ {book.name}
 					</Link>
 				</div>
 			);
