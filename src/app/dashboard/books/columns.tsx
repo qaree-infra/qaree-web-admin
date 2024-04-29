@@ -146,6 +146,7 @@ export const columns: ColumnDef<BookSummary>[] = [
 						<DropdownMenuItem asChild>
 							<Link href={`/dashboard/books/${bookId}`}>Review</Link>
 						</DropdownMenuItem>
+						<DropdownMenuItem>Add Offer</DropdownMenuItem>
 						<DropdownMenuItem>Delete</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
