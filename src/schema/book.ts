@@ -17,7 +17,8 @@ const invalid = {
 	content: "The review should be at least 10 characters long",
 	name: "Name should be at least 3 characters long",
 	hex_color: "Invalid hexadecimal color value",
-	number: "The value should be of type number",
+	number: "Enter a number",
+	discount: "This dscount is not valid",
 };
 
 export const reviewSchema = z.object({
@@ -61,10 +62,15 @@ export type CategorySchema = z.infer<typeof categorySchema>;
 export type CategorySchemaWithoutIcon = Omit<CategorySchema, "icon">;
 
 export const offerSchema = z.object({
-	percent: z.coerce.number({
-		required_error: errors.percent,
-		invalid_type_error: invalid.number,
-	}),
+	percent: z.coerce
+		.number({
+			required_error: errors.percent,
+			// FIXME: invalid error shown instead required
+			invalid_type_error: invalid.number,
+		})
+		.min(0, {
+			message: invalid.discount,
+		}),
 	expireAt: z
 		.date({
 			required_error: errors.expireAt,
