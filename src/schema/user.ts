@@ -28,3 +28,34 @@ export const resetPasswordFormSchema = z
 		path: ["confirm_password"],
 	});
 export type ResetPasswordSchemaType = z.infer<typeof resetPasswordFormSchema>;
+
+const errors = {
+	name: "",
+	oldPassword: "",
+	newPassword: "",
+	avatar: "",
+};
+
+const invalid = {
+	name: "",
+	newPassword: "",
+};
+
+export const updateAccountSchema = z.object({
+	name: z
+		.string({ required_error: errors.name })
+		.min(3, { message: errors.name }),
+	oldPassword: z.string({ required_error: errors.oldPassword }),
+	newPassword: z.string({ required_error: errors.newPassword }).min(8, {
+		message: invalid.newPassword,
+	}),
+});
+
+export type UpdateAccountSchema = z.infer<typeof updateAccountSchema>;
+
+export const updateAvatarSchema = z.object({
+	avatar: z.instanceof(File, {
+		message: errors.avatar,
+	}),
+});
+export type UpdateAvatarSchema = z.infer<typeof updateAvatarSchema>;
