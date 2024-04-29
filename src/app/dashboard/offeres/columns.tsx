@@ -28,7 +28,7 @@ export const columns: ColumnDef<Offer>[] = [
 				style: "percent",
 				minimumFractionDigits: 2,
 				maximumFractionDigits: 2,
-			}).format(row.original.percent);
+			}).format(row.original.percent / 100);
 
 			return <Badge>{formatedPercent}</Badge>;
 		},
