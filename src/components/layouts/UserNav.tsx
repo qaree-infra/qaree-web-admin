@@ -12,18 +12,18 @@ import {
 
 import { Button } from "../ui/button";
 import { siteConfig } from "@/lib/config/site";
-import { fetcher } from "@/lib/graphql/fetcher";
-import { getAdminInfoQuery } from "@/lib/graphql/queries";
-import type { AdminInfo } from "@/app/dashboard/account/page";
+import { getCurrentUser } from "@/lib/authOptions";
 
 async function UserNav() {
-	const { getAdminInfo } = (await fetcher({
-		query: getAdminInfoQuery,
-		server: true,
-		cache: "default",
-	})) as { getAdminInfo: AdminInfo };
+	// const { getAdminInfo } = (await fetcher({
+	// 	query: getAdminInfoQuery,
+	// 	server: true,
+	// 	cache: "default",
+	// })) as { getAdminInfo: AdminInfo };
 
-	const { avatar, name } = getAdminInfo;
+	// const { avatar, name } = getAdminInfo;
+
+	const { name, avatar } = await getCurrentUser();
 
 	return (
 		<DropdownMenu>

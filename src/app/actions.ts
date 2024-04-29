@@ -33,7 +33,7 @@ import { getServerSession } from "next-auth";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { Fascinate_Inline } from "next/font/google";
 import type { Category } from "./dashboard/categories/columns";
-import { redirect } from "next/dist/server/api-utils";
+import { redirect } from "next/navigation";
 
 type ActionState = {
 	success: boolean;
@@ -364,7 +364,9 @@ export const updateAccountAction = async (
 	}
 };
 
-export const deleteAccountAction = async (): Promise<ActionState> => {
+export const deleteAccountAction = async (): Promise<
+	ActionState | undefined
+> => {
 	try {
 		const { deleteAccount } = await fetcher({
 			query: deleteAccountMutation,
@@ -375,10 +377,7 @@ export const deleteAccountAction = async (): Promise<ActionState> => {
 			throw Error("Something went wrong!");
 		}
 
-		return {
-			success: true,
-			message: deleteAccount.message ?? "Your account has been deleted",
-		};
+		redirect("/");
 	} catch (error) {
 		const message = getErrorMessage(error);
 		return {
