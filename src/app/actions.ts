@@ -400,7 +400,7 @@ export const uploadAdminAvatar = async (
 
 		const token = session.user.access_token;
 
-		await fetch(UPLOAD_FULL_URL.avatar, {
+		const res = await fetch(UPLOAD_FULL_URL.avatar, {
 			method: "POST",
 			headers: {
 				accept: "application/json",
@@ -410,7 +410,9 @@ export const uploadAdminAvatar = async (
 			body: formData,
 		});
 
-		revalidateTag(tags.account);
+		if (!res.ok) {
+			throw Error(res.statusText);
+		}
 
 		return {
 			success: true,

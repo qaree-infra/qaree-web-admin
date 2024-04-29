@@ -5,11 +5,13 @@ import { fetcher } from "@/lib/graphql/fetcher";
 import { getAdminInfoQuery } from "@/lib/graphql/queries";
 import { AdminUpdateAccount } from "@/components/AdminUpdateAccount";
 import { Separator } from "@/components/ui/separator";
+import { UpdateAvatar } from "@/components/UpdateAvatar";
+
 export const metadata: Metadata = {
 	title: "Setting",
 };
 
-interface AdminInfo {
+export interface AdminInfo {
 	_id: string;
 	name: string;
 	email: string;
@@ -47,6 +49,12 @@ export default async function Account() {
 			</header>
 			<Separator />
 			<AdminUpdateAccount oldName={name} />
+			<UpdateAvatar
+				avatar={{
+					path: avatar.path,
+					name,
+				}}
+			/>
 		</div>
 	);
 }
