@@ -46,7 +46,9 @@ async function UserNav() {
 				<DropdownMenuSeparator />
 				<DropdownMenuItem>Settings</DropdownMenuItem>
 				<DropdownMenuItem>
-					<Link href={siteConfig.links.whatsapp}>Support</Link>
+					<Link href={siteConfig.links.whatsapp} target="_blnak">
+						Support
+					</Link>
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownLogoutItem />
