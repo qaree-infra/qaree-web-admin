@@ -4,16 +4,20 @@ import { z } from "zod";
 const errors = {
 	status: "Select book status",
 	content: "Write your review",
-	icon: "",
-	name: "",
-	background: "",
+	icon: "Upload the category icon",
+	name: "Enter the name",
+	background: "Pick a background color",
+	percent: "Enter the percent value",
+	expireAt: "Enter the expire date",
+	expired_date: "Expire date must be a future date",
 };
 
 const invalid = {
 	status: "Invalid status option!",
 	content: "The review should be at least 10 characters long",
-	name: "",
-	hex_color: "",
+	name: "Name should be at least 3 characters long",
+	hex_color: "Invalid hexadecimal color value",
+	number: "The value should be of type number",
 };
 
 export const reviewSchema = z.object({
@@ -34,6 +38,8 @@ export const reviewSchema = z.object({
 		}),
 });
 
+export type ReviewSchema = z.infer<typeof reviewSchema>;
+
 export const categorySchema = z.object({
 	icon: z
 		.instanceof(File, {
@@ -51,6 +57,27 @@ export const categorySchema = z.object({
 		.min(3, { message: invalid.hex_color }),
 });
 
-export type ReviewSchema = z.infer<typeof reviewSchema>;
 export type CategorySchema = z.infer<typeof categorySchema>;
 export type CategorySchemaWithoutIcon = Omit<CategorySchema, "icon">;
+
+export const offerSchema = z.object({
+	percent: z.coerce.number({
+		required_error: errors.percent,
+		invalid_type_error: invalid.number,
+	}),
+	expireAt: z
+		.date({
+			required_error: errors.expireAt,
+		})
+		.refine(
+			(date) => {
+				const now = new Date();
+				return date > now;
+			},
+			{
+				message: errors.expired_date,
+			},
+		),
+});
+
+export type OfferSchema = z.infer<typeof offerSchema>;
