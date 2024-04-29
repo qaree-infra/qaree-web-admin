@@ -5,6 +5,7 @@ import type {
 	CategorySchemaWithoutIcon,
 	OfferSchema,
 	ReviewSchema,
+	UpdateAccountSchema,
 	categorySchema,
 } from "@/schema";
 
@@ -338,11 +339,13 @@ export const deleteOfferAction = async (id: string): Promise<ActionState> => {
 	}
 };
 
-export const updateAccountAction = async (id: string): Promise<ActionState> => {
+export const updateAccountAction = async (
+	variables: UpdateAccountSchema,
+): Promise<ActionState> => {
 	try {
 		await fetcher({
 			query: updateAccountMutation,
-			// variables: "",
+			variables,
 			server: true,
 		});
 
@@ -350,7 +353,7 @@ export const updateAccountAction = async (id: string): Promise<ActionState> => {
 
 		return {
 			success: true,
-			message: "The offer has been successfully deleted",
+			message: "Your account data has been updated",
 		};
 	} catch (error) {
 		const message = getErrorMessage(error);

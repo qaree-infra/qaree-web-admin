@@ -45,7 +45,9 @@ export const updateAccountSchema = z.object({
 	name: z
 		.string({ required_error: errors.name })
 		.min(3, { message: errors.name }),
-	oldPassword: z.string({ required_error: errors.oldPassword }),
+	oldPassword: z.string().min(1, {
+		message: errors.oldPassword,
+	}),
 	newPassword: z.string({ required_error: errors.newPassword }).min(8, {
 		message: invalid.newPassword,
 	}),
