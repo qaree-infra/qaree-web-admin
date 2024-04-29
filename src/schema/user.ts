@@ -1,19 +1,22 @@
-import { string, z } from "zod";
+import { z } from "zod";
 
-export const registerFormSchema = z.object({
+export const registerSchema = z.object({
 	email: z.string().email(),
 	name: z.string().min(3),
 	password: z.string().min(4),
 });
+export type RegisterSchema = z.infer<typeof registerSchema>;
 
 export const verifyAccountFormSchema = z.object({
 	otp: z.string().length(6),
 });
+export type VerifyAccountSchemaType = z.infer<typeof verifyAccountFormSchema>;
 
 export const loginFormSchema = z.object({
 	email: z.string().email(),
 	password: z.string().min(3),
 });
+export type LoginSchemaType = z.infer<typeof loginFormSchema>;
 
 export const resetPasswordFormSchema = z
 	.object({
@@ -24,8 +27,4 @@ export const resetPasswordFormSchema = z
 		message: "The passwords did not match",
 		path: ["confirm_password"],
 	});
-
 export type ResetPasswordSchemaType = z.infer<typeof resetPasswordFormSchema>;
-export type RegisterSchemaType = z.infer<typeof registerFormSchema>;
-export type VerifyAccountSchemaType = z.infer<typeof verifyAccountFormSchema>;
-export type LoginSchemaType = z.infer<typeof loginFormSchema>;

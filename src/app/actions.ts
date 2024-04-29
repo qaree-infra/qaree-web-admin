@@ -26,7 +26,7 @@ import { authOptions } from "@/lib/authOptions";
 import { tags } from "@/lib/config/tags";
 import { UPLOAD_FULL_URL } from "@/lib/graphql";
 import type { CategoryIcon, RegisterData } from "@/lib/graphql/types";
-import { registerFormSchema } from "@/schema";
+import { registerSchema } from "@/schema";
 import type { ResultOf } from "gql.tada";
 import { getServerSession } from "next-auth";
 import { revalidatePath, revalidateTag } from "next/cache";
@@ -54,7 +54,7 @@ const getErrorMessage = (error: unknown): string => {
 export const registerAction = async (
 	userData: RegisterData,
 ): Promise<ActionState> => {
-	const result = registerFormSchema.safeParse(userData);
+	const result = registerSchema.safeParse(userData);
 
 	if (!result.success) {
 		const errorMessage = result.error.message;
