@@ -33,3 +33,28 @@ export const deleteCategoryMutation = graphql(`
     }
   }
 `);
+
+export const addOfferMutation = graphql(`
+  mutation addOffer($bookId: String!, $percent: Int!, $expireAt: String!) {
+    addOffer(bookId: $bookId, percent: $percent, expireAt: $expireAt) {
+      _id
+    }
+  }
+`);
+
+export const editOfferMutation = graphql(`
+  mutation editOffer($id: String!, $percent: Int!, $expireAt: String! ) {
+    editOffer(id: $id, percent: $percent, expireAt: $expireAt) {
+      _id
+    }
+  }
+`);
+
+export const deleteOfferMutation = graphql(`
+  mutation deleteOffer($id: String!) {
+    deleteOffer(id: $id) {
+      success
+      message
+    }
+  }
+`);
