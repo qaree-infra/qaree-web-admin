@@ -6,6 +6,12 @@ import { getAllCategoriesQuery } from "@/lib/graphql/queries";
 import { Category, columns } from "./columns";
 import { CategoriesDataTable } from "./data-table";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Categories",
+};
+
 const getData = async ({
 	pageNumber,
 	size,

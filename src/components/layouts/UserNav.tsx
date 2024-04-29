@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from "next/link";
 import {
 	DropdownLogoutItem,
 	DropdownMenu,
@@ -11,6 +12,7 @@ import {
 
 import { getCurrentUser } from "@/lib/authOptions";
 import { Button } from "../ui/button";
+import { siteConfig } from "@/lib/config/site";
 
 async function UserNav() {
 	const user = await getCurrentUser();
@@ -43,7 +45,9 @@ async function UserNav() {
 				<DropdownMenuLabel>My Account</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem>Settings</DropdownMenuItem>
-				<DropdownMenuItem>Support</DropdownMenuItem>
+				<DropdownMenuItem>
+					<Link href={siteConfig.links.whatsapp}>Support</Link>
+				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownLogoutItem />
 			</DropdownMenuContent>

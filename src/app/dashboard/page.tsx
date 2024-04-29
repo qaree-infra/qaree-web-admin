@@ -1,5 +1,11 @@
 import { getCurrentUser } from "@/lib/authOptions";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Dashboard",
+};
+
 export default async function Dashboard() {
 	const user = await getCurrentUser();
 
