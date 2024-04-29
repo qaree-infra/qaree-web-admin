@@ -1,5 +1,6 @@
 "use client";
 
+import DeleteOffer from "@/components/DeleteOffer";
 import { OfferAction } from "@/components/OfferAction";
 import { FormatedDate } from "@/components/table/FormatedDate";
 import { Badge } from "@/components/ui/badge";
@@ -81,8 +82,9 @@ export const columns: ColumnDef<Offer>[] = [
 		header: "Actions",
 		cell({ row }) {
 			return (
-				<div>
+				<div className="flex items-center gap-2">
 					<OfferAction type="update" offer={row.original} />
+					<DeleteOffer id={row.original._id} />
 				</div>
 			);
 		},

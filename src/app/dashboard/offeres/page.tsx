@@ -62,7 +62,7 @@ export default async function Offers({
 				columns={columns}
 				data={offers}
 				paginationConfig={{
-					rowCount: 1,
+					rowCount: total,
 					state: {
 						pageIndex: pageNumber - 1,
 						pageSize: Number(size),
