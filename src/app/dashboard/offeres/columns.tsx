@@ -1,3 +1,5 @@
+"use client";
+
 import { buttonVariants } from "@/components/ui/button";
 import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";

@@ -92,7 +92,7 @@ export const getAllCategoriesQuery = graphql(`
 `);
 
 export const getAllOffersQuery = graphql(`
-query getAllOffers($page: Int!, $limit: Int!, $sort: String!) {
+query getAllOffers($page: Int!, $limit: Int!, $sort: String) {
   getAllOffers(page: $page, limit: $limit, sort: $sort) {
     offers {
       _id
