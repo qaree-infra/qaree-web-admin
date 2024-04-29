@@ -90,3 +90,24 @@ export const getAllCategoriesQuery = graphql(`
     }
   }
 `);
+
+export const getAllOffersQuery = graphql(`
+query getAllOffers($page: Int!, $limit: Int!, $sort: String!) {
+  getAllOffers(page: $page, limit: $limit, sort: $sort) {
+    offers {
+      _id
+      percent
+      expireAt
+      book {
+       _id
+       name 
+      }
+      createdAt
+      updatedAt
+    }
+    numberOfPages
+    currentPage
+    total
+  }
+
+}`);
