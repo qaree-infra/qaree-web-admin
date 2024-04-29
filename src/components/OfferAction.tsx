@@ -8,16 +8,23 @@ import { toast } from "sonner";
 import { FormInput, SubmitButton } from "./SmartForm";
 import { FormDate } from "./FormDate";
 
-// props
-// type, bookId, offer
-// type create & bookId
-// type edit & offer el
+type T = {
+	type: "create" | "update";
+};
 
-export function OfferAction() {
+type AddProps = T & {
+	bookId: string;
+};
+
+type EditProps = T & {
+	offer: OfferSchema;
+};
+
+type Props = AddProps | EditProps;
+
+export function OfferAction(props: Props) {
 	const onSubmit = async (values: OfferSchema) => {
-		toast.info(
-			<pre className="text-wrap">{JSON.stringify(values, null, 2)}</pre>,
-		);
+		toast.info(<pre>{JSON.stringify(values, null, 2)}</pre>);
 	};
 	const form = useForm<OfferSchema>({
 		mode: "onSubmit",
