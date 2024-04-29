@@ -17,6 +17,7 @@ import { Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { SortName } from "./SortName";
+import { OfferAction } from "@/components/OfferAction";
 
 export interface BookSummary {
 	_id: string;
@@ -147,9 +148,7 @@ export const columns: ColumnDef<BookSummary>[] = [
 							<Link href={`/dashboard/books/${bookId}`}>Review</Link>
 						</DropdownMenuItem>
 						<DropdownMenuItem asChild>
-							<Button variant={"blank"} className="w-full justify-start">
-								Add Offer
-							</Button>
+							<OfferAction type="create" bookId={bookId} />
 						</DropdownMenuItem>
 						<DropdownMenuItem>Delete</DropdownMenuItem>
 					</DropdownMenuContent>

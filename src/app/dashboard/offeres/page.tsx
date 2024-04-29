@@ -57,7 +57,7 @@ export default async function Offers({
 
 	return (
 		<div>
-			<OfferAction />
+			<OfferAction type={"update"} offer={offers[0]} />
 			{/* <OffersDataTable
 				// @ts-ignore nullable values!
 				columns={columns}
