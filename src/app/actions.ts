@@ -28,8 +28,8 @@ import { registerFormSchema } from "@/schema";
 import type { ResultOf } from "gql.tada";
 import { getServerSession } from "next-auth";
 import { revalidatePath, revalidateTag } from "next/cache";
-import type { Category } from "./dashboard/categories/columns";
 import { Fascinate_Inline } from "next/font/google";
+import type { Category } from "./dashboard/categories/columns";
 
 type ActionState = {
 	success: boolean;

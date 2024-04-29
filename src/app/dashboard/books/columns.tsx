@@ -1,5 +1,6 @@
 "use client";
 
+import { OfferAction } from "@/components/OfferAction";
 import { FormatedDate } from "@/components/table/FormatedDate";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,9 +17,8 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { SortName } from "./SortName";
-import { OfferAction } from "@/components/OfferAction";
 import { useState } from "react";
+import { SortName } from "./SortName";
 
 export interface BookSummary {
 	_id: string;
