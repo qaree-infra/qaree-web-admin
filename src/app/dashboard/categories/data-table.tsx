@@ -9,12 +9,12 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 
-type PaginationConfig = {
+export type PaginationConfig = {
 	state: PaginationState;
 	rowCount: number;
 };
 
-interface DataTableProps<TData, TValue> {
+export interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
 	paginationConfig: PaginationConfig;
