@@ -12,12 +12,14 @@ import { fetcher } from "@/lib/graphql/fetcher";
 import {
 	addCategoryMutation,
 	addOfferMutation,
+	deleteAccountMutation,
 	deleteCategoryMutation,
 	deleteOfferMutation,
 	editCategoryMutation,
 	editOfferMutation,
 	reviewBookDataMutation,
 	signUpMutation,
+	updateAccountMutation,
 } from "@/lib/graphql/mutations";
 
 import { authOptions } from "@/lib/authOptions";
@@ -30,6 +32,7 @@ import { getServerSession } from "next-auth";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { Fascinate_Inline } from "next/font/google";
 import type { Category } from "./dashboard/categories/columns";
+import { redirect } from "next/dist/server/api-utils";
 
 type ActionState = {
 	success: boolean;
@@ -328,6 +331,91 @@ export const deleteOfferAction = async (id: string): Promise<ActionState> => {
 		};
 	} catch (error) {
 		const message = getErrorMessage(error);
+		return {
+			success: false,
+			message,
+		};
+	}
+};
+
+export const updateAccountAction = async (id: string): Promise<ActionState> => {
+	try {
+		await fetcher({
+			query: updateAccountMutation,
+			// variables: "",
+			server: true,
+		});
+
+		revalidateTag(tags.account);
+
+		return {
+			success: true,
+			message: "The offer has been successfully deleted",
+		};
+	} catch (error) {
+		const message = getErrorMessage(error);
+		return {
+			success: false,
+			message,
+		};
+	}
+};
+
+export const deleteAccountAction = async (): Promise<ActionState> => {
+	try {
+		const { deleteAccount } = await fetcher({
+			query: deleteAccountMutation,
+			server: true,
+		});
+
+		if (!deleteAccount?.success) {
+			throw Error("Something went wrong!");
+		}
+
+		return {
+			success: true,
+			message: deleteAccount.message ?? "Your account has been deleted",
+		};
+	} catch (error) {
+		const message = getErrorMessage(error);
+		return {
+			success: false,
+			message,
+		};
+	}
+};
+
+export const uploadAdminAvatar = async (
+	formData: FormData,
+): Promise<ActionState> => {
+	const session = await getServerSession(authOptions);
+
+	try {
+		if (!session?.user) {
+			throw Error("You must be signed in to perform this action");
+		}
+
+		const token = session.user.access_token;
+
+		await fetch(UPLOAD_FULL_URL.avatar, {
+			method: "POST",
+			headers: {
+				accept: "application/json",
+				contentType: "multipart/form-data",
+				Authorization: `Bearer ${token}`,
+			},
+			body: formData,
+		});
+
+		revalidateTag(tags.account);
+
+		return {
+			success: true,
+			message: " Your avatar has been updated.",
+		};
+	} catch (error) {
+		const message = getErrorMessage(error);
+
 		return {
 			success: false,
 			message,

@@ -17,7 +17,7 @@ export const signUpMutation = graphql(`
   }
 `);
 
-export const updateAccountAction = graphql(`
+export const updateAccountMutation = graphql(`
   mutation updateAccount($name: String!, $oldPassword: String!, $newPassword: String!){
     updateAccount(name: $name, oldPassword: $oldPassword, newPassword: $newPassword) {
       _id
@@ -25,7 +25,7 @@ export const updateAccountAction = graphql(`
   } 
 `);
 
-export const deleteAccountAction = graphql(`
+export const deleteAccountMutation = graphql(`
   mutation deleteAccount {
     deleteAccount {
       success
