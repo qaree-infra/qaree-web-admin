@@ -3,6 +3,7 @@
 import type {
 	CategorySchema,
 	CategorySchemaWithoutIcon,
+	OfferSchema,
 	ReviewSchema,
 	categorySchema,
 } from "@/schema";
@@ -10,8 +11,11 @@ import type {
 import { fetcher } from "@/lib/graphql/fetcher";
 import {
 	addCategoryMutation,
+	addOfferMutation,
 	deleteCategoryMutation,
+	deleteOfferMutation,
 	editCategoryMutation,
+	editOfferMutation,
 	reviewBookDataMutation,
 	signUpMutation,
 } from "@/lib/graphql/mutations";
@@ -25,6 +29,7 @@ import type { ResultOf } from "gql.tada";
 import { getServerSession } from "next-auth";
 import { revalidatePath, revalidateTag } from "next/cache";
 import type { Category } from "./dashboard/categories/columns";
+import { Fascinate_Inline } from "next/font/google";
 
 type ActionState = {
 	success: boolean;
@@ -244,6 +249,85 @@ export const deleteCategoryAction = async (
 	} catch (error) {
 		const message = getErrorMessage(error);
 
+		return {
+			success: false,
+			message,
+		};
+	}
+};
+
+export const addOfferAction = async (variables: {
+	bookId: string;
+	expireAt: string;
+	percent: number;
+}): Promise<ActionState> => {
+	try {
+		await fetcher({
+			query: addOfferMutation,
+			variables,
+			server: true,
+		});
+
+		revalidateTag(tags.offers);
+
+		return {
+			success: true,
+			message: "Your new offer has been added",
+		};
+	} catch (error) {
+		const message = getErrorMessage(error);
+		return {
+			success: false,
+			message,
+		};
+	}
+};
+
+export const editOfferAction = async (variables: {
+	id: string;
+	percent: number;
+	expireAt: string;
+}): Promise<ActionState> => {
+	try {
+		await fetcher({
+			query: editOfferMutation,
+			variables,
+			server: true,
+		});
+
+		revalidateTag(tags.offers);
+
+		return {
+			success: true,
+			message: "Your offer has been successfully edited",
+		};
+	} catch (error) {
+		const message = getErrorMessage(error);
+		return {
+			success: false,
+			message,
+		};
+	}
+};
+
+export const deleteOfferAction = async (id: string): Promise<ActionState> => {
+	try {
+		await fetcher({
+			query: deleteOfferMutation,
+			variables: {
+				id,
+			},
+			server: true,
+		});
+
+		revalidateTag(tags.offers);
+
+		return {
+			success: true,
+			message: "The offer has been successfully deleted",
+		};
+	} catch (error) {
+		const message = getErrorMessage(error);
 		return {
 			success: false,
 			message,

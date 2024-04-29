@@ -49,6 +49,7 @@ export function OfferAction(props: Props) {
 
 	const onSubmit = async (values: OfferSchema) => {
 		toast.info(<pre>{JSON.stringify(values, null, 2)}</pre>);
+		
 		setOpen(false);
 	};
 
