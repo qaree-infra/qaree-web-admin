@@ -91,9 +91,11 @@ export const reviewBookAction = async ({
 			server: true,
 			protectid: true,
 		});
+
 		if (!reviewBookData?.success) {
-			throw Error("Error: faield to save review");
+			throw Error(reviewBookData?.message || "Error: faield to save review");
 		}
+
 		return { success: true, message: reviewBookData.message ?? "Sucess" };
 	} catch (error) {
 		const message = getErrorMessage(error);
@@ -373,7 +375,7 @@ export const uploadAdminAvatar = async (
 
 		const token = session.user.access_token;
 
-		const res = await fetch(UPLOAD_FULL_URL.avatar, {
+		await fetch(UPLOAD_FULL_URL.avatar, {
 			method: "POST",
 			headers: {
 				accept: "application/json",
@@ -382,10 +384,6 @@ export const uploadAdminAvatar = async (
 			},
 			body: formData,
 		});
-
-		if (!res.ok) {
-			throw Error(res.statusText);
-		}
 
 		return {
 			success: true,

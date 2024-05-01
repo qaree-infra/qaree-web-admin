@@ -81,26 +81,22 @@ export async function fetcher<
 		}
 	} catch (error) {
 		if (error instanceof SyntaxError) {
-			// The backend returned an invalid JSON <!doctype...>
 			throw createCustomError(
 				"Error occurred while getting data from the server",
 			);
 		}
 
-		throw Error(
-			error instanceof Error
-				? error.message
-				: typeof error === "string"
-				  ? error
-				  : "Unknown error",
-		);
+		if (error instanceof Error) {
+			throw error;
+		}
+
+		throw Error(typeof error === "string" ? error : "Unknown error");
 	}
 
 	if (processRedirect) {
 		redirect(authOptions.pages?.signIn || "/signin");
 	}
 
-	// TODO: test the added NonNullable type
 	const resData = (await res.json()) as ApiResponse<NonNullable<ResultOf<T>>>;
 
 	if ("errors" in resData) {
