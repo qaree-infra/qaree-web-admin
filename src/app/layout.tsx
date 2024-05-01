@@ -44,9 +44,7 @@ export default function RootLayout({
 		<html lang="en" className="h-full" suppressHydrationWarning>
 			<body className={cn("flex h-full antialiased", inter.className)}>
 				<Providers>
-					<Suspense fallback={<Loader2 />}>
-						<div className="flex-1">{children}</div>
-					</Suspense>
+					<div className="flex-1">{children}</div>
 				</Providers>
 				<Toaster
 					richColors
