@@ -135,89 +135,87 @@ export function CategoryAction(props: Props) {
 	};
 
 	return (
-		<div>
-			<Dialog open={open} onOpenChange={setOpen}>
-				<DialogTrigger asChild>
-					{props.type === "update" ? (
-						<Button
-							size={"icon"}
-							variant={"outline"}
-							onClick={() => {
-								const { _id, createdAt, icon, updatedAt, ...rest } =
-									props.category;
-								form.reset(rest);
-							}}
-						>
-							<Pencil className="size-5" />
-						</Button>
-					) : (
-						<Button variant="outline" className="flex gap-2">
-							<Plus />
-							<span>New Category</span>
-						</Button>
-					)}
-				</DialogTrigger>
-				<DialogContent className="sm:max-w-xl">
-					<Form {...form}>
-						<form
-							onSubmit={form.handleSubmit(onSubmit)}
-							autoComplete="off"
-							className="space-y-5"
-						>
-							<DialogHeader>
-								<DialogTitle>Add / Edit Category</DialogTitle>
-								<DialogDescription>
-									Provide new category details or update existing ones. Ensure
-									the 24px icon type and appropriate background colors for light
-									and dark modes.
-								</DialogDescription>
-							</DialogHeader>
-							<div className="space-y-5">
-								<FormInput
+		<Dialog open={open} onOpenChange={setOpen}>
+			<DialogTrigger asChild>
+				{props.type === "update" ? (
+					<Button
+						size={"icon"}
+						variant={"outline"}
+						onClick={() => {
+							const { _id, createdAt, icon, updatedAt, ...rest } =
+								props.category;
+							form.reset(rest);
+						}}
+					>
+						<Pencil className="size-5" />
+					</Button>
+				) : (
+					<Button variant="outline" className="flex gap-2">
+						<Plus />
+						<span>New Category</span>
+					</Button>
+				)}
+			</DialogTrigger>
+			<DialogContent className="sm:max-w-xl">
+				<Form {...form}>
+					<form
+						onSubmit={form.handleSubmit(onSubmit)}
+						autoComplete="off"
+						className="space-y-5"
+					>
+						<DialogHeader>
+							<DialogTitle>Add / Edit Category</DialogTitle>
+							<DialogDescription>
+								Provide new category details or update existing ones. Ensure the
+								24px icon type and appropriate background colors for light and
+								dark modes.
+							</DialogDescription>
+						</DialogHeader>
+						<div className="space-y-5">
+							<FormInput
+								form={form}
+								name="name_en"
+								label="English Name"
+								placeholder="Category English mame"
+							/>
+							<FormInput
+								form={form}
+								name="name_ar"
+								label="Arabic Name"
+								placeholder="Category Arabic mame"
+							/>
+							<div className="grid grid-cols-2 gap-4">
+								<FormIcon
 									form={form}
-									name="name_en"
-									label="English Name"
-									placeholder="Category English mame"
+									name="icon"
+									type="file"
+									label="Shows Icon"
+									className="h-20"
+									url={
+										isUpdate && props.category.icon
+											? props.category.icon.path
+											: ""
+									}
 								/>
 								<FormInput
 									form={form}
-									name="name_ar"
-									label="Arabic Name"
-									placeholder="Category Arabic mame"
+									name="background"
+									label="Background"
+									type="color"
+									className="h-20"
 								/>
-								<div className="grid grid-cols-2 gap-4">
-									<FormIcon
-										form={form}
-										name="icon"
-										type="file"
-										label="Shows Icon"
-										className="h-20"
-										url={
-											isUpdate && props.category.icon
-												? props.category.icon.path
-												: ""
-										}
-									/>
-									<FormInput
-										form={form}
-										name="background"
-										label="Background"
-										type="color"
-										className="h-20"
-									/>
-								</div>
 							</div>
+						</div>
 
-							<DialogFooter>
-								<DialogClose asChild>
-									<Button variant="outline">Cancel</Button>
-								</DialogClose>
-								<SubmitButton className="w-32" />
-							</DialogFooter>
-						</form>
-					</Form>
-				</DialogContent>
-			</Dialog>
-		</div>
+						<DialogFooter>
+							<DialogClose asChild>
+								<Button variant="outline">Cancel</Button>
+							</DialogClose>
+							<SubmitButton className="w-32" />
+						</DialogFooter>
+					</form>
+				</Form>
+			</DialogContent>
+		</Dialog>
 	);
 }
