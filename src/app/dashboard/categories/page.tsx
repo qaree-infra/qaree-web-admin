@@ -7,35 +7,35 @@ import { Category, columns } from "./columns";
 import { CategoriesDataTable } from "./data-table";
 
 import type { Metadata } from "next";
+import { cache } from "react";
 
 export const metadata: Metadata = {
 	title: "Categories",
 };
 
-const getData = async ({
-	pageNumber,
-	size,
-}: { pageNumber: number; size: number }) => {
-	const [complete, incomplete] = await Promise.all([
-		fetcher({
-			query: getAllCategoriesQuery,
-			variables: { limit: size, page: pageNumber, completed: true },
-			server: true,
-		}),
-		fetcher({
-			query: getAllCategoriesQuery,
-			variables: { limit: size, page: pageNumber, completed: false },
-			server: true,
-		}),
-	]);
+const getData = cache(
+	async ({ pageNumber, size }: { pageNumber: number; size: number }) => {
+		const [complete, incomplete] = await Promise.all([
+			fetcher({
+				query: getAllCategoriesQuery,
+				variables: { limit: size, page: pageNumber, completed: true },
+				server: true,
+			}),
+			fetcher({
+				query: getAllCategoriesQuery,
+				variables: { limit: size, page: pageNumber, completed: false },
+				server: true,
+			}),
+		]);
 
-	return {
-		complete: complete.getAllCategories?.categories,
-		incomplete: incomplete.getAllCategories?.categories,
-		totalComplete: incomplete.getAllCategories?.totalCompleted,
-		totaleIncomplete: complete.getAllCategories?.totalCompleted,
-	};
-};
+		return {
+			complete: complete.getAllCategories?.categories,
+			incomplete: incomplete.getAllCategories?.categories,
+			totalComplete: incomplete.getAllCategories?.totalCompleted,
+			totaleIncomplete: complete.getAllCategories?.totalCompleted,
+		};
+	},
+);
 
 interface Props {
 	searchParams: {

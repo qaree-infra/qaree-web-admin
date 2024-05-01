@@ -1,5 +1,3 @@
-import React from "react";
-
 import type { Metadata } from "next";
 import { fetcher } from "@/lib/graphql/fetcher";
 import { getAdminInfoQuery } from "@/lib/graphql/queries";
@@ -7,6 +5,7 @@ import { AdminUpdateAccount } from "@/components/AdminUpdateAccount";
 import { Separator } from "@/components/ui/separator";
 import { UpdateAvatar } from "@/components/UpdateAvatar";
 import { DeleteAccount } from "@/components/DeleteAccount";
+import { cache } from "react";
 
 export const metadata: Metadata = {
 	title: "Setting",
@@ -24,7 +23,7 @@ export interface AdminInfo {
 	updatedAt: string;
 }
 
-const getData = async (): Promise<AdminInfo> => {
+const getData = cache(async (): Promise<AdminInfo> => {
 	const { getAdminInfo } = await fetcher({
 		query: getAdminInfoQuery,
 		server: true,
@@ -32,10 +31,10 @@ const getData = async (): Promise<AdminInfo> => {
 
 	// workaround -_- nullable values!
 	return getAdminInfo as AdminInfo;
-};
+});
 
 export default async function Account() {
-	const { name, email, avatar, createdAt, updatedAt } = await getData();
+	const { name, avatar } = await getData();
 
 	return (
 		<div className="space-y-8">

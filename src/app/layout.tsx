@@ -12,25 +12,6 @@ export const metadata: Metadata = {
 		template: `${siteConfig.name} - %s`,
 	},
 	description: siteConfig.description,
-	themeColor: [
-		{ media: "(prefers-color-scheme: light)", color: "white" },
-		{ media: "(prefers-color-scheme: dark)", color: "black" },
-	],
-	// metadataBase: new URL(siteConfig.links.url),
-	openGraph: {
-		type: "website",
-		locale: "ar_EG",
-		title: siteConfig.name,
-		description: siteConfig.description,
-		siteName: siteConfig.name,
-	},
-	twitter: {
-		card: "summary_large_image",
-		title: siteConfig.name,
-		description: siteConfig.description,
-		// images: [`${siteConfig.url}/og.jpg`],
-		creator: "@mohamedtsx",
-	},
 };
 
 export default function RootLayout({

@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { BACKEND_URL } from ".";
 import { authOptions } from "../authOptions";
+import { tags } from "../config/tags";
 
 /**
  * This function will return the data from the API,
@@ -30,7 +31,6 @@ interface TypeOptions<T> {
 export async function fetcher<
 	T extends TadaDocumentNode<ResultOf<T>, VariablesOf<T>>,
 >({
-	cache = "force-cache",
 	headers,
 	query,
 	variables,
@@ -39,15 +39,16 @@ export async function fetcher<
 }: TypeOptions<T>): Promise<ResultOf<T>> {
 	let res: Response;
 	let processRedirect = false;
+
+	const session = await getServerSession(authOptions);
+	if (!session && protectid) {
+		processRedirect = true;
+		//@ts-ignore this will case type error when redirect
+		return;
+	}
+
 	try {
 		if (server) {
-			const session = await getServerSession(authOptions);
-			if (!session && protectid) {
-				processRedirect = true;
-				//@ts-ignore this will case type error when redirect
-				return;
-			}
-
 			res = await fetch(BACKEND_URL, {
 				method: "POST",
 				headers: {
@@ -60,9 +61,9 @@ export async function fetcher<
 					query: print(query),
 					variables,
 				}),
-				cache,
 				next: {
-					revalidate: 0,
+					revalidate: 3600,
+					tags: [tags.account, tags.categories, tags.offers, tags.users],
 				},
 			});
 		} else {

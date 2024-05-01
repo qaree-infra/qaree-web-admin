@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetcher } from "@/lib/graphql/fetcher";
 import { adminGetAllUsersQuery, getAdminsQuery } from "@/lib/graphql/queries";
@@ -6,36 +7,36 @@ import { UsersDataTable } from "./data-table-users";
 
 import type { Metadata } from "next";
 import { RegisterAdmin } from "@/components/RegisterAdmin";
+import { cache } from "react";
 export const metadata: Metadata = {
 	title: "Users",
 };
 
-const getAllUsers = async ({
-	pageNumber,
-	size,
-}: { pageNumber: number; size: number }) => {
-	// Fetch users and admins concurrently using Promise.all
-	const [users, admins] = await Promise.all([
-		fetcher({
-			query: adminGetAllUsersQuery,
-			variables: { limit: size, page: pageNumber },
-			server: true,
-		}),
-		fetcher({
-			query: getAdminsQuery,
-			variables: { limit: size, page: pageNumber },
-			server: true,
-		}),
-	]);
+const getAllUsers = cache(
+	async ({ pageNumber, size }: { pageNumber: number; size: number }) => {
+		// Fetch users and admins concurrently using Promise.all
+		const [users, admins] = await Promise.all([
+			fetcher({
+				query: adminGetAllUsersQuery,
+				variables: { limit: size, page: pageNumber },
+				server: true,
+			}),
+			fetcher({
+				query: getAdminsQuery,
+				variables: { limit: size, page: pageNumber },
+				server: true,
+			}),
+		]);
 
-	// Extract data from resolved promises
-	return {
-		users: users.adminGetAllUsers?.users,
-		admins: admins.getAdmins?.admins,
-		totaleUsers: users.adminGetAllUsers?.total,
-		totaleAdmins: admins.getAdmins?.total,
-	};
-};
+		// Extract data from resolved promises
+		return {
+			users: users.adminGetAllUsers?.users,
+			admins: admins.getAdmins?.admins,
+			totaleUsers: users.adminGetAllUsers?.total,
+			totaleAdmins: admins.getAdmins?.total,
+		};
+	},
+);
 
 interface Props {
 	searchParams: {

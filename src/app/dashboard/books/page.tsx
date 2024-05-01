@@ -1,12 +1,11 @@
 import { NoBooksFound } from "@/components/skeleton/NoBooksFound";
 import { fetcher } from "@/lib/graphql/fetcher";
 import { getBookSummaryQuery } from "@/lib/graphql/queries";
-import type { PaginationState } from "@tanstack/react-table";
-import { redirect } from "next/navigation";
 import { type BookSummary, columns } from "./columns";
 import { BooksDataTable } from "./data-table";
 
 import type { Metadata } from "next";
+import { cache } from "react";
 
 export const metadata: Metadata = {
 	title: "Book Review",
@@ -19,21 +18,36 @@ type Props = {
 	};
 };
 
+const getData = cache(
+	async ({
+		pageNumber,
+		sizeNumber,
+	}: { pageNumber: number; sizeNumber: number }) => {
+		const { adminGetBooks } = await fetcher({
+			query: getBookSummaryQuery,
+			variables: {
+				limit: sizeNumber,
+				page: pageNumber,
+			},
+			server: true,
+		});
+
+		return adminGetBooks;
+	},
+);
+
 async function BooksPage({ searchParams: { page = "1", size = "5" } }) {
 	let pageNumber = Number.parseInt(page);
+	const sizeNumber = Number(size);
 
 	// Never trust user input
 	if (Number.isNaN(pageNumber)) {
 		pageNumber = 1;
 	}
 
-	const { adminGetBooks } = await fetcher({
-		query: getBookSummaryQuery,
-		variables: {
-			limit: Number(size),
-			page: pageNumber,
-		},
-		server: true,
+	const adminGetBooks = await getData({
+		pageNumber,
+		sizeNumber,
 	});
 
 	if (!adminGetBooks?.books) {
@@ -50,7 +64,7 @@ async function BooksPage({ searchParams: { page = "1", size = "5" } }) {
 				rowCount: total ?? 0,
 				state: {
 					pageIndex: pageNumber - 1,
-					pageSize: Number(size),
+					pageSize: sizeNumber,
 				},
 			}}
 		/>
