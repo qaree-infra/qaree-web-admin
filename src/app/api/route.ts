@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
 	reqBody.contentType ??= "application/json";
 
-	const res = await fetch(BACKEND_URL, {
+	const res = await fetch("https://qaree-admin.onrender.com/graphql", {
 		method: reqBody.method || "POST",
 		headers: {
 			"Content-Type": reqBody.contentType,

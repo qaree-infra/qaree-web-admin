@@ -1,12 +1,5 @@
 import { z } from "zod";
 
-export const registerSchema = z.object({
-	email: z.string().email(),
-	name: z.string().min(3),
-	password: z.string().min(4),
-});
-export type RegisterSchema = z.infer<typeof registerSchema>;
-
 export const verifyAccountFormSchema = z.object({
 	otp: z.string().length(6),
 });
@@ -61,3 +54,14 @@ export const updateAvatarSchema = z.object({
 	}),
 });
 export type UpdateAvatarSchema = z.infer<typeof updateAvatarSchema>;
+
+export const registerSchema = z.object({
+	email: z.string().email(),
+	name: z.string().min(3, {
+		message: invalid.name,
+	}),
+	password: z.string().min(8, {
+		message: invalid.newPassword,
+	}),
+});
+export type RegisterSchema = z.infer<typeof registerSchema>;
