@@ -4,6 +4,7 @@ import { BreadcrumbNav } from "@/components/layouts/BreadcrumbNav";
 import { MobileSheet } from "@/components/layouts/MobileSheet";
 import { SearchForm } from "@/components/layouts/SearchForm";
 import UserNav from "@/components/layouts/UserNav";
+import { Button } from "@/components/ui/button";
 import { type ReactNode, Suspense } from "react";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
@@ -16,7 +17,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 					{/* FIXME: Hydration Error */}
 					{/* <BreadcrumbNav /> */}
 					<SearchForm />
-					<Suspense fallback={<Spinner />}>
+					<Suspense
+						fallback={
+							<Button size={"icon"} className="bg-muted rounded-full" />
+						}
+					>
 						<UserNav />
 					</Suspense>
 				</header>

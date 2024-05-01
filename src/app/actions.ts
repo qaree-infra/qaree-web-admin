@@ -1,12 +1,10 @@
 "use server";
 
 import type {
-	CategorySchema,
 	CategorySchemaWithoutIcon,
-	OfferSchema,
+	RegisterSchema,
 	ReviewSchema,
 	UpdateAccountSchema,
-	categorySchema,
 } from "@/schema";
 
 import { fetcher } from "@/lib/graphql/fetcher";
@@ -18,21 +16,16 @@ import {
 	deleteOfferMutation,
 	editCategoryMutation,
 	editOfferMutation,
+	registerMutation,
 	reviewBookDataMutation,
-	signUpMutation,
 	updateAccountMutation,
 } from "@/lib/graphql/mutations";
 
 import { authOptions } from "@/lib/authOptions";
 import { tags } from "@/lib/config/tags";
 import { UPLOAD_FULL_URL } from "@/lib/graphql";
-import type { CategoryIcon, RegisterData } from "@/lib/graphql/types";
-import { registerSchema } from "@/schema";
-import type { ResultOf } from "gql.tada";
 import { getServerSession } from "next-auth";
-import { revalidatePath, revalidateTag } from "next/cache";
-import { Fascinate_Inline } from "next/font/google";
-import type { Category } from "./dashboard/categories/columns";
+import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 type ActionState = {
@@ -53,48 +46,30 @@ const getErrorMessage = (error: unknown): string => {
 };
 
 export const registerAction = async (
-	userData: RegisterData,
+	variables: RegisterSchema,
 ): Promise<ActionState> => {
-	const result = registerSchema.safeParse(userData);
-
-	if (!result.success) {
-		const errorMessage = result.error.message;
-		return {
-			success: false,
-			message: errorMessage,
-		};
-	}
-
 	try {
 		const { register } = await fetcher({
-			query: signUpMutation,
-			variables: userData,
-			cache: "default",
+			query: registerMutation,
+			variables,
 			server: true,
-			protectid: false,
 		});
 
 		if (!register) {
-			return {
-				success: false,
-				message: "Failed to sign up",
-			};
+			throw Error("Registration failed. Please try again");
 		}
+
+		revalidateTag(tags.users);
 
 		return {
 			success: true,
-			message: "Register succesffuly",
+			message: "Success! Registration complete! Welcome aboard! ",
 		};
 	} catch (error) {
-		let errorMessage = "Unexpected Error!";
-
-		if (error instanceof Error) {
-			errorMessage = error.message;
-		}
-
+		const message = getErrorMessage(error);
 		return {
 			success: false,
-			message: errorMessage,
+			message,
 		};
 	}
 };

@@ -1,10 +1,8 @@
-import { Loader2 } from "@/components/Loader2";
 import Providers from "@/components/Providers";
 import { Toaster } from "@/components/ui/sonner";
 import { inter } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import "../styles/globals.css";
 import { siteConfig } from "@/lib/config/site";
 
@@ -44,9 +42,7 @@ export default function RootLayout({
 		<html lang="en" className="h-full" suppressHydrationWarning>
 			<body className={cn("flex h-full antialiased", inter.className)}>
 				<Providers>
-					<Suspense fallback={<Loader2 />}>
-						<div className="flex-1">{children}</div>
-					</Suspense>
+					<div className="flex-1">{children}</div>
 				</Providers>
 				<Toaster
 					richColors

@@ -5,6 +5,7 @@ import { type AdminUser, type User, columns } from "./columns-users";
 import { UsersDataTable } from "./data-table-users";
 
 import type { Metadata } from "next";
+import { RegisterAdmin } from "@/components/RegisterAdmin";
 export const metadata: Metadata = {
 	title: "Users",
 };
@@ -59,10 +60,14 @@ export default async function UsersPage({
 
 	return (
 		<Tabs defaultValue="users">
-			<TabsList>
-				<TabsTrigger value="users">Users</TabsTrigger>
-				<TabsTrigger value="admins">Admins</TabsTrigger>
-			</TabsList>
+			<div className="flex justify-between items-center">
+				<TabsList>
+					<TabsTrigger value="users">Users</TabsTrigger>
+					<TabsTrigger value="admins">Admins</TabsTrigger>
+				</TabsList>
+				<RegisterAdmin />
+			</div>
+
 			<TabsContent value="users">
 				<UsersDataTable
 					columns={columns}
