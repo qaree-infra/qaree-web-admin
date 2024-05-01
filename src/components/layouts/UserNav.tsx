@@ -48,8 +48,10 @@ async function UserNav() {
 			<DropdownMenuContent align="end">
 				<DropdownMenuLabel>My Account</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>Settings</DropdownMenuItem>
-				<DropdownMenuItem>
+				<DropdownMenuItem asChild>
+					<Link href={"/dashboard/account"}>Settings</Link>
+				</DropdownMenuItem>
+				<DropdownMenuItem asChild>
 					<Link href={siteConfig.links.whatsapp} target="_blnak">
 						Support
 					</Link>

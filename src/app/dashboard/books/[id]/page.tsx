@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import AdminReviewForm from "@/components/AdminReviewForm";
 import BookDetailes from "@/components/BookDetailes";
 import ReviewHistory from "@/components/ReviewHistory";

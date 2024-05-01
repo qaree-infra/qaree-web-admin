@@ -94,7 +94,6 @@ export const reviewBookAction = async ({
 		if (!reviewBookData?.success) {
 			throw Error("Error: faield to save review");
 		}
-		// revalidatePath("/dashboard/categories");
 		return { success: true, message: reviewBookData.message ?? "Sucess" };
 	} catch (error) {
 		const message = getErrorMessage(error);
