@@ -1,10 +1,8 @@
-import { Loader2 } from "@/components/Loader2";
 import Providers from "@/components/Providers";
 import { Toaster } from "@/components/ui/sonner";
 import { inter } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import "../styles/globals.css";
 import { siteConfig } from "@/lib/config/site";
 

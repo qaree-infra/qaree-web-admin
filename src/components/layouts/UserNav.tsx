@@ -32,7 +32,7 @@ async function UserNav() {
 					size="icon"
 					className="overflow-hidden rounded-full"
 				>
-					<Avatar className="size-8">
+					<Avatar className="size-9">
 						<AvatarImage
 							src={avatar?.path || ""}
 							alt={`@${name}`}
