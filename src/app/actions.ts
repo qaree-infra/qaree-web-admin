@@ -5,6 +5,7 @@ import type {
 	CategorySchemaWithoutIcon,
 	OfferSchema,
 	ReviewSchema,
+	UpdateAccountSchema,
 	categorySchema,
 } from "@/schema";
 
@@ -12,24 +13,27 @@ import { fetcher } from "@/lib/graphql/fetcher";
 import {
 	addCategoryMutation,
 	addOfferMutation,
+	deleteAccountMutation,
 	deleteCategoryMutation,
 	deleteOfferMutation,
 	editCategoryMutation,
 	editOfferMutation,
 	reviewBookDataMutation,
 	signUpMutation,
+	updateAccountMutation,
 } from "@/lib/graphql/mutations";
 
 import { authOptions } from "@/lib/authOptions";
 import { tags } from "@/lib/config/tags";
 import { UPLOAD_FULL_URL } from "@/lib/graphql";
 import type { CategoryIcon, RegisterData } from "@/lib/graphql/types";
-import { registerFormSchema } from "@/schema";
+import { registerSchema } from "@/schema";
 import type { ResultOf } from "gql.tada";
 import { getServerSession } from "next-auth";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { Fascinate_Inline } from "next/font/google";
 import type { Category } from "./dashboard/categories/columns";
+import { redirect } from "next/navigation";
 
 type ActionState = {
 	success: boolean;
@@ -51,7 +55,7 @@ const getErrorMessage = (error: unknown): string => {
 export const registerAction = async (
 	userData: RegisterData,
 ): Promise<ActionState> => {
-	const result = registerFormSchema.safeParse(userData);
+	const result = registerSchema.safeParse(userData);
 
 	if (!result.success) {
 		const errorMessage = result.error.message;
@@ -328,6 +332,94 @@ export const deleteOfferAction = async (id: string): Promise<ActionState> => {
 		};
 	} catch (error) {
 		const message = getErrorMessage(error);
+		return {
+			success: false,
+			message,
+		};
+	}
+};
+
+export const updateAccountAction = async (
+	variables: UpdateAccountSchema,
+): Promise<ActionState> => {
+	try {
+		await fetcher({
+			query: updateAccountMutation,
+			variables,
+			server: true,
+		});
+
+		revalidateTag(tags.account);
+
+		return {
+			success: true,
+			message: "Your account data has been updated",
+		};
+	} catch (error) {
+		const message = getErrorMessage(error);
+		return {
+			success: false,
+			message,
+		};
+	}
+};
+
+export const deleteAccountAction = async (): Promise<
+	ActionState | undefined
+> => {
+	try {
+		const { deleteAccount } = await fetcher({
+			query: deleteAccountMutation,
+			server: true,
+		});
+
+		if (!deleteAccount?.success) {
+			throw Error("Something went wrong!");
+		}
+
+		redirect("/");
+	} catch (error) {
+		const message = getErrorMessage(error);
+		return {
+			success: false,
+			message,
+		};
+	}
+};
+
+export const uploadAdminAvatar = async (
+	formData: FormData,
+): Promise<ActionState> => {
+	const session = await getServerSession(authOptions);
+
+	try {
+		if (!session?.user) {
+			throw Error("You must be signed in to perform this action");
+		}
+
+		const token = session.user.access_token;
+
+		const res = await fetch(UPLOAD_FULL_URL.avatar, {
+			method: "POST",
+			headers: {
+				accept: "application/json",
+				contentType: "multipart/form-data",
+				Authorization: `Bearer ${token}`,
+			},
+			body: formData,
+		});
+
+		if (!res.ok) {
+			throw Error(res.statusText);
+		}
+
+		return {
+			success: true,
+			message: " Your avatar has been updated.",
+		};
+	} catch (error) {
+		const message = getErrorMessage(error);
+
 		return {
 			success: false,
 			message,

@@ -17,6 +17,24 @@ export const signUpMutation = graphql(`
   }
 `);
 
+export const updateAccountMutation = graphql(`
+  mutation updateAccount($name: String!, $oldPassword: String!, $newPassword: String!){
+    updateAccount(name: $name, oldPassword: $oldPassword, newPassword: $newPassword) {
+      _id
+    }
+  } 
+`);
+
+export const deleteAccountMutation = graphql(`
+  mutation deleteAccount {
+    deleteAccount {
+      success
+      message
+      deleted_id
+    }
+  }
+`);
+
 // export const verifyAccountMutation = graphql(`
 //   mutation verifyAccount($otp: String!, $email: String!){
 //     verifyAccount(otp: $otp, email: $email) {

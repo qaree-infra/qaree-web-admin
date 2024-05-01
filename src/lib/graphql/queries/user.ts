@@ -3,12 +3,15 @@ import { graphql } from "gql.tada";
 export const getAdminInfoQuery = graphql(`
   query getAdminInfo {
     getAdminInfo {
-        name,
-        email,
-        avatar {
-          size,
-          path
-        }
+      _id
+      name,
+      email,
+      avatar {
+        name
+        path
+      }
+      updatedAt
+      createdAt
     }
   }
 `);

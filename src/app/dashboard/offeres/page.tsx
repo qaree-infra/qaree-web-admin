@@ -3,6 +3,11 @@ import { getAllOffersQuery } from "@/lib/graphql/queries";
 import { columns } from "./columns";
 import { OffersDataTable } from "./data-table";
 
+import type { Metadata } from "next";
+export const metadata: Metadata = {
+	title: "Offers",
+};
+
 const getData = async (page: number, limit: number) => {
 	const { getAllOffers } = await fetcher({
 		query: getAllOffersQuery,

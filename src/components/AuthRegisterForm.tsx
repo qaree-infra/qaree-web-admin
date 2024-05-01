@@ -2,7 +2,7 @@
 
 import { Form } from "./ui/form";
 
-import { type RegisterSchemaType, registerFormSchema } from "@/schema";
+import { type RegisterSchema, registerSchema } from "@/schema";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -26,8 +26,8 @@ import {
 } from "./ui/card";
 
 function AuthRegisterForm() {
-	const form = useForm<RegisterSchemaType>({
-		resolver: zodResolver(registerFormSchema),
+	const form = useForm<RegisterSchema>({
+		resolver: zodResolver(registerSchema),
 		defaultValues: {
 			email: "",
 		},
@@ -40,7 +40,7 @@ function AuthRegisterForm() {
 		password: "",
 	});
 
-	const onSubmit = async (values: RegisterSchemaType) => {
+	const onSubmit = async (values: RegisterSchema) => {
 		const { email, name, password } = values;
 
 		if (!email || !password || !name) {

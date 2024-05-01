@@ -23,7 +23,6 @@ export type AuthUser = {
 	email: string;
 	access_token: string;
 	avatar: {
-		size: number;
 		path: string;
 	};
 };

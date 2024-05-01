@@ -46,7 +46,6 @@ export const authOptions: NextAuthOptions = {
 						name: getAdminInfo?.name as string,
 						email: getAdminInfo?.email as string,
 						avatar: getAdminInfo?.avatar as {
-							size: number;
 							path: string;
 						},
 					};
@@ -83,7 +82,6 @@ export const authOptions: NextAuthOptions = {
 					name: getAdminInfo?.name as string,
 					email: getAdminInfo?.email as string,
 					avatar: getAdminInfo?.avatar as {
-						size: number;
 						path: string;
 					},
 				};

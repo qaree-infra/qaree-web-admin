@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from "next/link";
 import {
 	DropdownLogoutItem,
 	DropdownMenu,
@@ -9,14 +10,20 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { getCurrentUser } from "@/lib/authOptions";
 import { Button } from "../ui/button";
+import { siteConfig } from "@/lib/config/site";
+import { getCurrentUser } from "@/lib/authOptions";
 
 async function UserNav() {
-	const user = await getCurrentUser();
+	// const { getAdminInfo } = (await fetcher({
+	// 	query: getAdminInfoQuery,
+	// 	server: true,
+	// 	cache: "default",
+	// })) as { getAdminInfo: AdminInfo };
 
-	if (!user) return;
-	const { name, avatar } = user;
+	// const { avatar, name } = getAdminInfo;
+
+	const { name, avatar } = await getCurrentUser();
 
 	return (
 		<DropdownMenu>
@@ -43,7 +50,11 @@ async function UserNav() {
 				<DropdownMenuLabel>My Account</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem>Settings</DropdownMenuItem>
-				<DropdownMenuItem>Support</DropdownMenuItem>
+				<DropdownMenuItem>
+					<Link href={siteConfig.links.whatsapp} target="_blnak">
+						Support
+					</Link>
+				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownLogoutItem />
 			</DropdownMenuContent>
