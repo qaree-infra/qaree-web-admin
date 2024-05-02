@@ -38,6 +38,7 @@ export function MobileSheet() {
 					</Link>
 					{items.map((el) => (
 						<Link
+							key={el.name}
 							href={`/dashboard/${el.href}`}
 							className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
 							onClick={() => setOpen(false)}
