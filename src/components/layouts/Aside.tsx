@@ -23,7 +23,7 @@ interface Item {
 	icon: ReactNode;
 }
 
-const items: Item[] = [
+export const items: Item[] = [
 	{
 		name: "Dashboard",
 		href: "/",
