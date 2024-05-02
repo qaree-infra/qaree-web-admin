@@ -20,7 +20,6 @@ import { tags } from "../config/tags";
  */
 
 interface TypeOptions<T> {
-	cache?: RequestCache;
 	headers?: HeadersInit;
 	query: T;
 	variables?: VariablesOf<T>;
@@ -37,7 +36,7 @@ export async function fetcher<
 	variables,
 	server = false,
 	protectid = true,
-	tags,
+	// tags,
 }: TypeOptions<T>): Promise<ResultOf<T>> {
 	let res: Response;
 	let processRedirect = false;
@@ -65,7 +64,7 @@ export async function fetcher<
 				}),
 				next: {
 					revalidate: 3600,
-					tags,
+					tags: [tags.account, tags.categories, tags.books, tags.users],
 				},
 			});
 		} else {

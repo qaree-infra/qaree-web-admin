@@ -5,7 +5,6 @@ import { type BookSummary, columns } from "./columns";
 import { BooksDataTable } from "./data-table";
 
 import type { Metadata } from "next";
-import { cache } from "react";
 import { tags } from "@/lib/config/tags";
 
 export const metadata: Metadata = {
@@ -19,24 +18,22 @@ type Props = {
 	};
 };
 
-const getData = cache(
-	async ({
-		pageNumber,
-		sizeNumber,
-	}: { pageNumber: number; sizeNumber: number }) => {
-		const { adminGetBooks } = await fetcher({
-			query: getBookSummaryQuery,
-			variables: {
-				limit: sizeNumber,
-				page: pageNumber,
-			},
-			server: true,
-			tags: [tags.books],
-		});
+const getData = async ({
+	pageNumber,
+	sizeNumber,
+}: { pageNumber: number; sizeNumber: number }) => {
+	const { adminGetBooks } = await fetcher({
+		query: getBookSummaryQuery,
+		variables: {
+			limit: sizeNumber,
+			page: pageNumber,
+		},
+		server: true,
+		tags: [tags.books],
+	});
 
-		return adminGetBooks;
-	},
-);
+	return adminGetBooks;
+};
 
 async function BooksPage({ searchParams: { page = "1", size = "5" } }) {
 	let pageNumber = Number.parseInt(page);

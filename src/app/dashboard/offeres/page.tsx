@@ -4,13 +4,12 @@ import { columns } from "./columns";
 import { OffersDataTable } from "./data-table";
 
 import type { Metadata } from "next";
-import { cache } from "react";
 import { tags } from "@/lib/config/tags";
 export const metadata: Metadata = {
 	title: "Offers",
 };
 
-const getData = cache(async (page: number, limit: number) => {
+const getData = async (page: number, limit: number) => {
 	const { getAllOffers } = await fetcher({
 		query: getAllOffersQuery,
 		variables: {
@@ -26,7 +25,7 @@ const getData = cache(async (page: number, limit: number) => {
 		offers: getAllOffers?.offers ?? [],
 		total: getAllOffers?.total ?? 0,
 	};
-});
+};
 
 interface Props {
 	searchParams: {

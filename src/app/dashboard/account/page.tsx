@@ -5,7 +5,6 @@ import { AdminUpdateAccount } from "@/components/AdminUpdateAccount";
 import { Separator } from "@/components/ui/separator";
 import { UpdateAvatar } from "@/components/UpdateAvatar";
 import { DeleteAccount } from "@/components/DeleteAccount";
-import { cache } from "react";
 import { tags } from "@/lib/config/tags";
 
 export const metadata: Metadata = {
@@ -24,7 +23,7 @@ export interface AdminInfo {
 	updatedAt: string;
 }
 
-const getData = cache(async (): Promise<AdminInfo> => {
+const getData = async (): Promise<AdminInfo> => {
 	const { getAdminInfo } = await fetcher({
 		query: getAdminInfoQuery,
 		server: true,
@@ -33,7 +32,7 @@ const getData = cache(async (): Promise<AdminInfo> => {
 
 	// workaround -_- nullable values!
 	return getAdminInfo as AdminInfo;
-});
+};
 
 export default async function Account() {
 	const { name, avatar } = await getData();

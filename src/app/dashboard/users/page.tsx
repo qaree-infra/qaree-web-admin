@@ -7,39 +7,39 @@ import { UsersDataTable } from "./data-table-users";
 
 import type { Metadata } from "next";
 import { RegisterAdmin } from "@/components/RegisterAdmin";
-import { cache } from "react";
 import { tags } from "@/lib/config/tags";
 export const metadata: Metadata = {
 	title: "Users",
 };
 
-const getAllUsers = cache(
-	async ({ pageNumber, size }: { pageNumber: number; size: number }) => {
-		// Fetch users and admins concurrently using Promise.all
-		const [users, admins] = await Promise.all([
-			fetcher({
-				query: adminGetAllUsersQuery,
-				variables: { limit: size, page: pageNumber },
-				server: true,
-				tags: [tags.users],
-			}),
-			fetcher({
-				query: getAdminsQuery,
-				variables: { limit: size, page: pageNumber },
-				server: true,
-				tags: [tags.users],
-			}),
-		]);
+const getAllUsers = async ({
+	pageNumber,
+	size,
+}: { pageNumber: number; size: number }) => {
+	// Fetch users and admins concurrently using Promise.all
+	const [users, admins] = await Promise.all([
+		fetcher({
+			query: adminGetAllUsersQuery,
+			variables: { limit: size, page: pageNumber },
+			server: true,
+			tags: [tags.users],
+		}),
+		fetcher({
+			query: getAdminsQuery,
+			variables: { limit: size, page: pageNumber },
+			server: true,
+			tags: [tags.users],
+		}),
+	]);
 
-		// Extract data from resolved promises
-		return {
-			users: users.adminGetAllUsers?.users,
-			admins: admins.getAdmins?.admins,
-			totaleUsers: users.adminGetAllUsers?.total,
-			totaleAdmins: admins.getAdmins?.total,
-		};
-	},
-);
+	// Extract data from resolved promises
+	return {
+		users: users.adminGetAllUsers?.users,
+		admins: admins.getAdmins?.admins,
+		totaleUsers: users.adminGetAllUsers?.total,
+		totaleAdmins: admins.getAdmins?.total,
+	};
+};
 
 interface Props {
 	searchParams: {

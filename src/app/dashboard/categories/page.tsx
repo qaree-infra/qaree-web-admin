@@ -3,42 +3,42 @@ import { NoBooksFound } from "@/components/skeleton/NoBooksFound";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { fetcher } from "@/lib/graphql/fetcher";
 import { getAllCategoriesQuery } from "@/lib/graphql/queries";
-import { Category, columns } from "./columns";
+import { columns } from "./columns";
 import { CategoriesDataTable } from "./data-table";
 
 import type { Metadata } from "next";
-import { cache } from "react";
 import { tags } from "@/lib/config/tags";
 
 export const metadata: Metadata = {
 	title: "Categories",
 };
 
-const getData = cache(
-	async ({ pageNumber, size }: { pageNumber: number; size: number }) => {
-		const [complete, incomplete] = await Promise.all([
-			fetcher({
-				query: getAllCategoriesQuery,
-				variables: { limit: size, page: pageNumber, completed: true },
-				server: true,
-				tags: [tags.categories],
-			}),
-			fetcher({
-				query: getAllCategoriesQuery,
-				variables: { limit: size, page: pageNumber, completed: false },
-				server: true,
-				tags: [tags.categories],
-			}),
-		]);
+const getData = async ({
+	pageNumber,
+	size,
+}: { pageNumber: number; size: number }) => {
+	const [complete, incomplete] = await Promise.all([
+		fetcher({
+			query: getAllCategoriesQuery,
+			variables: { limit: size, page: pageNumber, completed: true },
+			server: true,
+			tags: [tags.categories],
+		}),
+		fetcher({
+			query: getAllCategoriesQuery,
+			variables: { limit: size, page: pageNumber, completed: false },
+			server: true,
+			tags: [tags.categories],
+		}),
+	]);
 
-		return {
-			complete: complete.getAllCategories?.categories,
-			incomplete: incomplete.getAllCategories?.categories,
-			totalComplete: incomplete.getAllCategories?.totalCompleted,
-			totaleIncomplete: complete.getAllCategories?.totalCompleted,
-		};
-	},
-);
+	return {
+		complete: complete.getAllCategories?.categories,
+		incomplete: incomplete.getAllCategories?.categories,
+		totalComplete: incomplete.getAllCategories?.totalCompleted,
+		totaleIncomplete: complete.getAllCategories?.totalCompleted,
+	};
+};
 
 interface Props {
 	searchParams: {
