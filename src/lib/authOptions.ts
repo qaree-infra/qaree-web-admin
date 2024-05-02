@@ -6,6 +6,7 @@ import { fetcher } from "./graphql/fetcher";
 import { signInMutation } from "./graphql/mutations";
 import { getAdminInfoQuery } from "./graphql/queries";
 import type { AuthUser } from "./graphql/types";
+import { tags } from "./config/tags";
 
 // TODO: remove the placeholder data
 export const authOptions: NextAuthOptions = {
@@ -48,6 +49,7 @@ export const authOptions: NextAuthOptions = {
 					headers: {
 						Authorization: `Bearer ${signIn.access_token}`,
 					},
+					tags: [tags.user],
 				});
 
 				const user = {
@@ -69,7 +71,7 @@ export const authOptions: NextAuthOptions = {
 	callbacks: {
 		async jwt({ token, user, trigger, session }) {
 			if (trigger === "update") {
-				return { ...token, ...session.user };
+				return { ...token, ...session?.user };
 			}
 
 			if (user) {

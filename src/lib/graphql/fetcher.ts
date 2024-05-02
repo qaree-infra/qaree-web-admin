@@ -36,7 +36,7 @@ export async function fetcher<
 	variables,
 	server = false,
 	protectid = true,
-	// tags,
+	tags,
 }: TypeOptions<T>): Promise<ResultOf<T>> {
 	let res: Response;
 	let processRedirect = false;
@@ -64,7 +64,7 @@ export async function fetcher<
 				}),
 				next: {
 					revalidate: 3600,
-					tags: [tags.account, tags.categories, tags.books, tags.users],
+					tags,
 				},
 			});
 		} else {

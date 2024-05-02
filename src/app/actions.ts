@@ -325,7 +325,7 @@ export const updateAccountAction = async (
 			server: true,
 		});
 
-		revalidateTag(tags.account);
+		revalidateTag(tags.user);
 
 		return {
 			success: true,
@@ -340,9 +340,7 @@ export const updateAccountAction = async (
 	}
 };
 
-export const deleteAccountAction = async (): Promise<
-	ActionState | undefined
-> => {
+export const deleteAccountAction = async (): Promise<ActionState> => {
 	try {
 		const { deleteAccount } = await fetcher({
 			query: deleteAccountMutation,
@@ -350,10 +348,15 @@ export const deleteAccountAction = async (): Promise<
 		});
 
 		if (!deleteAccount?.success) {
-			throw Error("Something went wrong!");
+			throw Error(deleteAccount?.message || "Something went wrong!");
 		}
 
-		redirect("/");
+		revalidateTag(tags.user);
+
+		return {
+			success: true,
+			message: deleteAccount.message || "Account successfully deleted",
+		};
 	} catch (error) {
 		const message = getErrorMessage(error);
 		return {
@@ -384,6 +387,8 @@ export const uploadAdminAvatar = async (
 			},
 			body: formData,
 		});
+
+		revalidateTag(tags.user);
 
 		return {
 			success: true,

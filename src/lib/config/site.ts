@@ -4,7 +4,7 @@ export const siteConfig = {
 	description:
 		"Manage and monitor Qaree e-book reading app through the user-friendly Qaree Admin Dashboard",
 	links: {
-		whatsapp: "https://wa.me/+201094755628?text=السلام عليكم 👋",
+		whatsapp: "https://wa.me/+201102687520?text=السلام عليكم",
 		github: "https://github.com/qaree-infra",
 		url: "",
 	},

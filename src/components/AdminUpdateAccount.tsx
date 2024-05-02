@@ -15,11 +15,8 @@ import { Form } from "./ui/form";
 import { toast } from "sonner";
 import { FormInput, SubmitButton } from "./SmartForm";
 import { updateAccountAction } from "@/app/actions";
-import { useRouter } from "next/navigation";
 
 export function AdminUpdateAccount({ oldName }: { oldName: string }) {
-	const router = useRouter();
-
 	const form = useForm<UpdateAccountSchema>({
 		mode: "onSubmit",
 		resolver: zodResolver(updateAccountSchema),
@@ -41,7 +38,6 @@ export function AdminUpdateAccount({ oldName }: { oldName: string }) {
 			newPassword: "",
 			oldPassword: "",
 		});
-		router.refresh();
 	};
 
 	return (

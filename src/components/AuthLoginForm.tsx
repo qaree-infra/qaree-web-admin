@@ -22,12 +22,14 @@ import {
 	CardHeader,
 	CardTitle,
 } from "./ui/card";
+import { siteConfig } from "@/lib/config/site";
 
 function AuthLoginForm() {
 	const form = useForm<LoginSchemaType>({
 		resolver: zodResolver(loginFormSchema),
 		defaultValues: {
 			email: "",
+			password: "",
 		},
 	});
 
@@ -97,8 +99,12 @@ function AuthLoginForm() {
 						<SubmitButton>Login</SubmitButton>
 						<p className="text-sm text-muted-foreground w-full mt-5">
 							Don`t have account?{" "}
-							<Link href={"/signup"} className="hover:underline">
-								Sign up
+							<Link
+								href={siteConfig.links.whatsapp}
+								target="_blank"
+								className="hover:underline"
+							>
+								Contact Support
 							</Link>
 						</p>
 					</CardFooter>

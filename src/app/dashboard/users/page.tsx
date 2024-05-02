@@ -28,7 +28,7 @@ const getAllUsers = async ({
 			query: getAdminsQuery,
 			variables: { limit: size, page: pageNumber },
 			server: true,
-			tags: [tags.users],
+			tags: [tags.users, tags.user],
 		}),
 	]);
 

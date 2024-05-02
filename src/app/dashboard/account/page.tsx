@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { UpdateAvatar } from "@/components/UpdateAvatar";
 import { DeleteAccount } from "@/components/DeleteAccount";
 import { tags } from "@/lib/config/tags";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
 	title: "Setting",
@@ -27,7 +28,7 @@ const getData = async (): Promise<AdminInfo> => {
 	const { getAdminInfo } = await fetcher({
 		query: getAdminInfoQuery,
 		server: true,
-		tags: [tags.account],
+		tags: [tags.user],
 	});
 
 	// workaround -_- nullable values!
@@ -54,7 +55,7 @@ export default async function Account() {
 				<div className="flex flex-col gap-4">
 					<UpdateAvatar
 						avatar={{
-							path: avatar.path,
+							path: avatar?.path,
 							name,
 						}}
 					/>

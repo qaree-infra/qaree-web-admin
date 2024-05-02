@@ -16,7 +16,6 @@ import { Form } from "@/components/ui/form";
 import { toast } from "sonner";
 import { SubmitButton } from "@/components/SmartForm";
 import { uploadAdminAvatar } from "@/app/actions";
-import { useRouter } from "next/navigation";
 import { FormAvatar } from "./FormAvatar";
 
 export function UpdateAvatar({
@@ -27,8 +26,6 @@ export function UpdateAvatar({
 		path: string;
 	};
 }) {
-	const router = useRouter();
-
 	const form = useForm<UpdateAvatarSchema>({
 		mode: "onSubmit",
 		resolver: zodResolver(updateAvatarSchema),

@@ -15,11 +15,13 @@ import { siteConfig } from "@/lib/config/site";
 import { getAdminInfoQuery } from "@/lib/graphql/queries";
 import type { AdminInfo } from "@/app/dashboard/account/page";
 import { fetcher } from "@/lib/graphql/fetcher";
+import { tags } from "@/lib/config/tags";
 
 async function UserNav() {
 	const { getAdminInfo } = (await fetcher({
 		query: getAdminInfoQuery,
 		server: true,
+		tags: [tags.user],
 	})) as { getAdminInfo: AdminInfo };
 
 	const { avatar, name } = getAdminInfo;

@@ -41,7 +41,7 @@ export function FormAvatar<T extends FieldValues>({
 							<Avatar className="size-24">
 								<label htmlFor={id} className="cursor-pointer">
 									<AvatarImage alt={`@${avatar.name}`} src={url} />
-									<AvatarFallback className="text-2xl">
+									<AvatarFallback className="text-2xl size-24">
 										{avatar.name[0].toUpperCase()}
 									</AvatarFallback>
 								</label>
