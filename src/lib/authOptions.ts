@@ -2,11 +2,11 @@ import { type NextAuthOptions, getServerSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import { redirect } from "next/navigation";
+import { tags } from "./config/tags";
 import { fetcher } from "./graphql/fetcher";
 import { signInMutation } from "./graphql/mutations";
 import { getAdminInfoQuery } from "./graphql/queries";
 import type { AuthUser } from "./graphql/types";
-import { tags } from "./config/tags";
 
 // TODO: remove the placeholder data
 export const authOptions: NextAuthOptions = {

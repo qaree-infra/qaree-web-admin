@@ -5,9 +5,9 @@ import { adminGetAllUsersQuery, getAdminsQuery } from "@/lib/graphql/queries";
 import { type AdminUser, type User, columns } from "./columns-users";
 import { UsersDataTable } from "./data-table-users";
 
-import type { Metadata } from "next";
 import { RegisterAdmin } from "@/components/RegisterAdmin";
 import { tags } from "@/lib/config/tags";
+import type { Metadata } from "next";
 export const metadata: Metadata = {
 	title: "Users",
 };

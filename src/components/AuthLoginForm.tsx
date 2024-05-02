@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { Icons } from "./Icons";
 import { Button } from "./ui/button";
 
+import { siteConfig } from "@/lib/config/site";
 import Link from "next/link";
 import {
 	Card,
@@ -22,7 +23,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "./ui/card";
-import { siteConfig } from "@/lib/config/site";
 
 function AuthLoginForm() {
 	const form = useForm<LoginSchemaType>({

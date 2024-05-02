@@ -2,20 +2,20 @@
 
 import {
 	Card,
-	CardHeader,
-	CardFooter,
-	CardTitle,
-	CardDescription,
 	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
 } from "@/components/ui/card";
 
-import { updateAvatarSchema, type UpdateAvatarSchema } from "@/schema";
+import { uploadAdminAvatar } from "@/app/actions";
+import { SubmitButton } from "@/components/SmartForm";
+import { Form } from "@/components/ui/form";
+import { type UpdateAvatarSchema, updateAvatarSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Form } from "@/components/ui/form";
 import { toast } from "sonner";
-import { SubmitButton } from "@/components/SmartForm";
-import { uploadAdminAvatar } from "@/app/actions";
 import { FormAvatar } from "./FormAvatar";
 
 export function UpdateAvatar({

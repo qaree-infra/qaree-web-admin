@@ -1,20 +1,20 @@
 "use client";
 
+import { updateAccountAction } from "@/app/actions";
 import {
 	Card,
-	CardHeader,
-	CardFooter,
-	CardTitle,
-	CardDescription,
 	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
 } from "@/components/ui/card";
 import { type UpdateAccountSchema, updateAccountSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Form } from "./ui/form";
 import { toast } from "sonner";
 import { FormInput, SubmitButton } from "./SmartForm";
-import { updateAccountAction } from "@/app/actions";
+import { Form } from "./ui/form";
 
 export function AdminUpdateAccount({ oldName }: { oldName: string }) {
 	const form = useForm<UpdateAccountSchema>({

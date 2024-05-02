@@ -3,8 +3,8 @@ import { getAllOffersQuery } from "@/lib/graphql/queries";
 import { columns } from "./columns";
 import { OffersDataTable } from "./data-table";
 
-import type { Metadata } from "next";
 import { tags } from "@/lib/config/tags";
+import type { Metadata } from "next";
 export const metadata: Metadata = {
 	title: "Offers",
 };

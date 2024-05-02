@@ -1,25 +1,25 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "./ui/button";
+import { registerAction } from "@/app/actions";
+import { type RegisterSchema, registerSchema } from "@/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { FormInput, SubmitButton } from "./SmartForm";
+import { Button } from "./ui/button";
 import {
 	Dialog,
-	DialogTrigger,
 	DialogClose,
-	DialogFooter,
 	DialogContent,
 	DialogDescription,
+	DialogFooter,
 	DialogHeader,
 	DialogTitle,
+	DialogTrigger,
 } from "./ui/dialog";
-import { FormInput, SubmitButton } from "./SmartForm";
 import { Form } from "./ui/form";
-import { registerAction } from "@/app/actions";
-import { registerSchema, type RegisterSchema } from "@/schema";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
 
 const defaultValues = {
 	email: "",

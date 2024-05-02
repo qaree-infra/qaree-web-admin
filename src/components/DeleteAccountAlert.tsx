@@ -2,22 +2,22 @@
 
 import {
 	AlertDialog,
-	AlertDialogTrigger,
-	AlertDialogContent,
-	AlertDialogTitle,
-	AlertDialogDescription,
 	AlertDialogCancel,
-	AlertDialogHeader,
+	AlertDialogContent,
+	AlertDialogDescription,
 	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
 } from "./ui/alert-dialog";
 
 import { Button } from "./ui/button";
 
-import { useState } from "react";
 import { deleteAccountAction } from "@/app/actions";
-import { toast } from "sonner";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 
 function DeleteAccountAlert() {
 	const [loading, setLoading] = useState(false);

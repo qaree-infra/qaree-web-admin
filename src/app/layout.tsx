@@ -1,10 +1,10 @@
 import Providers from "@/components/Providers";
 import { Toaster } from "@/components/ui/sonner";
+import { siteConfig } from "@/lib/config/site";
 import { inter } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import "../styles/globals.css";
-import { siteConfig } from "@/lib/config/site";
 
 export const metadata: Metadata = {
 	title: {

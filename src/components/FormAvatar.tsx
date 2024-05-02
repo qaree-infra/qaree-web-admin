@@ -1,3 +1,4 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
@@ -5,7 +6,6 @@ import { type ComponentProps, useId } from "react";
 import type { ControllerRenderProps, FieldValues, Path } from "react-hook-form";
 import { FormElement, type SharedProps } from "./SmartForm";
 import { FormLabel } from "./ui/form";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 

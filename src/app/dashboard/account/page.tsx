@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
+import { AdminUpdateAccount } from "@/components/AdminUpdateAccount";
+import { DeleteAccount } from "@/components/DeleteAccount";
+import { UpdateAvatar } from "@/components/UpdateAvatar";
+import { Separator } from "@/components/ui/separator";
+import { tags } from "@/lib/config/tags";
 import { fetcher } from "@/lib/graphql/fetcher";
 import { getAdminInfoQuery } from "@/lib/graphql/queries";
-import { AdminUpdateAccount } from "@/components/AdminUpdateAccount";
-import { Separator } from "@/components/ui/separator";
-import { UpdateAvatar } from "@/components/UpdateAvatar";
-import { DeleteAccount } from "@/components/DeleteAccount";
-import { tags } from "@/lib/config/tags";
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {

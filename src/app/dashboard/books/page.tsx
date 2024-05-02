@@ -4,8 +4,8 @@ import { getBookSummaryQuery } from "@/lib/graphql/queries";
 import { type BookSummary, columns } from "./columns";
 import { BooksDataTable } from "./data-table";
 
-import type { Metadata } from "next";
 import { tags } from "@/lib/config/tags";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Book Review",

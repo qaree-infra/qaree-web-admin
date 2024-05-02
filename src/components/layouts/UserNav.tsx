@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
 import {
 	DropdownLogoutItem,
 	DropdownMenu,
@@ -9,13 +8,14 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
-import { Button } from "../ui/button";
-import { siteConfig } from "@/lib/config/site";
-import { getAdminInfoQuery } from "@/lib/graphql/queries";
 import type { AdminInfo } from "@/app/dashboard/account/page";
-import { fetcher } from "@/lib/graphql/fetcher";
+import { siteConfig } from "@/lib/config/site";
 import { tags } from "@/lib/config/tags";
+import { fetcher } from "@/lib/graphql/fetcher";
+import { getAdminInfoQuery } from "@/lib/graphql/queries";
+import { Button } from "../ui/button";
 
 async function UserNav() {
 	const { getAdminInfo } = (await fetcher({

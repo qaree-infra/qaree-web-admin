@@ -1,3 +1,4 @@
+import DeleteAccountAlert from "./DeleteAccountAlert";
 import {
 	Card,
 	CardContent,
@@ -6,7 +7,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "./ui/card";
-import DeleteAccountAlert from "./DeleteAccountAlert";
 
 export function DeleteAccount() {
 	return (
