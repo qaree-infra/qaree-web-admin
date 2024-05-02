@@ -22,34 +22,9 @@ export const authOptions: NextAuthOptions = {
 					type: "password",
 				},
 			},
-			async authorize(credentials, req) {
+			async authorize(credentials) {
 				const email = credentials?.email as string;
 				const password = credentials?.password as string;
-				const resetToken = req.body?.reset_token;
-
-				if (resetToken) {
-					// todo(security) validate the token
-
-					// // I need more data about user
-					const { getAdminInfo } = await fetcher({
-						query: getAdminInfoQuery,
-						server: true,
-						protectid: true,
-						headers: {
-							Authorization: `Bearer ${resetToken}`,
-						},
-						cache: "default",
-					});
-
-					return {
-						access_token: resetToken,
-						name: getAdminInfo?.name as string,
-						email: getAdminInfo?.email as string,
-						avatar: getAdminInfo?.avatar as {
-							path: string;
-						},
-					};
-				}
 
 				if (!email || !password) return null;
 
@@ -61,7 +36,6 @@ export const authOptions: NextAuthOptions = {
 					},
 					server: true,
 					protectid: false,
-					cache: "default",
 				});
 
 				if (!signIn?.access_token) return null;
@@ -74,7 +48,6 @@ export const authOptions: NextAuthOptions = {
 					headers: {
 						Authorization: `Bearer ${signIn.access_token}`,
 					},
-					cache: "no-cache",
 				});
 
 				const user = {
@@ -90,11 +63,15 @@ export const authOptions: NextAuthOptions = {
 			},
 		}),
 	],
+	session: {
+		maxAge: 60 * 55,
+	},
 	callbacks: {
 		async jwt({ token, user, trigger, session }) {
 			if (trigger === "update") {
 				return { ...token, ...session.user };
 			}
+
 			if (user) {
 				token.name = user.name;
 				token.email = user.email;
