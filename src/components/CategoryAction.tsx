@@ -57,11 +57,15 @@ export function CategoryAction(props: Props) {
 		defaultValues,
 	});
 
+	const {
+		formState: { isDirty },
+	} = form;
+
 	const onSubmit = async (values: CategorySchema) => {
 		const { icon, ...rest } = values;
 
 		if (isUpdate) {
-			if (!form.formState.isDirty) {
+			if (!isDirty) {
 				return toast.warning("No changes have been triggered!");
 			}
 

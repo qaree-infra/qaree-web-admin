@@ -2,7 +2,7 @@
 
 import { type OfferSchema, offerSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import { toast } from "sonner";
 import { FormDate } from "./FormDate";
 import { FormInput, SubmitButton } from "./SmartForm";
@@ -48,17 +48,32 @@ export function OfferAction(props: Props) {
 	const form = useForm<OfferSchema>({
 		mode: "onSubmit",
 		resolver: zodResolver(offerSchema),
-		defaultValues: {
-			percent: undefined,
-			expireAt: undefined,
+		//@ts-expect-error
+		defaultValues: async () => {
+			if (isUpdate) {
+				const { percent, expireAt } = props.offer;
+				return {
+					percent,
+					expireAt: new Date(+expireAt),
+				};
+			}
+
+			return {
+				percent: undefined,
+				expireAt: undefined,
+			};
 		},
 	});
+
+	const {
+		formState: { isDirty },
+	} = form;
 
 	const onSubmit = async (values: OfferSchema) => {
 		const expireAt = values.expireAt.toLocaleString();
 
 		if (isUpdate) {
-			if (!form.formState.isDirty) {
+			if (!isDirty) {
 				return toast.warning("No changes have been triggered!");
 			}
 			const { success, message } = await editOfferAction({
@@ -95,13 +110,13 @@ export function OfferAction(props: Props) {
 					<Button
 						size={"icon"}
 						variant={"outline"}
-						onClick={() => {
-							const { percent, expireAt } = props.offer;
-							form.reset({
-								percent,
-								expireAt: new Date(+expireAt),
-							});
-						}}
+						// onClick={() => {
+						// 	const { percent, expireAt } = props.offer;
+						// 	form.reset({
+						// 		percent,
+						// 		expireAt: new Date(+expireAt),
+						// 	});
+						// }}
 					>
 						<Pencil className="size-5" />
 					</Button>
