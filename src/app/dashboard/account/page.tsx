@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { UpdateAvatar } from "@/components/UpdateAvatar";
 import { DeleteAccount } from "@/components/DeleteAccount";
 import { cache } from "react";
+import { tags } from "@/lib/config/tags";
 
 export const metadata: Metadata = {
 	title: "Setting",
@@ -27,6 +28,7 @@ const getData = cache(async (): Promise<AdminInfo> => {
 	const { getAdminInfo } = await fetcher({
 		query: getAdminInfoQuery,
 		server: true,
+		tags: [tags.account],
 	});
 
 	// workaround -_- nullable values!

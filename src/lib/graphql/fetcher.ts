@@ -26,6 +26,7 @@ interface TypeOptions<T> {
 	variables?: VariablesOf<T>;
 	server?: boolean;
 	protectid?: boolean;
+	tags?: string[];
 }
 
 export async function fetcher<
@@ -36,6 +37,7 @@ export async function fetcher<
 	variables,
 	server = false,
 	protectid = true,
+	tags,
 }: TypeOptions<T>): Promise<ResultOf<T>> {
 	let res: Response;
 	let processRedirect = false;
@@ -63,7 +65,7 @@ export async function fetcher<
 				}),
 				next: {
 					revalidate: 3600,
-					tags: [tags.account, tags.categories, tags.offers, tags.users],
+					tags,
 				},
 			});
 		} else {

@@ -5,6 +5,7 @@ import { OffersDataTable } from "./data-table";
 
 import type { Metadata } from "next";
 import { cache } from "react";
+import { tags } from "@/lib/config/tags";
 export const metadata: Metadata = {
 	title: "Offers",
 };
@@ -18,6 +19,7 @@ const getData = cache(async (page: number, limit: number) => {
 			sort: "",
 		},
 		server: true,
+		tags: [tags.offers],
 	});
 
 	return {

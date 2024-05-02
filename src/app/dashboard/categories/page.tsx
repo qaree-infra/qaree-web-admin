@@ -8,6 +8,7 @@ import { CategoriesDataTable } from "./data-table";
 
 import type { Metadata } from "next";
 import { cache } from "react";
+import { tags } from "@/lib/config/tags";
 
 export const metadata: Metadata = {
 	title: "Categories",
@@ -20,11 +21,13 @@ const getData = cache(
 				query: getAllCategoriesQuery,
 				variables: { limit: size, page: pageNumber, completed: true },
 				server: true,
+				tags: [tags.categories],
 			}),
 			fetcher({
 				query: getAllCategoriesQuery,
 				variables: { limit: size, page: pageNumber, completed: false },
 				server: true,
+				tags: [tags.categories],
 			}),
 		]);
 

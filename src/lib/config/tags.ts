@@ -3,4 +3,5 @@ export const tags = {
 	offers: "offers",
 	account: "account",
 	users: "users",
+	books: "books",
 };

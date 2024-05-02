@@ -6,6 +6,7 @@ import { BooksDataTable } from "./data-table";
 
 import type { Metadata } from "next";
 import { cache } from "react";
+import { tags } from "@/lib/config/tags";
 
 export const metadata: Metadata = {
 	title: "Book Review",
@@ -30,6 +31,7 @@ const getData = cache(
 				page: pageNumber,
 			},
 			server: true,
+			tags: [tags.books],
 		});
 
 		return adminGetBooks;

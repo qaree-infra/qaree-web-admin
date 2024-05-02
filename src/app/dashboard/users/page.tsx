@@ -8,6 +8,7 @@ import { UsersDataTable } from "./data-table-users";
 import type { Metadata } from "next";
 import { RegisterAdmin } from "@/components/RegisterAdmin";
 import { cache } from "react";
+import { tags } from "@/lib/config/tags";
 export const metadata: Metadata = {
 	title: "Users",
 };
@@ -20,11 +21,13 @@ const getAllUsers = cache(
 				query: adminGetAllUsersQuery,
 				variables: { limit: size, page: pageNumber },
 				server: true,
+				tags: [tags.users],
 			}),
 			fetcher({
 				query: getAdminsQuery,
 				variables: { limit: size, page: pageNumber },
 				server: true,
+				tags: [tags.users],
 			}),
 		]);
 
