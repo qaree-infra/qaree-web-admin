@@ -28,8 +28,8 @@ function AuthLoginForm() {
 	const form = useForm<LoginSchemaType>({
 		resolver: zodResolver(loginFormSchema),
 		defaultValues: {
-			email: "",
-			password: "",
+			email: "admin@qaree.com",
+			password: "Ali12345",
 		},
 	});
 
