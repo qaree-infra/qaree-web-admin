@@ -19,12 +19,14 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "./ui/dialog";
+
 import { Form } from "./ui/form";
 
-const defaultValues = {
+const defaultValues: RegisterSchema = {
 	email: "",
 	name: "",
 	password: "",
+	confirmPassword: "",
 };
 
 export function RegisterAdmin() {
@@ -91,6 +93,12 @@ export function RegisterAdmin() {
 								name="password"
 								type="password"
 								label="Password"
+							/>
+							<FormInput
+								form={form}
+								name="confirmPassword"
+								type="password"
+								label="Confirm Password"
 							/>
 						</div>
 						<DialogFooter>

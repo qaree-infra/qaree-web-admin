@@ -46,8 +46,10 @@ const getErrorMessage = (error: unknown): string => {
 };
 
 export const registerAction = async (
-	variables: RegisterSchema,
+	values: RegisterSchema,
 ): Promise<ActionState> => {
+	const { confirmPassword: _confirmPassword, ...variables } = values;
+
 	try {
 		const { register } = await fetcher({
 			query: registerMutation,
