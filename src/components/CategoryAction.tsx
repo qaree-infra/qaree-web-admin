@@ -211,11 +211,11 @@ export function CategoryAction(props: Props) {
 							</div>
 						</div>
 
-						<DialogFooter>
+						<DialogFooter className="max-sm:gap-4">
 							<DialogClose asChild>
 								<Button variant="outline">Cancel</Button>
 							</DialogClose>
-							<SubmitButton className="w-32" />
+							<SubmitButton className="sm:w-32" />
 						</DialogFooter>
 					</form>
 				</Form>

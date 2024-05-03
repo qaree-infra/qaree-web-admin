@@ -29,7 +29,7 @@ export const columns: ColumnDef<Category>[] = [
 			const icon = row.original.icon;
 
 			return (
-				<div className="flex items-center gap-4">
+				<div className="flex items-center gap-4 min-w-14">
 					<div className="flex items-center justify-center p-2 rounded-md bg-muted">
 						{icon?.path ? (
 							<Image
