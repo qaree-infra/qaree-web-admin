@@ -21,7 +21,7 @@ export default function ErrorPage({
 						{error.message || "Something went wrong"}
 					</h1>
 					<p className="opacity-80">
-						Please check your internet connection or contact{" "}
+						Please try again or contact{" "}
 						<a
 							rel="noreferrer"
 							href="mailto:ma0068664@gmail.com?subject=Qaree admin dashboard problem"

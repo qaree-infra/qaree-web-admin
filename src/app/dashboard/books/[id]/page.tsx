@@ -1,21 +1,55 @@
+import { tags } from "@/lib/config/tags";
+import { fetcher } from "@/lib/graphql/fetcher";
+import { getBookEPubMetadataQuery } from "@/lib/graphql/queries";
+import { ResultOf } from "gql.tada";
+
 type Props = {
 	params: {
 		id: string;
 	};
 };
 
-export default function BookPage({ params: { id } }: Props) {
-	// return <V0 />;
+type NonNullableBookMetadata = {
+	ISBN: string;
+	date: string;
+	creatorFileAs: string;
+	creator: string;
+	description: string;
+	subject: string;
+	title: string;
+	language: string;
+	modified: string;
+	specifiedFonts: string;
+	cover: string;
+	generator: string;
+	publisher: string;
+};
+
+const getData = async (bookId: string) => {
+	const { getBookEPubMetadata } = await fetcher({
+		query: getBookEPubMetadataQuery,
+		variables: {
+			bookId: bookId,
+		},
+		server: true,
+		tags: [tags.books],
+	});
+	return getBookEPubMetadata as NonNullableBookMetadata;
+};
+
+export default async function BookPage({ params: { id } }: Props) {
+	const data = await getData(id);
 
 	return (
-		<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-40 flex items-center text-muted-foreground justify-center">
-			<div className="text-xl md:text-3xl xl:text-7xl">Comming Soon...</div>
+		<div>
+			<div className="h-96 bg-muted ">book info</div>
+			<pre>{JSON.stringify(data, null, 2)}</pre>
 		</div>
 	);
 
 	// return (
 	// 	<div>
-	// 		{/* <BookDetailes bookId={id} /> */}
+	// {/* <BookDetailes bookId={id} /> */}
 	// 		<AdminReviewForm bookId={id} />
 	// 		<ReviewHistory bookId={id} />
 	// 	</div>
