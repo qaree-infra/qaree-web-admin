@@ -16,7 +16,8 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
 
 interface DataTablePaginationProps<TData> {
 	table: Table<TData>;
@@ -25,15 +26,26 @@ interface DataTablePaginationProps<TData> {
 export function RouterPagination<TData>({
 	table,
 }: DataTablePaginationProps<TData>) {
-	const router = useRouter();
-
 	const page = table.getState().pagination.pageIndex + 1;
 	const size = table.getState().pagination.pageSize;
 	const count = table.getRowCount();
 
+	const router = useRouter();
+	const searchParams = useSearchParams();
+
+	const createQueryString = useCallback(
+		(name: string, value: string) => {
+			const params = new URLSearchParams(searchParams.toString());
+			params.set(name, value);
+
+			return params.toString();
+		},
+		[searchParams],
+	);
+
 	const lastPage = Math.ceil(count / size);
 	if (page > lastPage) {
-		router.push(`?page=${lastPage}&size=${size}`);
+		router.push(`?${createQueryString("page", String(table.getPageCount()))}`);
 	}
 
 	return (
@@ -47,8 +59,7 @@ export function RouterPagination<TData>({
 					<Select
 						value={`${size}`}
 						onValueChange={(value) => {
-							router.push(`?page=${page}&size=${value}`);
-							// table.setPageSize(Number(value));
+							router.push(`?${createQueryString("size", value)}`);
 						}}
 					>
 						<SelectTrigger className="h-8 w-[70px]">
@@ -71,8 +82,7 @@ export function RouterPagination<TData>({
 						variant="outline"
 						className="hidden h-8 w-8 p-0 lg:flex"
 						onClick={() => {
-							router.push(`?page=1&size=${size}`);
-							// table.setPageIndex(0)
+							router.push(`?${createQueryString("page", String(1))}`);
 						}}
 						disabled={!table.getCanPreviousPage()}
 					>
@@ -83,7 +93,7 @@ export function RouterPagination<TData>({
 						variant="outline"
 						className="h-8 w-8 p-0"
 						onClick={() => {
-							router.push(`?page=${page - 1}&size=${size}`);
+							router.push(`?${createQueryString("page", String(page - 1))}`);
 						}}
 						disabled={!table.getCanPreviousPage()}
 					>
@@ -94,7 +104,7 @@ export function RouterPagination<TData>({
 						variant="outline"
 						className="h-8 w-8 p-0"
 						onClick={() => {
-							router.push(`?page=${page + 1}&size=${size}`);
+							router.push(`?${createQueryString("page", String(page + 1))}`);
 						}}
 						disabled={!table.getCanNextPage()}
 					>
@@ -105,8 +115,9 @@ export function RouterPagination<TData>({
 						variant="outline"
 						className="hidden h-8 w-8 p-0 lg:flex"
 						onClick={() => {
-							router.push(`?page=${table.getPageCount()}&size=${size}`);
-							// table.setPageIndex(table.getPageCount() - 1)
+							router.push(
+								`?${createQueryString("page", String(table.getPageCount()))}`,
+							);
 						}}
 						disabled={!table.getCanNextPage()}
 					>
