@@ -41,8 +41,8 @@ export default async function Account() {
 	return (
 		<div className="space-y-8">
 			<header>
-				<h1 className="text-3xl font-medium mb-2">Admin Profile</h1>
-				<p className=" max-w-5xl text-balance text-muted-foreground">
+				<h1 className="text-2xl sm:text-3xl font-medium mb-2">Admin Profile</h1>
+				<p className="max-sm:text-sm max-w-5xl text-balance text-muted-foreground">
 					Welcome to your Admin Profile dashboard. Here, you wield full control
 					over your digital identity. Customize your avatar to reflect your
 					unique personality and update essential account details such as your

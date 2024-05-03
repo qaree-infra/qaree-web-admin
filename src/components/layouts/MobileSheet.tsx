@@ -12,8 +12,9 @@ import {
 import Link from "next/link";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Sheet, SheetContent, SheetFooter, SheetTrigger } from "../ui/sheet";
 import { items } from "./Aside";
+import ThemeToggle from "../ThemeToggle";
 
 export function MobileSheet() {
 	const [open, setOpen] = useState(false);
@@ -26,7 +27,7 @@ export function MobileSheet() {
 					<span className="sr-only">Toggle Menu</span>
 				</Button>
 			</SheetTrigger>
-			<SheetContent side="left" className="sm:max-w-xs">
+			<SheetContent side="left" className="sm:max-w-xs flex flex-col">
 				<nav className="grid gap-6 text-lg font-medium">
 					<Link
 						href="/dashboard"
@@ -48,6 +49,9 @@ export function MobileSheet() {
 						</Link>
 					))}
 				</nav>
+				<SheetFooter className="mt-auto items-end">
+					<ThemeToggle />
+				</SheetFooter>
 			</SheetContent>
 		</Sheet>
 	);
