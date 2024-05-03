@@ -26,55 +26,18 @@ import { ArrowDownUp, Check } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
-type Status = {
+type Option = {
 	value: string;
 	label: string;
 };
 
-const statuses: Status[] = [
-	{
-		value: "backlog",
-		label: "Backlog",
-	},
-	{
-		value: "todo",
-		label: "Todo",
-	},
-	{
-		value: "in progress",
-		label: "In Progress",
-	},
-	{
-		value: "done",
-		label: "Done",
-	},
-	{
-		value: "canceled",
-		label: "Canceled",
-	},
-];
-
-const TriggerButton = () => {
-	return (
-		<Button variant="outline" size="sm" className="h-7 gap-1">
-			<ArrowDownUp className="size-3.5" />
-			<span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Sort</span>
-		</Button>
-	);
-};
-
-export type Options = { label: string; value: string }[];
-
 interface Props {
-	options: Options;
+	options: Option[];
 }
 
 export function AddSortParams({ options }: Props) {
 	const [open, setOpen] = React.useState(false);
 	const isDesktop = useMediaQuery("(min-width: 768px)");
-	const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
-		null,
-	);
 
 	if (isDesktop) {
 		return (
@@ -89,11 +52,7 @@ export function AddSortParams({ options }: Props) {
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent className="w-[200px] p-0" align="end">
-					<StatusList
-						setOpen={setOpen}
-						setSelectedStatus={setSelectedStatus}
-						options={options}
-					/>
+					<StatusList setOpen={setOpen} options={options} />
 				</PopoverContent>
 			</Popover>
 		);
@@ -112,11 +71,7 @@ export function AddSortParams({ options }: Props) {
 			</DrawerTrigger>
 			<DrawerContent>
 				<div className="mt-4 border-t">
-					<StatusList
-						setOpen={setOpen}
-						setSelectedStatus={setSelectedStatus}
-						options={options}
-					/>
+					<StatusList setOpen={setOpen} options={options} />
 				</div>
 			</DrawerContent>
 		</Drawer>
@@ -125,12 +80,10 @@ export function AddSortParams({ options }: Props) {
 
 function StatusList({
 	setOpen,
-	setSelectedStatus,
 	options,
 }: {
 	setOpen: (open: boolean) => void;
-	setSelectedStatus: (status: Status | null) => void;
-	options: Options;
+	options: Option[];
 }) {
 	const router = useRouter();
 	const searchParams = useSearchParams();
@@ -154,22 +107,22 @@ function StatusList({
 
 	return (
 		<Command>
-			<CommandInput placeholder="Filter status..." />
+			<CommandInput placeholder="Filter option..." />
 			<CommandList>
 				<CommandEmpty>No results found.</CommandEmpty>
 				<CommandGroup>
-					{options.map((status) => (
+					{options.map((option) => (
 						<CommandItem
-							key={status.value}
-							value={status.value}
+							key={option.value}
+							value={option.value}
 							onSelect={(value) => {
 								router.push(`?${createQueryString("sort", value)}`);
 								setOpen(false);
 							}}
 							className=" justify-between"
 						>
-							<span>{status.label}</span>
-							{searchParams.get("sort") === status.value && (
+							<span>{option.label}</span>
+							{searchParams.get("sort") === option.value && (
 								<Check className="size-5" />
 							)}
 						</CommandItem>
