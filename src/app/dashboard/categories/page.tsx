@@ -36,7 +36,7 @@ const getData = async ({
 		complete: complete.getAllCategories?.categories,
 		incomplete: incomplete.getAllCategories?.categories,
 		totalComplete: incomplete.getAllCategories?.totalCompleted,
-		totaleIncomplete: complete.getAllCategories?.totalCompleted,
+		totaleIncomplete: complete.getAllCategories?.totalUncompleted,
 	};
 };
 
