@@ -1,6 +1,6 @@
 import type { Option } from "@/components/AddSortParams";
 
-export const bookStatusList = ["published", "rejected"] as const;
+export const bookStatusList = ["approved", "rejected"] as const;
 
 export const bookStatusItems: Option[] = [
 	{

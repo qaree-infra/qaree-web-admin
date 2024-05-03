@@ -97,6 +97,8 @@ export const reviewBookAction = async ({
 			throw Error(reviewBookData?.message || "Error: faield to save review");
 		}
 
+		revalidateTag(tags.books);
+
 		return { success: true, message: reviewBookData.message ?? "Sucess" };
 	} catch (error) {
 		const message = getErrorMessage(error);
