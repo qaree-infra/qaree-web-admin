@@ -26,6 +26,7 @@ import {
 } from "@/lib/config/book-status-items";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { AddSortParams } from "@/components/AddSortParams";
+import { ResetParams } from "@/components/ResetParams";
 
 type PaginationConfig = {
 	state: PaginationState;
@@ -112,6 +113,7 @@ export function BooksDataTable<TData, TValue>({
 				</TabsList>
 
 				<div className="ml-auto flex items-center gap-2">
+					<ResetParams />
 					<ColumnsFilter table={table} />
 					<AddSortParams options={booksSortByItems} />
 				</div>
