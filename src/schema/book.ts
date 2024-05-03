@@ -1,4 +1,4 @@
-import { options } from "@/lib/config/book-status-items";
+import { bookStatusList } from "@/lib/config/book-status-items";
 import { z } from "zod";
 
 const errors = {
@@ -22,7 +22,7 @@ const invalid = {
 };
 
 export const reviewSchema = z.object({
-	status: z.enum(options, {
+	status: z.enum(bookStatusList, {
 		errorMap: (issue) => {
 			if (issue.code === "invalid_enum_value" && issue.received !== "") {
 				return { message: invalid.status };

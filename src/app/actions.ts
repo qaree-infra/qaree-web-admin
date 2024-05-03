@@ -91,7 +91,6 @@ export const reviewBookAction = async ({
 				...review,
 			},
 			server: true,
-			protectid: true,
 		});
 
 		if (!reviewBookData?.success) {

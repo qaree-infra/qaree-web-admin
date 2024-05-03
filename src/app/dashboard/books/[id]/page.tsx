@@ -43,23 +43,15 @@ export default async function BookPage({ params: { id } }: Props) {
 	const data = await getData(id);
 
 	return (
-		<div className="space-y-6">
+		<div className="space-y-6 pb-20">
 			<div className=" bg-muted p-4">
 				<h3 className="mb-2">Review This Data ^^</h3>
 				<pre className="text-wrap ">{JSON.stringify(data, null, 2)}</pre>
 			</div>
 			<div>
-				<h3 className="text-2xl ">Admin Review</h3>
+				<h3 className="text-2xl ">Book Status</h3>
 				<AdminReviewForm bookId={id} />
 			</div>
 		</div>
 	);
-
-	// return (
-	// 	<div>
-	// {/* <BookDetailes bookId={id} /> */}
-	//
-	// 		<ReviewHistory bookId={id} />
-	// 	</div>
-	// );
 }

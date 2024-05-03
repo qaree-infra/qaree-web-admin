@@ -1,21 +1,17 @@
-// This 'options' array is used in Zod enum. If the selected option is not one of these, an invalid option error message will be shown.
+import type { Option } from "@/components/AddSortParams";
 
-import { Options } from "@/components/AddSortParams";
+export const bookStatusList = ["published", "rejected"] as const;
 
-// Use snake_case for adding new options.
-export const options = [
-	"in_review",
-	"pending",
-	"rejected",
-	"accepted",
-	"draft",
-] as const;
-
-// Generate book status items with labels corresponding to options
-export const bookStatusItems = options.map((status, index) => ({
-	label: status.charAt(0).toUpperCase() + status.slice(1).replace("_", " "),
-	value: options[index],
-}));
+export const bookStatusItems: Option[] = [
+	{
+		label: "Accepted",
+		value: bookStatusList["0"],
+	},
+	{
+		label: "Rejected",
+		value: bookStatusList["1"],
+	},
+];
 
 export enum booksFilterBy {
 	in_review = "inReview",
@@ -23,7 +19,7 @@ export enum booksFilterBy {
 	published = "published",
 }
 
-export const booksSortByItems: Options = [
+export const booksSortByItems: Option[] = [
 	{
 		label: "Updated At",
 		value: "updatedAt",

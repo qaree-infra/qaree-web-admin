@@ -25,8 +25,9 @@ import {
 import { ArrowDownUp, Check } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
+import { RadixIcons } from "./ui/ReduxIcons";
 
-type Option = {
+export type Option = {
 	value: string;
 	label: string;
 };
@@ -123,7 +124,7 @@ function StatusList({
 						>
 							<span>{option.label}</span>
 							{searchParams.get("sort") === option.value && (
-								<Check className="size-5" />
+								<RadixIcons.check className="h-4 w-4" />
 							)}
 						</CommandItem>
 					))}

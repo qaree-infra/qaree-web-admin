@@ -44,7 +44,7 @@ function AdminReviewForm({ bookId }: Props) {
 				<FormSelect
 					form={form}
 					name="status"
-					placeholder="select status"
+					placeholder="Select Status"
 					label="Status"
 					showLabel
 					items={bookStatusItems}
