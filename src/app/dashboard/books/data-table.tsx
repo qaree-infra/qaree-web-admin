@@ -17,16 +17,16 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 
+import { AddSortParams } from "@/components/AddSortParams";
+import { ResetParams } from "@/components/ResetParams";
 import { ColumnsFilter } from "@/components/table/ColumnsFilter";
 import { TableWithPagination } from "@/components/table/TableWithPagination";
-import { useCallback, useState } from "react";
 import {
 	booksFilterBy,
 	booksSortByItems,
 } from "@/lib/config/book-status-items";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { AddSortParams } from "@/components/AddSortParams";
-import { ResetParams } from "@/components/ResetParams";
+import { useCallback, useState } from "react";
 
 type PaginationConfig = {
 	state: PaginationState;

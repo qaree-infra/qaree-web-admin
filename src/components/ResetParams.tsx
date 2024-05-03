@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
-import { Button } from "./ui/button";
 import { Cable } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React from "react";
+import { Button } from "./ui/button";
 
 export function ResetParams() {
 	const pathname = usePathname();

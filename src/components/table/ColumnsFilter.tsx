@@ -5,8 +5,8 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { Table } from "@tanstack/react-table";
-import { Button } from "../ui/button";
 import { Icons } from "../Icons";
+import { Button } from "../ui/button";
 
 export function ColumnsFilter<TData>({ table }: { table: Table<TData> }) {
 	return (
