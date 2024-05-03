@@ -6,6 +6,7 @@ import { BooksDataTable } from "./data-table";
 
 import { tags } from "@/lib/config/tags";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
 	title: "Book Review",
@@ -15,7 +16,13 @@ const getData = async ({
 	pageNumber,
 	sizeNumber,
 	filter,
-}: { pageNumber: number; sizeNumber: number; filter: string }) => {
+	sort,
+}: {
+	pageNumber: number;
+	sizeNumber: number;
+	filter: string;
+	sort: string;
+}) => {
 	const { adminGetBooks } = await fetcher({
 		query: getBookSummaryQuery,
 		variables: {
@@ -23,7 +30,7 @@ const getData = async ({
 			page: pageNumber,
 			filterBy: filter,
 			keyword: "",
-			sortBy: "",
+			sortBy: sort,
 		},
 		server: true,
 		tags: [tags.books],
@@ -32,17 +39,12 @@ const getData = async ({
 	return adminGetBooks;
 };
 
-// filterBy: "inReview", "rejected", "published"
-// keyword: search keyword
-// sortBy: updatedAt (the date of the last modification), price, name, publishionDate (the date of approval for publishing)
-
 async function BooksPage({
-	searchParams: { page = "1", size = "5", filter = "" },
+	searchParams: { page = "1", size = "5", filter = "", sort = "" },
 }) {
 	let pageNumber = Number.parseInt(page);
 	const sizeNumber = Number(size);
 
-	// Never trust user input
 	if (Number.isNaN(pageNumber)) {
 		pageNumber = 1;
 	}
@@ -51,6 +53,7 @@ async function BooksPage({
 		pageNumber,
 		sizeNumber,
 		filter,
+		sort,
 	});
 
 	if (!adminGetBooks?.books) {
