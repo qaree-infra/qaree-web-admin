@@ -117,6 +117,7 @@ export function BooksDataTable<TData, TValue>({
 
 				<div className="ml-auto flex items-center gap-2">
 					<ColumnsFilter table={table} />
+
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button variant="outline" size="sm" className="h-7 gap-1">
