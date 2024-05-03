@@ -13,3 +13,9 @@ export const bookStatusItems = options.map((status, index) => ({
 	label: status.charAt(0).toUpperCase() + status.slice(1).replace("_", " "),
 	value: options[index],
 }));
+
+export enum booksFilterBy {
+	in_review = "inReview",
+	rejected = "rejected",
+	published = "published",
+}

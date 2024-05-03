@@ -11,22 +11,19 @@ export const metadata: Metadata = {
 	title: "Book Review",
 };
 
-type Props = {
-	searchParams: {
-		page: string;
-		size: string;
-	};
-};
-
 const getData = async ({
 	pageNumber,
 	sizeNumber,
-}: { pageNumber: number; sizeNumber: number }) => {
+	filter,
+}: { pageNumber: number; sizeNumber: number; filter: string }) => {
 	const { adminGetBooks } = await fetcher({
 		query: getBookSummaryQuery,
 		variables: {
 			limit: sizeNumber,
 			page: pageNumber,
+			filterBy: filter,
+			keyword: "",
+			sortBy: "",
 		},
 		server: true,
 		tags: [tags.books],
@@ -35,7 +32,13 @@ const getData = async ({
 	return adminGetBooks;
 };
 
-async function BooksPage({ searchParams: { page = "1", size = "5" } }) {
+// filterBy: "inReview", "rejected", "published"
+// keyword: search keyword
+// sortBy: updatedAt (the date of the last modification), price, name, publishionDate (the date of approval for publishing)
+
+async function BooksPage({
+	searchParams: { page = "1", size = "5", filter = "" },
+}) {
 	let pageNumber = Number.parseInt(page);
 	const sizeNumber = Number(size);
 
@@ -47,6 +50,7 @@ async function BooksPage({ searchParams: { page = "1", size = "5" } }) {
 	const adminGetBooks = await getData({
 		pageNumber,
 		sizeNumber,
+		filter,
 	});
 
 	if (!adminGetBooks?.books) {

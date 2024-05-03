@@ -1,7 +1,7 @@
 "use client";
 import { ArrowDownUp } from "lucide-react";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import type {
 	ColumnDef,
@@ -27,7 +27,9 @@ import {
 
 import { ColumnsFilter } from "@/components/table/ColumnsFilter";
 import { TableWithPagination } from "@/components/table/TableWithPagination";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { booksFilterBy } from "@/lib/config/book-status-items";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type PaginationConfig = {
 	state: PaginationState;
@@ -69,15 +71,47 @@ export function BooksDataTable<TData, TValue>({
 		rowCount: paginationConfig.rowCount,
 	});
 
+	const router = useRouter();
+	const searchParams = useSearchParams();
+	const pathname = usePathname();
+
+	const createQueryString = useCallback(
+		(name: string, value: string) => {
+			const params = new URLSearchParams(searchParams.toString());
+			params.set(name, value);
+
+			return params.toString();
+		},
+		[searchParams],
+	);
+
+	const queryWithoutFilter = () => {
+		const params = new URLSearchParams(searchParams.toString());
+		params.delete("filter");
+		return params.toString();
+	};
+
 	return (
-		<Tabs defaultValue="all">
+		<Tabs
+			defaultValue={searchParams.get("filter") || "all"}
+			onValueChange={(value) => {
+				if (value !== "all") {
+					return router.push(`?${createQueryString("filter", value)}`);
+				}
+
+				router.replace(`${pathname}?${queryWithoutFilter()}`);
+			}}
+		>
 			<div className="flex items-center">
 				<TabsList>
 					<TabsTrigger value="all">All</TabsTrigger>
-					<TabsTrigger value="active">Active</TabsTrigger>
-					<TabsTrigger value="draft">Draft</TabsTrigger>
-					<TabsTrigger value="archived" className="hidden sm:flex">
-						Archived
+					<TabsTrigger value={booksFilterBy.in_review}>Pending</TabsTrigger>
+					<TabsTrigger value={booksFilterBy.published}>Published</TabsTrigger>
+					<TabsTrigger
+						value={booksFilterBy.rejected}
+						className="hidden sm:flex"
+					>
+						Rejected
 					</TabsTrigger>
 				</TabsList>
 
@@ -98,9 +132,9 @@ export function BooksDataTable<TData, TValue>({
 					</DropdownMenu>
 				</div>
 			</div>
-			<TabsContent value="all">
+			<div className="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
 				<TableWithPagination table={table} />
-			</TabsContent>
+			</div>
 		</Tabs>
 	);
 }
