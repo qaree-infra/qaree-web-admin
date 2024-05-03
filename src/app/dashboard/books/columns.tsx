@@ -19,6 +19,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { SortName } from "./SortName";
+import { booksFilterBy } from "@/lib/config/book-status-items";
 
 export interface BookSummary {
 	_id: string;
@@ -76,7 +77,10 @@ export const columns: ColumnDef<BookSummary>[] = [
 		header: "Status",
 		enableHiding: false,
 		cell({ row }) {
-			return <Badge>{row.original.status}</Badge>;
+			const status = row.original.status;
+			const betterName =
+				status === booksFilterBy.in_review ? "Pending" : status;
+			return <Badge className="capitalize">{betterName}</Badge>;
 		},
 	},
 	{
