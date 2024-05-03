@@ -20,18 +20,24 @@ export function BreadcrumbNav() {
 		<Breadcrumb className="hidden md:flex">
 			<BreadcrumbList>
 				{pathSegments.map((item, index) => (
-					<BreadcrumbItem key={item}>
-						<BreadcrumbLink asChild>
+					<>
+						<BreadcrumbItem key={item}>
 							{index + 1 === pathSegments.length ? (
-								<BreadcrumbPage>{item}</BreadcrumbPage>
+								pathSegments[index - 1] === "books" ? (
+									<BreadcrumbPage>{"Review"}</BreadcrumbPage>
+								) : (
+									<BreadcrumbPage>{item}</BreadcrumbPage>
+								)
 							) : (
-								<Link href={`/${pathSegments.slice(0, index + 1).join("/")}`}>
-									{item}
-								</Link>
+								<BreadcrumbLink asChild>
+									<Link href={`/${pathSegments.slice(0, index + 1).join("/")}`}>
+										{item}
+									</Link>
+								</BreadcrumbLink>
 							)}
-						</BreadcrumbLink>
+						</BreadcrumbItem>
 						{index < pathSegments.length - 1 && <BreadcrumbSeparator />}
-					</BreadcrumbItem>
+					</>
 				))}
 			</BreadcrumbList>
 		</Breadcrumb>

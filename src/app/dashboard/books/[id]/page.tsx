@@ -1,3 +1,5 @@
+import AdminReviewForm from "@/components/AdminReviewForm";
+import { Separator } from "@/components/ui/separator";
 import { tags } from "@/lib/config/tags";
 import { fetcher } from "@/lib/graphql/fetcher";
 import { getBookEPubMetadataQuery } from "@/lib/graphql/queries";
@@ -41,16 +43,22 @@ export default async function BookPage({ params: { id } }: Props) {
 	const data = await getData(id);
 
 	return (
-		<div>
-			<div className="h-96 bg-muted ">book info</div>
-			<pre>{JSON.stringify(data, null, 2)}</pre>
+		<div className="space-y-6">
+			<div className=" bg-muted p-4">
+				<h3 className="mb-2">Review This Data ^^</h3>
+				<pre className="text-wrap ">{JSON.stringify(data, null, 2)}</pre>
+			</div>
+			<div>
+				<h3 className="text-2xl ">Admin Review</h3>
+				<AdminReviewForm bookId={id} />
+			</div>
 		</div>
 	);
 
 	// return (
 	// 	<div>
 	// {/* <BookDetailes bookId={id} /> */}
-	// 		<AdminReviewForm bookId={id} />
+	//
 	// 		<ReviewHistory bookId={id} />
 	// 	</div>
 	// );

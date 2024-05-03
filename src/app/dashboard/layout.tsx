@@ -15,7 +15,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 				<header className="sticky top-0 z-30 mb-4 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
 					<MobileSheet />
 					{/* FIXME: Hydration Error */}
-					{/* <BreadcrumbNav /> */}
+					<BreadcrumbNav />
 					<SearchForm />
 					<Suspense
 						fallback={
@@ -25,7 +25,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 						<UserNav />
 					</Suspense>
 				</header>
-				<main className="grid flex-1 items-start gap-4 px-4 sm:px-6 sm:py-0 md:gap-8">
+				<main className="grid max-sm:pb-20 flex-1 items-start gap-4 px-4 sm:px-6 sm:py-0 md:gap-8">
 					{children}
 				</main>
 			</div>
